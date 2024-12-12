@@ -63,13 +63,3 @@ const slise = createSlice({
 export default slise.reducer;
 
 
-
-export const liContacts = (state) => state.contacts.items;
-
-
-export const selectFilteredContacts = createSelector([liContacts, nameFilters], (contacts, filter) => { 
-    if (filter == "") {
-        return contacts;
-    }
-    return contacts.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
-});
