@@ -21,8 +21,6 @@ const WaterSlice = createSlice({
     initialState,
     extraReducers : (builder) => {
         builder
-        .addMatcher(isAnyOf(addWater.pending, updateWater.pending, deleteWater.pending), handlePending)
-        .addMatcher(isAnyOf(addWater.rejected, updateWater.rejected, deleteWater.rejected), handleRejected)
         .addCase(addWater.fulfilled, (state, action) => {
             state.isLoading = false,
             state.error = null,
@@ -50,6 +48,8 @@ const WaterSlice = createSlice({
                 state.waterShots[index].splice(index, 1)
               }
         })
+        .addMatcher(isAnyOf(addWater.pending, updateWater.pending, deleteWater.pending), handlePending)
+        .addMatcher(isAnyOf(addWater.rejected, updateWater.rejected, deleteWater.rejected), handleRejected)
     },
 },
 );

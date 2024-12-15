@@ -1,5 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { fetchWaterRate, putWaterRate } from './operations';
+import { refreshUser } from "../auth/operations";
 
 const initialState = {
     isLoading: false,
