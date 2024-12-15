@@ -2,7 +2,11 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import HomePage from "../../pages/HomePage/HomePage";
+import Header from "../Header/Header";
+
 import css from "./App.module.css";
+
 import SharedLayout from "../SharedLayout/SharedLayout";
 import Loader from "../Loader/Loader";
 
@@ -15,6 +19,9 @@ const WelcomePage = lazy(() => import("../../pages/WelcomePage/WelcomePage"));
 const SigninPage = lazy(() => import("../../pages/SigninPage/SigninPage"));
 const SignupPage = lazy(() => import("../../pages/SignupPage/SignupPage"));
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+
+
+
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -31,6 +38,7 @@ export default function App() {
     <SharedLayout>
       <Suspense fallback={null}>
         <div className={css.container}>
+          <Header />
           <Routes>
             <Route path="/welcome" element={<WelcomePage />} />
             <Route
