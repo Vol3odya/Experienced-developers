@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMonthWater } from "./operations";
+import { getMonthWater } from "./operations.js";
 
 const initialState = {
   items: [

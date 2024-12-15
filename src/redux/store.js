@@ -1,18 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import {todayReducer} from './todayWaterList/sliсe.js';
-import {monthReducer} from './monthWaterList/slice.js';
-import {authReducer} from './auth/slice.js';
+import { todayReducer } from './todayWaterList/sliсe.js';
+import { monthReducer } from './monthWaterList/slice.js';
+import { authReducer } from './auth/slice.js';
 
-import {waterRateReducer} from './warerRate/slice.js';
+import { waterRateReducer } from './waterRate/slice.js';
 import { waterReducer } from './water/slice.js';
+import { userReducer } from './user/slice.js';
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist:['token'],
+  whitelist: ['token'],
 };
-
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +30,7 @@ export const store = configureStore({
     month: monthReducer,
     waterRate: waterRateReducer,
     water: waterReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -29,6 +39,5 @@ export const store = configureStore({
       },
     }),
 });
-
 
 export const persistor = persistStore(store);
