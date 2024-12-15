@@ -1,11 +1,19 @@
+import { NavLink } from "react-router-dom";
+import svg from "../../images/Logo/Logo.svg";
 
+
+import css from "./Logo.module.css";
 
 export default function Logo() {
 
+
+  const addres = "/";
+
   return (
-    <div>
-      
-    </div>
+    <NavLink className={css.logo} to='/' >
+      <img className={css.logo_img} src={svg} alt="logo" width="40" height="48" />
+      <p className={css.logo_text}>Tracker of water</p>
+    </NavLink>
   )
 }
 
