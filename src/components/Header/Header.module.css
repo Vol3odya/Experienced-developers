@@ -1,0 +1,6 @@
+.header{
+    max-width: 280px;
+    max-height: 48px;
+    display: flex;
+    flex-wrap: wrap;
+}
