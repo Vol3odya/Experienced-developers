@@ -1,4 +1,4 @@
-import svg from "../../images/UserLogo/solid.svg";
+
 
 import css from "./UserLogo.module.css";
 
