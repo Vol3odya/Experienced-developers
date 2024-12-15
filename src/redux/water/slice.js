@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { addWater, deleteWater, updateWater } from './operations';
+import { addWater, deleteWater, updateWater } from './operations.js';
 
 const initialState = {
     waterShots: [],
@@ -7,7 +7,8 @@ const initialState = {
     error: null,
 }
 
-const handlePending = (state, action) => {
+
+const handlePending = (state) => {
     state.isLoading = true;
 }
 
