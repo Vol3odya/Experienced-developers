@@ -1,7 +1,7 @@
 import css from "./WaterRatioPanel.module.css";
-import bottleImageM from "../../assets/svg/bow-m.svg";
-import bottleImageT from "../../assets/svg/bow-t.svg";
-import bottleImageD from "../../assets/svg/bow-d.svg";
+import bottleImageM from "../../images/svg/bow-m.svg";
+import bottleImageT from "../../images/svg/bow-t.svg";
+import bottleImageD from "../../images/svg/bow-d.svg";
 
 export default function WaterRatioPanel() {
   return (

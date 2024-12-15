@@ -1,21 +1,26 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import waterReducer from './todayWaterList/sliсe.js';
-import authSlise from './auth/slice.js';
+import {todayReducer} from './todayWaterList/sliсe.js';
+import {monthReducer} from './monthWaterList/slice.js';
+import {authReducer} from './auth/slice.js';
 
-const persistConfig = {
-  key: 'root',
+import {waterRateReducer} from './warerRate/slice.js';
+import { waterReducer } from './water/slice.js';
+const authPersistConfig = {
+  key: 'auth',
   storage,
   whitelist:['token'],
 };
 
-const persistedReducer = persistReducer(persistConfig, authSlise);
 
 export const store = configureStore({
   reducer: {
-    water: waterReducer, 
-    auth: persistedReducer,
+    auth: persistReducer(authPersistConfig, authReducer),
+    today: todayReducer,
+    month: monthReducer,
+    waterRate: waterRateReducer,
+    water: waterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

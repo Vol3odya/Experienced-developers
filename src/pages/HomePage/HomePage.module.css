@@ -1,18 +1,18 @@
 .container {
-  background-image: url(../../assets/svg/bg-home-m.svg);
+  background-image: url(../../images/svg/bg-home-m.svg);
   width: 320px;
 }
 
 @media (min-width: 768px) {
   .container {
-    background-image: url(../../assets/svg/bg-home-t.svg);
+    background-image: url(../../images/svg/bg-home-t.svg);
     width: 768px;
   }
 }
 
 @media (min-width: 1440px) {
   .container {
-    background-image: url(../../assets/svg/bg-home-d.svg);
+    background-image: url(../../images/svg/bg-home-d.svg);
     width: 1440px;
   }
 }
