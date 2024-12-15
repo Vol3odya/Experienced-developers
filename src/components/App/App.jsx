@@ -1,15 +1,29 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import css from './App.module.css';
+import css from "./App.module.css";
+import SettingModal from "../SettingModal/SettingModal";
 
-export default function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const userData = {
+    photo: "",
+    gender: "Man",
+    name: "David",
+    email: "david01@gmail.com",
+  };
 
   return (
-    <div className={css.container}>
-      <p>csfdddsff</p>
+    <div>
+      <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
+      {isModalOpen && (
+        <SettingModal
+          userData={userData}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
+export default App;
