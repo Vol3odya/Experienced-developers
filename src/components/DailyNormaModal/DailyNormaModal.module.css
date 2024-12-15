@@ -1,3 +1,18 @@
+/* !------------- GENERAL -------------! */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
 .modal {
   width: 280px;
   /* height: 816px; */
@@ -10,29 +25,56 @@
   line-height: 1.25;
 }
 
+/* ------------- Head & CloseBtn ------------- */
+
 .top {
   display: flex;
+  flex-direction: row;
   gap: 52px;
-  align-items: baseline;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
 .top button {
-  width: 12px;
-  height: 12px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  position: relative;
+}
+
+.top button:focus,
+.top button:active,
+.saveButton:focus,
+.saveButton.active {
+  outline: none; /* Убирает обводку */
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  color: #407bff;
+  position: relative;
+  bottom: 3px;
+  right: 3px;
 }
 
 .head {
-  width: 182px;
-  margin-bottom: 24px;
+  /* width: 182px; */
+  font-weight: 500;
   font-size: 26px;
 }
 
+/* ------------- Formulas ------------- */
+
 .formulas {
-  padding: 10px;
   text-align: left;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-bottom: 12px;
 }
 
 .formula {
@@ -54,10 +96,15 @@
   color: #407bff;
 }
 
+/* ------------- Form ------------- */
+
 .calc {
   font-size: 18px;
   margin-bottom: 16px;
+  font-weight: 500;
 }
+
+/* ------------- Radiobuttons ------------- */
 
 .radio {
   display: flex;
@@ -83,8 +130,10 @@
   align-items: center;
 }
 
+/* --- Weight, Time, RequiredAmount --- */
+
 .weight,
-.activity {
+.time {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -104,19 +153,27 @@
   margin-bottom: 24px;
 }
 
-.amount {
+.volume {
   color: #407bff;
   font-size: 18px;
   line-height: 1.33;
+  font-weight: 700;
 }
 
 .dailyNorma {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-weight: 500;
   font-size: 18px;
   line-height: 1.11;
   margin-bottom: 24px;
+}
+
+.error {
+  color: #ef5050;
+  font-size: 14px;
+  line-height: 1.28;
 }
 
 .saveButton {
@@ -126,5 +183,53 @@
   background-color: #407bff;
   padding: 8px 30px;
   width: 100%;
-  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+/* !------------- TABLET -------------! */
+
+@media screen and (min-width: 768px) {
+  .modal {
+    width: 704px;
+    padding: 32px 24px;
+  }
+
+  .top {
+    gap: 452px;
+  }
+
+  .formulas {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .saveButton {
+    width: 160px;
+    padding: 8px 30px;
+    position: relative;
+    left: 245px;
+  }
+
+  /* .btnWrap {
+    display: flex;
+    justify-content: flex-end;
+  } */
+}
+
+/* !------------- DESKTOP -------------! */
+
+@media screen and (min-width: 1440px) {
+  .modal {
+    width: 592px;
+  }
+
+  .top {
+    gap: 340px;
+  }
+
+  .saveButton {
+    padding: 10px 30px;
+    position: relative;
+    left: 190px;
+  }
 }

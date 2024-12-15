@@ -1,11 +1,3 @@
-
-
 export default function DailyNorma() {
-
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
-
