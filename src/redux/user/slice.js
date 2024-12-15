@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { fetchUser, updateUser, updateUserAvatar } from './operations.js';
 
 const handleFulfilled = (state, action) => {

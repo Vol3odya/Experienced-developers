@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function MonthStatsTable() {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  /*const [currentDate, setCurrentDate] = useState(new Date());
 
   const getFirstDayOfMonth = (date: Date) => new Date(date.getFullYear.Year());
   const getFirstDayOfMonth = (date: Date) =>
@@ -41,7 +41,7 @@ export default function MonthStatsTable() {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
     );
-  };
+  };*/
 
   return <div></div>;
 }
