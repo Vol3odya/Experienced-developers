@@ -1,5 +1,7 @@
+
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { fetchUser, updateUser, updateUserAvatar } from './operations.js';
+
 
 const handleFulfilled = (state, action) => {
   (state.isLoading = false),
@@ -17,7 +19,7 @@ const handleRejected = (state, action) => {
 };
 
 const slice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
     user: {},
     isLoading: false,
