@@ -1,16 +1,17 @@
 import Logo from "../Logo/Logo"
 import UserAuth from "../UserAuth/UserAuth";
+import UserLogo from "../UserLogo/UserLogo";
 
 import css from "./Header.module.css"
 
 export default function Header() {
 
-  const loggedIn = false;
+  const loggedIn = true;
 
   return (
     <div className={css.header}>
       <Logo />
-      <UserAuth/>
+      {loggedIn ? <UserLogo/> : <UserAuth/>}
       
     </div>
   )
