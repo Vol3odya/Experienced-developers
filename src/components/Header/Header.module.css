@@ -1,7 +1,24 @@
 .header{
-    width: 280px;
-    max-height: 48px;
+    padding: 8px 20px;
+    margin: 0 auto;
+    width: 320px;
+    height: 48px;
     display: flex;
     flex-wrap: wrap;
     padding: 0;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .container {
+        padding: 16px 32px;
+        width: 768px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .container {
+        padding: 12px 18px;
+        width: 1440px;
+    }
 }

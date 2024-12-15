@@ -2,8 +2,6 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import HomePage from "../../pages/HomePage/HomePage";
-import Header from "../Header/Header";
 
 import css from "./App.module.css";
 
@@ -38,7 +36,6 @@ export default function App() {
     <SharedLayout>
       <Suspense fallback={null}>
         <div className={css.container}>
-          <Header />
           <Routes>
             <Route path="/welcome" element={<WelcomePage />} />
             <Route
