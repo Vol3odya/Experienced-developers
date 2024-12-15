@@ -13,7 +13,7 @@ const initialState = {
   isLoggedIn: false,
   isLoading: false,
   isRefresh: false,
-  isError: false,
+  isError: null,
 };
 
 const authSlice = createSlice({
@@ -43,8 +43,7 @@ const authSlice = createSlice({
         state.isRefresh = false;
         state.isLoggedIn = true;
       })
-      .addCase(refreshUser.rejected, () => {})
-      .addMatcher(isAnyOf(/*register.pending,*/ signin.pending), (state) => {
+      .addMatcher(isAnyOf(signup.pending, signin.pending), (state) => {
         state.isLoading = true;
       })
       .addMatcher(
@@ -57,4 +56,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export const  authReducer = authSlice.reducer;
