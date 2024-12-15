@@ -1,0 +1,130 @@
+.modal {
+  width: 280px;
+  /* height: 816px; */
+  border-radius: 10px;
+  padding: 24px 10px;
+
+  background-color: #ffffff;
+  color: #2f2f2f;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.top {
+  display: flex;
+  gap: 52px;
+  align-items: baseline;
+}
+
+.top button {
+  width: 12px;
+  height: 12px;
+}
+
+.head {
+  width: 182px;
+  margin-bottom: 24px;
+  font-size: 26px;
+}
+
+.formulas {
+  padding: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formula {
+  color: #407bff;
+  font-size: 18px;
+}
+
+.formulaDescription {
+  border: 1px solid #d7e3ff;
+  color: #8f8f8f;
+  border-radius: 10px;
+  padding: 10px;
+  line-height: 1.33;
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+
+.asterisk {
+  color: #407bff;
+}
+
+.calc {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.radio {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.radioBtn {
+  width: 14px;
+  height: 14px;
+  border-color: #407bff;
+  background-color: #ffffff;
+}
+
+.radioBtn:checked {
+  width: 14px;
+  height: 14px;
+}
+
+.radio label {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.weight,
+.activity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.input {
+  background-color: #ffffff;
+  color: #407bff;
+  outline: none;
+  padding: 12px 10px;
+  border: 1px solid #d7e3ff;
+  border-radius: 10px;
+}
+
+.requiredAmount {
+  margin-bottom: 24px;
+}
+
+.amount {
+  color: #407bff;
+  font-size: 18px;
+  line-height: 1.33;
+}
+
+.dailyNorma {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 18px;
+  line-height: 1.11;
+  margin-bottom: 24px;
+}
+
+.saveButton {
+  border: none;
+  display: block;
+  margin: 0 auto;
+  background-color: #407bff;
+  padding: 8px 30px;
+  width: 100%;
+  margin-bottom: 24px;
+}
