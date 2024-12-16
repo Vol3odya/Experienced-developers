@@ -1,7 +1,8 @@
 .header{
-    padding: 8px 20px;
-    margin: 0 auto;
-    width: 320px;
+    margin: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 280px;
     height: 48px;
     display: flex;
     flex-wrap: wrap;
