@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose, userData }) => {
@@ -50,6 +50,20 @@ const SettingModal = ({ onClose, userData }) => {
       [field]: !prev[field],
     }));
   };
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        onClose(); // Закрывает модалку
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+
+    // Очистка обработчика при размонтировании компонента
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [onClose]);
 
   return (
     <>
@@ -191,149 +205,165 @@ const SettingModal = ({ onClose, userData }) => {
               </div>
             </div>
           </div>
-
-          {/* Gender Identity Section */}
-          <div className={styles["gender-section"]}>
-            <label className={styles["gender-label"]}>
-              Your gender identity
-            </label>
-            <div className={styles["gender-options"]}>
-              {/* Woman */}
-              <div className={styles["gender-option"]}>
-                <input
-                  type="radio"
-                  id="woman"
-                  name="gender"
-                  value="Woman"
-                  checked={formData.gender === "Woman"}
-                  onChange={handleGenderChange}
-                  className={styles["hidden-radio"]}
-                />
-                <label htmlFor="woman" className={styles["gender-label"]}>
-                  <svg width="32" height="32">
-                    <use
-                      xlinkHref={
-                        formData.gender === "Woman"
-                          ? "#icon-touch1"
-                          : "#icon-touch"
-                      }
-                    />
-                  </svg>
-                  Woman
-                </label>
-              </div>
-
-              {/* Man */}
-              <div className={styles["gender-option"]}>
-                <input
-                  type="radio"
-                  id="man"
-                  name="gender"
-                  value="Man"
-                  checked={formData.gender === "Man"}
-                  onChange={handleGenderChange}
-                  className={styles["hidden-radio"]}
-                />
-                <label htmlFor="man" className={styles["gender-label"]}>
-                  <svg width="32" height="32">
-                    <use
-                      xlinkHref={
-                        formData.gender === "Man"
-                          ? "#icon-touch1"
-                          : "#icon-touch"
-                      }
-                    />
-                  </svg>
-                  Man
-                </label>
-              </div>
-            </div>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className={styles["input-section"]}>
-              {/* Your name */}
-              <div className={styles["input-group"]}>
-                <label htmlFor="name" className={styles["input-label"]}>
-                  Your name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  placeholder="Enter your name"
-                  onChange={handleChange}
-                  className={styles["input-field"]}
-                />
-              </div>
-
-              {/* E-mail */}
-              <div className={styles["input-group"]}>
-                <label htmlFor="email" className={styles["input-label"]}>
-                  E-mail
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  placeholder="Enter your email"
-                  onChange={handleChange}
-                  className={styles["input-field"]}
-                />
-              </div>
-            </div>
-
-            {/* Секция паролей */}
-            <div className={styles["password-section"]}>
-              <label className={styles["section-label"]}>Password</label>
-
-              {/* Поля паролей */}
-              {["oldPassword", "newPassword", "repeatPassword"].map((field) => (
-                <div className={styles["password-group"]} key={field}>
-                  <label
-                    htmlFor={field}
-                    className={styles["password-input-label"]}
-                  >
-                    {field === "oldPassword"
-                      ? "Outdated password:"
-                      : field === "newPassword"
-                      ? "New Password:"
-                      : "Repeat new password:"}
+          <form onSubmit={handleSubmit} className={styles["form-container"]}>
+            <div className={styles["form-layout"]}>
+              {/* Левая колонка */}
+              <div className={styles["left-column"]}>
+                {/* Gender Identity Section */}
+                <div className={styles["gender-section"]}>
+                  <label className={styles["gender-label"]}>
+                    Your gender identity
                   </label>
-                  <div className={styles["input-container"]}>
-                    <input
-                      id={field}
-                      type={passwordVisibility[field] ? "text" : "password"}
-                      name={field}
-                      value={formData[field]}
-                      onChange={handleChange}
-                      className={styles["password-input"]}
-                      placeholder="Password"
-                    />
-                    <button
-                      type="button"
-                      className={styles["visibility-button"]}
-                      onClick={() => togglePasswordVisibility(field)}
-                    >
-                      <svg width="16" height="16">
-                        <use
-                          xlinkHref={
-                            passwordVisibility[field]
-                              ? "#icon-eye-1"
-                              : "#icon-eye-slash-1"
-                          }
-                        />
-                      </svg>
-                    </button>
+                  <div className={styles["gender-options"]}>
+                    {/* Woman */}
+                    <div className={styles["gender-option"]}>
+                      <input
+                        type="radio"
+                        id="woman"
+                        name="gender"
+                        value="Woman"
+                        checked={formData.gender === "Woman"}
+                        onChange={handleGenderChange}
+                        className={styles["hidden-radio"]}
+                      />
+                      <label htmlFor="woman" className={styles["gender-label"]}>
+                        <svg width="32" height="32">
+                          <use
+                            xlinkHref={
+                              formData.gender === "Woman"
+                                ? "#icon-touch1"
+                                : "#icon-touch"
+                            }
+                          />
+                        </svg>
+                        Woman
+                      </label>
+                    </div>
+
+                    {/* Man */}
+                    <div className={styles["gender-option"]}>
+                      <input
+                        type="radio"
+                        id="man"
+                        name="gender"
+                        value="Man"
+                        checked={formData.gender === "Man"}
+                        onChange={handleGenderChange}
+                        className={styles["hidden-radio"]}
+                      />
+                      <label htmlFor="man" className={styles["gender-label"]}>
+                        <svg width="32" height="32">
+                          <use
+                            xlinkHref={
+                              formData.gender === "Man"
+                                ? "#icon-touch1"
+                                : "#icon-touch"
+                            }
+                          />
+                        </svg>
+                        Man
+                      </label>
+                    </div>
                   </div>
                 </div>
-              ))}
+
+                <div className={styles["combined-section"]}>
+                  {/* Input Section */}
+                  <div className={styles["input-section"]}>
+                    {/* Your name */}
+                    <div className={styles["input-group"]}>
+                      <label htmlFor="name" className={styles["input-label"]}>
+                        Your name
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        placeholder="Enter your name"
+                        onChange={handleChange}
+                        className={styles["input-field"]}
+                      />
+                    </div>
+
+                    {/* E-mail */}
+                    <div className={styles["input-group"]}>
+                      <label htmlFor="email" className={styles["input-label"]}>
+                        E-mail
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        placeholder="Enter your email"
+                        onChange={handleChange}
+                        className={styles["input-field"]}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Правая колонка */}
+              <div className={styles["right-column"]}>
+                {/* Password Section */}
+                <div className={styles["password-section"]}>
+                  <label className={styles["section-label"]}>Password</label>
+
+                  {["oldPassword", "newPassword", "repeatPassword"].map(
+                    (field) => (
+                      <div className={styles["password-group"]} key={field}>
+                        <label
+                          htmlFor={field}
+                          className={styles["password-input-label"]}
+                        >
+                          {field === "oldPassword"
+                            ? "Outdated password:"
+                            : field === "newPassword"
+                            ? "New Password:"
+                            : "Repeat new password:"}
+                        </label>
+                        <div className={styles["input-container"]}>
+                          <input
+                            id={field}
+                            type={
+                              passwordVisibility[field] ? "text" : "password"
+                            }
+                            name={field}
+                            value={formData[field]}
+                            onChange={handleChange}
+                            className={styles["password-input"]}
+                            placeholder="Password"
+                          />
+                          <button
+                            type="button"
+                            className={styles["visibility-button"]}
+                            onClick={() => togglePasswordVisibility(field)}
+                          >
+                            <svg width="16" height="16">
+                              <use
+                                xlinkHref={
+                                  passwordVisibility[field]
+                                    ? "#icon-eye-1"
+                                    : "#icon-eye-slash-1"
+                                }
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
             </div>
-            {/* Кнопка Save */}
-            <button type="submit" className={styles["save-button"]}>
-              Save
-            </button>
+
+            {/* Контейнер кнопки */}
+            <div className={styles["button-container"]}>
+              <button type="submit" className={styles["save-button"]}>
+                Save
+              </button>
+            </div>
           </form>
         </div>
       </div>
