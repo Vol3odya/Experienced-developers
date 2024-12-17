@@ -69,6 +69,7 @@ export const updateProfile = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const { data } = await axios.patch("/profile/update", formData);
+
       console.log("Server Response:", data);
 
       return data.data;

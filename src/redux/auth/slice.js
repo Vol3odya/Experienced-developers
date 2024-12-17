@@ -7,6 +7,7 @@ import {
   updateProfile,
 } from "./operations";
 
+
 const initialState = {
   user: {
     name: null,
@@ -19,7 +20,7 @@ const initialState = {
   isLoggedIn: false,
   isLoading: false,
   isRefresh: false,
-  isError: false,
+  isError: null,
 };
 
 const authSlice = createSlice({
@@ -35,7 +36,7 @@ const authSlice = createSlice({
 
       .addCase(signin.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
       })
       .addCase(logout.fulfilled, () => {
@@ -75,4 +76,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export const  authReducer = authSlice.reducer;
