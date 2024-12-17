@@ -28,6 +28,7 @@ const AuthForm = ({ mode }) => {
     };
     if (mode === "signup") {
       dispatch(signup(credentials));
+      console.log(credentials);
     } else {
       dispatch(signin(credentials));
     }
