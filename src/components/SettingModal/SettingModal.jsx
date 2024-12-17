@@ -22,10 +22,10 @@ const SettingModal = ({ onClose }) => {
     console.log("UserData из Redux:", userData); // Проверка
     if (userData) {
       setFormData({
-        photo: userData.avatarUrl || "",
-        gender: userData.gender || "",
-        name: userData.name || "",
-        email: userData.email || "",
+        photo: userData.avatarUrl,// || "",
+        gender: userData.gender,// || "",
+        name: userData.name,// || "",
+        email: userData.email,// || "",
         oldPassword: "",
         newPassword: "",
         repeatPassword: "",
