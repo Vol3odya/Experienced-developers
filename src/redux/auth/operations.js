@@ -66,12 +66,15 @@ export const refreshUser = createAsyncThunk(
 );
 export const updateProfile = createAsyncThunk(
   "auth/updateProfile",
-  async (formData, thunkApi) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const { data } = await axios.patch("/profile/update", formData);
-      return data.data; // Обновленные данные пользователя.
+
+      console.log("Server Response:", data);
+
+      return data.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(error.message || "Update failed");
+      return rejectWithValue(error.response?.data.message || "Update failed");
     }
   }
 );
