@@ -69,7 +69,7 @@ export const updateProfile = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await axios.patch("/profile/update", formData);
-      return data; // Обновленные данные пользователя
+      return data; // Обновленные данные пользователя.
     } catch (error) {
       return thunkApi.rejectWithValue(error.message || "Update failed");
     }
