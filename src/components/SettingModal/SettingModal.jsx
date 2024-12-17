@@ -1,16 +1,49 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styles from "./SettingModal.module.css";
 
-const SettingModal = ({ onClose, userData }) => {
+const SettingModal = ({ onClose }) => {
+  // Получаем userData из Redux
+  const userData = useSelector((state) => state.auth.user);
+
+  // Иницилизация formData после получения userData
   const [formData, setFormData] = useState({
-    photo: userData.photo || "",
-    gender: userData.gender || "",
-    name: userData.name || "",
-    email: userData.email || "",
+    photo: "",
+    gender: "",
+    name: "",
+    email: "",
     oldPassword: "",
     newPassword: "",
     repeatPassword: "",
   });
+
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        photo: userData.photo || "",
+        gender: userData.gender || "",
+        name: userData.name || "",
+        email: userData.email || "",
+        oldPassword: "",
+        newPassword: "",
+        repeatPassword: "",
+      });
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        onClose(); // Закрывает модалку
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+
+    // Очистка обработчика при размонтировании компонента
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [onClose]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,10 +59,27 @@ const SettingModal = ({ onClose, userData }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Form submitted: " + JSON.stringify(formData));
-    onClose();
+
+    try {
+      const response = await fetch("http://localhost:3000/update-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Помилка оновлення даних");
+      }
+
+      alert("Дані успішно оновлено!");
+    } catch (error) {
+      console.error(error.message);
+      alert("Помилка: " + error.message);
+    }
   };
 
   const handleGenderChange = (e) => {
@@ -50,20 +100,6 @@ const SettingModal = ({ onClose, userData }) => {
       [field]: !prev[field],
     }));
   };
-
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
-        onClose(); // Закрывает модалку
-      }
-    };
-    window.addEventListener("keydown", handleEscape);
-
-    // Очистка обработчика при размонтировании компонента
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [onClose]);
 
   return (
     <>
