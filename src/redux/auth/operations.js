@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://tracker-of-water-xk7t.onrender.com/";
 
@@ -11,10 +11,10 @@ const clearAuthHeader = () => {
 };
 
 export const signup = createAsyncThunk(
-  'auth/signup',
+  "auth/signup",
   async (credentials, thunkApi) => {
     try {
-      const { data } = await axios.post('auth/signup', credentials);
+      const { data } = await axios.post("auth/signup", credentials);
       setAuthHeader(data.token);
       return data;
     } catch (error) {
@@ -24,10 +24,10 @@ export const signup = createAsyncThunk(
 );
 
 export const signin = createAsyncThunk(
-  'auth/signin',
+  "auth/signin",
   async (credentials, thunkApi) => {
     try {
-      const { data } = await axios.post('auth/signin', credentials);
+      const { data } = await axios.post("auth/signin", credentials);
       setAuthHeader(data.token);
       return data;
     } catch (error) {
@@ -36,9 +36,9 @@ export const signin = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
+export const logout = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
-    await axios.post('/auth/logout');
+    await axios.post("/auth/logout");
     clearAuthHeader();
   } catch (error) {
     return thunkApi.rejectWithValue(error.messege);
@@ -46,12 +46,12 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
 });
 
 export const refreshUser = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, thunkApi) => {
     const reduxState = thunkApi.getState();
     setAuthHeader(reduxState.auth.token);
     try {
-      const { data } = await axios.get('auth/current');
+      const { data } = await axios.get("auth/current");
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
@@ -62,5 +62,16 @@ export const refreshUser = createAsyncThunk(
       const reduxState = thunkApi.getState();
       return reduxState.auth.token !== null;
     },
+  }
+);
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (formData, thunkApi) => {
+    try {
+      const { data } = await axios.patch("/profile/update", formData);
+      return data; // Обновленные данные пользователя.
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message || "Update failed");
+    }
   }
 );

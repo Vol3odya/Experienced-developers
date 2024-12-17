@@ -1,5 +1,12 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { signin, logout, refreshUser, signup } from './operations.js';
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  signin,
+  logout,
+  refreshUser,
+  signup,
+  updateProfile,
+} from "./operations";
+
 
 const initialState = {
   user: {
@@ -17,7 +24,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   extraReducers: (builder) => {
     builder
@@ -43,7 +50,20 @@ const authSlice = createSlice({
         state.isRefresh = false;
         state.isLoggedIn = true;
       })
-      .addMatcher(isAnyOf(signup.pending, signin.pending), (state) => {
+      .addCase(refreshUser.rejected, () => {})
+      .addCase(updateProfile.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.user = { ...state.user, ...action.payload }; // Обновляем данные пользователя
+        state.isLoading = false;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
+      })
+      .addMatcher(isAnyOf(/*register.pending,*/ signin.pending), (state) => {
         state.isLoading = true;
       })
       .addMatcher(

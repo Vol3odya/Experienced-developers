@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateProfile } from "../../redux/auth/operations";
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose }) => {
-  // Получаем userData из Redux
+  const dispatch = useDispatch();
+
   const userData = useSelector((state) => state.auth.user);
 
-  // Иницилизация formData после получения userData
   const [formData, setFormData] = useState({
     photo: "",
     gender: "",
@@ -18,9 +19,10 @@ const SettingModal = ({ onClose }) => {
   });
 
   useEffect(() => {
+    console.log("UserData из Redux:", userData); // Проверка
     if (userData) {
       setFormData({
-        photo: userData.photo || "",
+        photo: userData.avatarUrl || "",
         gender: userData.gender || "",
         name: userData.name || "",
         email: userData.email || "",
@@ -34,12 +36,11 @@ const SettingModal = ({ onClose }) => {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
-        onClose(); // Закрывает модалку
+        onClose();
       }
     };
     window.addEventListener("keydown", handleEscape);
 
-    // Очистка обработчика при размонтировании компонента
     return () => {
       window.removeEventListener("keydown", handleEscape);
     };
@@ -59,30 +60,19 @@ const SettingModal = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(
-        "https://tracker-of-water-xk7t.onrender.com/update-user",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Помилка оновлення даних");
-      }
-
-      alert("Дані успішно оновлено!");
-    } catch (error) {
-      console.error(error.message);
-      alert("Помилка: " + error.message);
-    }
+    dispatch(updateProfile(formData))
+      .unwrap()
+      .then(() => {
+        alert("Дані успішно оновлено!");
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Помилка:", error);
+        alert("Помилка оновлення даних: " + error);
+      });
   };
 
   const handleGenderChange = (e) => {
@@ -96,7 +86,6 @@ const SettingModal = ({ onClose }) => {
     repeatPassword: false,
   });
 
-  // Обработчик видимости пароля
   const togglePasswordVisibility = (field) => {
     setPasswordVisibility((prev) => ({
       ...prev,
