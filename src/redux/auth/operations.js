@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// axios.defaults.baseURL = ...
+axios.defaults.baseURL = "https://tracker-of-water-xk7t.onrender.com/";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -15,8 +15,8 @@ export const signup = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const { data } = await axios.post("auth/signup", credentials);
-      setAuthHeader(data.token);
-      return data;
+      setAuthHeader(data.data.accessToken);
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
@@ -28,8 +28,8 @@ export const signin = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const { data } = await axios.post("auth/signin", credentials);
-      setAuthHeader(data.token);
-      return data;
+      setAuthHeader(data.data.accessToken);
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
@@ -52,7 +52,7 @@ export const refreshUser = createAsyncThunk(
     setAuthHeader(reduxState.auth.token);
     try {
       const { data } = await axios.get("auth/current");
-      return data;
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
@@ -66,12 +66,14 @@ export const refreshUser = createAsyncThunk(
 );
 export const updateProfile = createAsyncThunk(
   "auth/updateProfile",
-  async (formData, thunkApi) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const { data } = await axios.patch("/profile/update", formData);
-      return data; // Обновленные данные пользователя
+      console.log("Server Response:", data);
+
+      return data.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(error.message || "Update failed");
+      return rejectWithValue(error.response?.data.message || "Update failed");
     }
   }
 );

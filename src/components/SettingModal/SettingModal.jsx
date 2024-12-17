@@ -22,10 +22,10 @@ const SettingModal = ({ onClose }) => {
     console.log("UserData из Redux:", userData); // Проверка
     if (userData) {
       setFormData({
-        photo: userData.avatarUrl || "",
-        gender: userData.gender || "",
-        name: userData.name || "",
-        email: userData.email || "",
+        photo: userData.avatarUrl, // || "",
+        gender: userData.gender || "Man", // Значение по умолчанию
+        name: userData.name, // || "",
+        email: userData.email, // || "",
         oldPassword: "",
         newPassword: "",
         repeatPassword: "",
@@ -46,6 +46,17 @@ const SettingModal = ({ onClose }) => {
     };
   }, [onClose]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = ""; // Показывает браузерное предупреждение
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -54,30 +65,54 @@ const SettingModal = ({ onClose }) => {
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setFormData({ ...formData, photo: reader.result });
-      reader.readAsDataURL(file);
+      const previewURL = URL.createObjectURL(file); // Создаём URL для предварительного просмотра
+      setFormData((prev) => ({ ...prev, photo: previewURL, photoFile: file })); // Сохраняем preview и файл
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(updateProfile(formData))
+    // Проверка на совпадение паролей
+    if (
+      formData.newPassword &&
+      formData.newPassword !== formData.repeatPassword
+    ) {
+      alert("New passwords do not match!");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("gender", formData.gender);
+    if (formData.photoFile) {
+      formDataToSend.append("photo", formData.photoFile);
+    }
+    if (formData.oldPassword) {
+      formDataToSend.append("oldPassword", formData.oldPassword);
+      formDataToSend.append("newPassword", formData.newPassword);
+    }
+    if (formData.newPassword && formData.newPassword.length < 6) {
+      alert("New password must be at least 6 characters long!");
+      return;
+    }
+
+    dispatch(updateProfile(formDataToSend))
       .unwrap()
       .then(() => {
-        alert("Дані успішно оновлено!");
+        alert("Profile updated successfully!");
         onClose();
       })
       .catch((error) => {
-        console.error("Помилка:", error);
-        alert("Помилка оновлення даних: " + error);
+        console.error("Error updating profile:", error);
+        alert("Error updating profile: " + error);
       });
   };
 
   const handleGenderChange = (e) => {
     const { value } = e.target;
-    setFormData({ ...formData, gender: value });
+    setFormData((prev) => ({ ...prev, gender: value }));
   };
 
   const [passwordVisibility, setPasswordVisibility] = useState({
