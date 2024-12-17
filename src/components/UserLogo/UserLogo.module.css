@@ -3,22 +3,26 @@
     flex-wrap: wrap;
     margin-right: 0;
     height: 28px;
-    margin-top: auto;
+    margin-top: 10px;
     margin-bottom: auto;
-    padding-top: auto;
-    padding-bottom: auto;
+    /*padding-top: auto;
+    padding-bottom: auto;*/
     color: #FFFFFF;
     background-color: #FFFFFF;
     border: none;
+    /*width: 118px;*/
 }
 
 .username{
     margin-right: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-weight: 400;
     font-size: 16px;
     line-height: 125%;
     text-align: right;
     color: #2F2F2F;
+    width: 60px;
 }
 
 .userphoto{

@@ -80,6 +80,8 @@ body {
 
 button{
   border: none;
+  padding-top: auto;
+  padding-bottom: auto;
 }
 
 
