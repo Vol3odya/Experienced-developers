@@ -1,0 +1,68 @@
+.background {
+  padding: 0 20px;
+  min-width: 320px;
+}
+
+.component {
+  padding: 0 20px;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.14;
+  color: #2f2f2f;
+  margin-top: 24px;
+}
+
+.subtitle {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.25;
+  color: #2f2f2f;
+  margin-top: 16px;
+}
+
+.text {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #2f2f2f;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.trackerList {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.trackerItem {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.button {
+  width: 280px;
+  padding: 9px 0;
+  border-radius: 10px;
+  border: none;
+  background-color: #407bff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+}
