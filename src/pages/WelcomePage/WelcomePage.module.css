@@ -1,0 +1,26 @@
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/*TODO =====================MEDIA===================== */
+
+@media (min-width: 320px) {
+  .background {
+    background-image: url(../../images/WelcomePage/mobile/background-main-page.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    padding-bottom: 40px;
+    background-attachment: fixed;
+  }
+}
+@media (min-width: 320px) and (min-resolution: 192dpi),
+  (min-width: 320px) and (min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url(../../images/WelcomePage/mobile/background-main-page@2x.png);
+    background-size: cover;
+  }
+}

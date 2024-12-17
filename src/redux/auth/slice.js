@@ -7,6 +7,7 @@ import {
   updateProfile,
 } from "./operations";
 
+
 const initialState = {
   user: {
     name: null,
@@ -19,7 +20,7 @@ const initialState = {
   isLoggedIn: false,
   isLoading: false,
   isRefresh: false,
-  isError: false,
+  isError: null,
 };
 
 const authSlice = createSlice({
@@ -75,4 +76,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export const  authReducer = authSlice.reducer;

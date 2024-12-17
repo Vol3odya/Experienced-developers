@@ -1,5 +1,7 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { logout } from '../auth/operations';
+import { createSlice } from '@reduxjs/toolkit';
+
+import { getMonthWater } from "./operations.js";
+
 
 const initialState = {
   items: [
@@ -21,22 +23,21 @@ const slice = createSlice({
     builder
       .addCase(getMonthWater.pending, (state) => {
         state.loading = true;
-        state.error = false;
       })
       .addCase(getMonthWater.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.date = action.payload.items.date;
+        state.daylyNorma = action.payload.items.daylyNorma;
+        state.servings = action.payload.items.servings;
+        state.percentFromDailyNorma = action.payload.items.percentFromDailyNorma;
         state.loading = false;
       })
-      .addCase(getMonthWater.rejected, (state) => {
-        state.error = true;
+      .addCase(getMonthWater.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
-        state.items = action.payload;
-        state.date = action.payload.date;
-        state.daylyNorma = action.payload.daylyNorma;
-        state.servings = action.payload.servings;
-        state.percentFromDailyNorma = action.payload.percentFromDailyNorma;
+      
       });
   },
 });
 
-export default slice.reducer;
+export const monthReducer = slice.reducer;
