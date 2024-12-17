@@ -60,6 +60,9 @@ export default function UserLogoModal({ closeModal }) {
     setIsClose(false);
   };
 
+  const user = {
+    name:"Vasya",
+  }
 
   return (
     <div className={css.modal} onClick={handleBackdropClick}>
@@ -77,7 +80,7 @@ export default function UserLogoModal({ closeModal }) {
         </svg>
         <p className={css.text}>Log out</p>
       </button>
-      {isOpen && <SettingModal onClose={handleCloseModal} />}
+      {isOpen && <SettingModal onClose={handleCloseModal} userData={user} />}
       {isClose && <UserLogoutModal closeModal={handleCloseModalLogout} delOrLogout = {false}/>}
     </div>
   )

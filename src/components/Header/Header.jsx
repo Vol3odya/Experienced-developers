@@ -8,7 +8,7 @@ import css from "./Header.module.css"
 
 export default function Header() {
 
-  const loggedIn = true;//useSelector(selectIsLoggedIn);
+  const loggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <div className={css.header}>

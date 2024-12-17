@@ -59,7 +59,7 @@ export default function App() {
             <Route
               path="/home"
               element={
-                <RestrictedRoute /*PrivateRoute замінити після роботи логінізації*/ component={<HomePage />} redirectTo="/signin" />
+                <PrivateRoute component={<HomePage />} redirectTo="/signin" />
               }
             />
           </Routes>
