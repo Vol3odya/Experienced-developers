@@ -15,7 +15,7 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (_, thunkAPI) 
 
 export const updateUserAvatar = createAsyncThunk('user/updateUserAvatar', async(formdata, thunkAPI) => {
     try {
-        const response = await axios.patch('/user/updateUserAvatar', formdata, {
+        const response = await axios.patch('/user/avatar', formdata, {
             headers: {
                 "Content-Type": "multipart/form-data",
               },
@@ -28,7 +28,7 @@ export const updateUserAvatar = createAsyncThunk('user/updateUserAvatar', async(
 
 export const updateUser = createAsyncThunk('user/updateUser', async (newdata, thunkAPI) => {
     try {
-        const response = await axios.patch('/user/updateUser', newdata);
+        const response = await axios.patch('/user', newdata);
         return response.data.user;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message)
