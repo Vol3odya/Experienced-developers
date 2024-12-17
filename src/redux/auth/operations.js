@@ -16,7 +16,7 @@ export const signup = createAsyncThunk(
     try {
       const { data } = await axios.post("auth/signup", credentials);
       setAuthHeader(data.data.accessToken);
-      return data;
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
@@ -29,7 +29,7 @@ export const signin = createAsyncThunk(
     try {
       const { data } = await axios.post("auth/signin", credentials);
       setAuthHeader(data.data.accessToken);
-      return data;
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
@@ -52,7 +52,7 @@ export const refreshUser = createAsyncThunk(
     setAuthHeader(reduxState.auth.token);
     try {
       const { data } = await axios.get("auth/current");
-      return data;
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
@@ -69,7 +69,7 @@ export const updateProfile = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       const { data } = await axios.patch("/profile/update", formData);
-      return data; // Обновленные данные пользователя.
+      return data.data; // Обновленные данные пользователя.
     } catch (error) {
       return thunkApi.rejectWithValue(error.message || "Update failed");
     }

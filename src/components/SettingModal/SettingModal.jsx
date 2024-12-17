@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProfile } from "../../redux/auth/operations";
+import {selectUser} from "../../redux/auth/selectors"
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
-  const userData = useSelector((state) => state.auth.user);
-
+  const userData = useSelector(selectUser);
+console.log("UserData из Redux:", userData); // Проверка
   const [formData, setFormData] = useState({
     photo: "",
     gender: "",
@@ -19,7 +20,7 @@ const SettingModal = ({ onClose }) => {
   });
 
   useEffect(() => {
-    console.log("UserData из Redux:", userData); // Проверка
+    
     if (userData) {
       setFormData({
         photo: userData.avatarUrl,// || "",
