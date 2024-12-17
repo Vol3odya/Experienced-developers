@@ -63,13 +63,16 @@ const SettingModal = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/update-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://tracker-of-water-xk7t.onrender.com/update-user",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Помилка оновлення даних");
