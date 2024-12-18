@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../redux/user/operations";
-import {selectUser} from "../../redux/auth/selectors"
+
+import { updateUser, updateUserAvatar } from "../../redux/user/operations";
+import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const userData = useSelector(selectUser);
-console.log("UserData из Redux:", userData); // Проверка
+
+  console.log("UserData из Redux:", userData); // Проверка
+
   const [formData, setFormData] = useState({
     photo: "",
-    gender: "",
+    gender: "Man",
     name: "",
     email: "",
     oldPassword: "",
@@ -20,11 +23,12 @@ console.log("UserData из Redux:", userData); // Проверка
   });
 
   useEffect(() => {
-    
-    if (userData) {
+
+    if (userData && Object.keys(userData).length > 0) {
+
       setFormData({
         photo: userData.avatarUrl, // || "",
-        gender: userData.gender || "Man", // Значение по умолчанию
+        gender: userData.gender || "male", // Значение по умолчанию
         name: userData.name, // || "",
         email: userData.email, // || "",
         oldPassword: "",
@@ -47,17 +51,6 @@ console.log("UserData из Redux:", userData); // Проверка
     };
   }, [onClose]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue = ""; // Показывает браузерное предупреждение
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -66,15 +59,19 @@ console.log("UserData из Redux:", userData); // Проверка
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const previewURL = URL.createObjectURL(file); // Создаём URL для предварительного просмотра
-      setFormData((prev) => ({ ...prev, photo: previewURL, photoFile: file })); // Сохраняем preview и файл
+      const previewURL = URL.createObjectURL(file);
+      setFormData((prev) => ({ ...prev, photo: previewURL, photoFile: file }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Проверка на совпадение паролей
+    if (!formData.name || !formData.email) {
+      alert("Name and email are required!");
+      return;
+    }
+
     if (
       formData.newPassword &&
       formData.newPassword !== formData.repeatPassword
@@ -83,37 +80,39 @@ console.log("UserData из Redux:", userData); // Проверка
       return;
     }
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("gender", formData.gender);
-    if (formData.photoFile) {
-      formDataToSend.append("photo", formData.photoFile);
-    }
-    if (formData.oldPassword) {
-      formDataToSend.append("oldPassword", formData.oldPassword);
-      formDataToSend.append("newPassword", formData.newPassword);
-    }
     if (formData.newPassword && formData.newPassword.length < 6) {
       alert("New password must be at least 6 characters long!");
       return;
     }
 
-    dispatch(updateUser(formDataToSend))
-      .unwrap()
-      .then(() => {
-        alert("Profile updated successfully!");
-        onClose();
-      })
-      .catch((error) => {
-        console.error("Error updating profile:", error);
-        alert("Error updating profile: " + error);
-      });
+    try {
+      if (formData.photoFile) {
+        const avatarData = new FormData();
+        avatarData.append("photo", formData.photoFile);
+        await dispatch(updateUserAvatar(avatarData)).unwrap();
+      }
+
+      const updatedData = {
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender,
+        ...(formData.oldPassword && {
+          oldPassword: formData.oldPassword,
+          newPassword: formData.newPassword,
+        }),
+      };
+
+      await dispatch(updateUser(updatedData)).unwrap();
+      alert("Profile updated successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile: " + error.message);
+    }
   };
 
   const handleGenderChange = (e) => {
-    const { value } = e.target;
-    setFormData((prev) => ({ ...prev, gender: value }));
+    setFormData((prev) => ({ ...prev, gender: e.target.value }));
   };
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -283,18 +282,21 @@ console.log("UserData из Redux:", userData); // Проверка
                     <div className={styles["gender-option"]}>
                       <input
                         type="radio"
-                        id="woman"
+                        id="female"
                         name="gender"
-                        value="Woman"
-                        checked={formData.gender === "Woman"}
+                        value="female" // Храним как "female"
+                        checked={formData.gender === "female"}
                         onChange={handleGenderChange}
                         className={styles["hidden-radio"]}
                       />
-                      <label htmlFor="woman" className={styles["gender-label"]}>
+                      <label
+                        htmlFor="female"
+                        className={styles["gender-label"]}
+                      >
                         <svg width="32" height="32">
                           <use
                             xlinkHref={
-                              formData.gender === "Woman"
+                              formData.gender === "female"
                                 ? "#icon-touch1"
                                 : "#icon-touch"
                             }
@@ -308,18 +310,18 @@ console.log("UserData из Redux:", userData); // Проверка
                     <div className={styles["gender-option"]}>
                       <input
                         type="radio"
-                        id="man"
+                        id="male"
                         name="gender"
-                        value="Man"
-                        checked={formData.gender === "Man"}
+                        value="male" // Храним как "male"
+                        checked={formData.gender === "male"}
                         onChange={handleGenderChange}
                         className={styles["hidden-radio"]}
                       />
-                      <label htmlFor="man" className={styles["gender-label"]}>
+                      <label htmlFor="male" className={styles["gender-label"]}>
                         <svg width="32" height="32">
                           <use
                             xlinkHref={
-                              formData.gender === "Man"
+                              formData.gender === "male"
                                 ? "#icon-touch1"
                                 : "#icon-touch"
                             }
