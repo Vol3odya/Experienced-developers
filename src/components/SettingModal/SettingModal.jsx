@@ -8,6 +8,7 @@ const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const userData = useSelector(selectUser);
+
   console.log("UserData из Redux:", userData); // Проверка
 
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const SettingModal = ({ onClose }) => {
     if (userData && Object.keys(userData).length > 0) {
       setFormData({
         photo: userData.avatarUrl, // || "",
-        gender: userData.gender || "Man", // Значение по умолчанию
+        gender: userData.gender || "male", // Значение по умолчанию
         name: userData.name, // || "",
         email: userData.email, // || "",
         oldPassword: "",
@@ -63,6 +64,11 @@ const SettingModal = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.name || !formData.email) {
+      alert("Name and email are required!");
+      return;
+    }
+
     if (
       formData.newPassword &&
       formData.newPassword !== formData.repeatPassword
@@ -81,7 +87,6 @@ const SettingModal = ({ onClose }) => {
         const avatarData = new FormData();
         avatarData.append("photo", formData.photoFile);
         await dispatch(updateUserAvatar(avatarData)).unwrap();
-        console.log("Avatar updated successfully");
       }
 
       const updatedData = {
@@ -274,18 +279,21 @@ const SettingModal = ({ onClose }) => {
                     <div className={styles["gender-option"]}>
                       <input
                         type="radio"
-                        id="woman"
+                        id="female"
                         name="gender"
-                        value="Woman"
-                        checked={formData.gender === "Woman"}
+                        value="female" // Храним как "female"
+                        checked={formData.gender === "female"}
                         onChange={handleGenderChange}
                         className={styles["hidden-radio"]}
                       />
-                      <label htmlFor="woman" className={styles["gender-label"]}>
+                      <label
+                        htmlFor="female"
+                        className={styles["gender-label"]}
+                      >
                         <svg width="32" height="32">
                           <use
                             xlinkHref={
-                              formData.gender === "Woman"
+                              formData.gender === "female"
                                 ? "#icon-touch1"
                                 : "#icon-touch"
                             }
@@ -299,18 +307,18 @@ const SettingModal = ({ onClose }) => {
                     <div className={styles["gender-option"]}>
                       <input
                         type="radio"
-                        id="man"
+                        id="male"
                         name="gender"
-                        value="Man"
-                        checked={formData.gender === "Man"}
+                        value="male" // Храним как "male"
+                        checked={formData.gender === "male"}
                         onChange={handleGenderChange}
                         className={styles["hidden-radio"]}
                       />
-                      <label htmlFor="man" className={styles["gender-label"]}>
+                      <label htmlFor="male" className={styles["gender-label"]}>
                         <svg width="32" height="32">
                           <use
                             xlinkHref={
-                              formData.gender === "Man"
+                              formData.gender === "male"
                                 ? "#icon-touch1"
                                 : "#icon-touch"
                             }
