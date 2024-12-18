@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProfile } from "../../redux/auth/operations";
+import { updateUser, updateUserAvatar } from "../../redux/user/operations";
+import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
-  const userData = useSelector((state) => state.auth.user);
+  const userData = useSelector(selectUser);
+  console.log("UserData из Redux:", userData); // Проверка
 
   const [formData, setFormData] = useState({
     photo: "",
-    gender: "",
+    gender: "Man",
     name: "",
     email: "",
     oldPassword: "",
@@ -19,8 +21,7 @@ const SettingModal = ({ onClose }) => {
   });
 
   useEffect(() => {
-    console.log("UserData из Redux:", userData); // Проверка
-    if (userData) {
+    if (userData && Object.keys(userData).length > 0) {
       setFormData({
         photo: userData.avatarUrl, // || "",
         gender: userData.gender || "Man", // Значение по умолчанию
@@ -46,17 +47,6 @@ const SettingModal = ({ onClose }) => {
     };
   }, [onClose]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue = ""; // Показывает браузерное предупреждение
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -65,15 +55,14 @@ const SettingModal = ({ onClose }) => {
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const previewURL = URL.createObjectURL(file); // Создаём URL для предварительного просмотра
-      setFormData((prev) => ({ ...prev, photo: previewURL, photoFile: file })); // Сохраняем preview и файл
+      const previewURL = URL.createObjectURL(file);
+      setFormData((prev) => ({ ...prev, photo: previewURL, photoFile: file }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Проверка на совпадение паролей
     if (
       formData.newPassword &&
       formData.newPassword !== formData.repeatPassword
@@ -82,37 +71,40 @@ const SettingModal = ({ onClose }) => {
       return;
     }
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("gender", formData.gender);
-    if (formData.photoFile) {
-      formDataToSend.append("photo", formData.photoFile);
-    }
-    if (formData.oldPassword) {
-      formDataToSend.append("oldPassword", formData.oldPassword);
-      formDataToSend.append("newPassword", formData.newPassword);
-    }
     if (formData.newPassword && formData.newPassword.length < 6) {
       alert("New password must be at least 6 characters long!");
       return;
     }
 
-    dispatch(updateProfile(formDataToSend))
-      .unwrap()
-      .then(() => {
-        alert("Profile updated successfully!");
-        onClose();
-      })
-      .catch((error) => {
-        console.error("Error updating profile:", error);
-        alert("Error updating profile: " + error);
-      });
+    try {
+      if (formData.photoFile) {
+        const avatarData = new FormData();
+        avatarData.append("photo", formData.photoFile);
+        await dispatch(updateUserAvatar(avatarData)).unwrap();
+        console.log("Avatar updated successfully");
+      }
+
+      const updatedData = {
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender,
+        ...(formData.oldPassword && {
+          oldPassword: formData.oldPassword,
+          newPassword: formData.newPassword,
+        }),
+      };
+
+      await dispatch(updateUser(updatedData)).unwrap();
+      alert("Profile updated successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile: " + error.message);
+    }
   };
 
   const handleGenderChange = (e) => {
-    const { value } = e.target;
-    setFormData((prev) => ({ ...prev, gender: value }));
+    setFormData((prev) => ({ ...prev, gender: e.target.value }));
   };
 
   const [passwordVisibility, setPasswordVisibility] = useState({
