@@ -16,7 +16,7 @@ export const signup = createAsyncThunk(
     try {
       const { data } = await axios.post('auth/signup', credentials);
       return {
-        userData: data.data.data,
+        ...data.data.data,
         photo: data.data.photo,
       };
     } catch (error) {
@@ -29,13 +29,19 @@ export const signin = createAsyncThunk(
   'auth/signin',
   async (credentials, thunkApi) => {
     try {
-      const { data } = await axios.post('auth/signin', credentials, {
-        withCredentials: true,
-      });
+      const { data } = await axios.post(
+        'auth/signin',
+        credentials
+        // {
+        // withCredentials: true,
+        // }
+      );
+      // console.log(data);
+
       setAuthHeader(data.data.accessToken);
-      return { accessToken: data.data.accessToken };
+      return data.data.accessToken;
     } catch (error) {
-      return thunkApi.rejectWithValue(error.messege);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -43,6 +49,8 @@ export const signin = createAsyncThunk(
 export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
     const response = await axios.post('/auth/logout');
+    console.log(response.status);
+
     if (response.status === 204) {
       clearAuthHeader();
     }
@@ -58,7 +66,7 @@ export const refreshUser = createAsyncThunk(
     setAuthHeader(reduxState.auth.token);
     try {
       const { data } = await axios.get('auth/refreshSession');
-      return { accessToken: data.data.accessToken };
+      return data.data.accessToken;
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
