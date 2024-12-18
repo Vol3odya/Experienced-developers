@@ -1,6 +1,10 @@
 import css from "../TodayListModal/TodayListModal.module.css";
 import { IoMdClose } from "react-icons/io";
+<<<<<<< Updated upstream
 import { addWater } from "../../redux/water/operations.js";
+=======
+
+>>>>>>> Stashed changes
 import { Field, Form, Formik } from "formik";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -62,6 +66,7 @@ export default function TodayListModal({ closeModal }) {
       amount: amount,
       date: forDate,
     };
+<<<<<<< Updated upstream
     dispatch(addWater(newNote));
     console.log(newNote);
   };
@@ -99,6 +104,62 @@ export default function TodayListModal({ closeModal }) {
                 onClick={decrementAmount}
               >
                 <HiMinus size={24} />
+=======
+    // dispatch(addWater(newNote));
+    console.log(newNote);
+
+    // буде запит на додавання води post
+  };
+
+  // const handleSubmit = (values) => {
+  //   const newNote = {
+  //     date: values.date,
+  //     waterVolume: values.waterVolume,
+  //   };
+  //   dispatch(addWater(newNote));
+  //   onClose();
+  // };
+
+  // onSubmit={(values) => {
+  //   dispatch(addWater(values));
+  //   const notify = () => toast("Successfully added!");
+  //   notify();
+  //   onClose();
+  // }}
+  // validationSchema={schema}
+
+  // const handleBackdropClick = (event) => {
+  //   if (event.target === event.currentTarget) {
+  //     closeModal();
+  //   }
+  // };
+
+  return (
+    <div className={css.backdrop}>
+      <Formik initialValues={{ amount: 0, time }} onSubmit={handleSubmit}>
+        <Form>
+          <div className={css.container}>
+            <div className={css.iconclose}>
+              <h2 className={css.title}>App water</h2>
+              <button
+                type="button"
+                className={css.closeIcon}
+                onClick={closeModal}
+              >
+                <IoMdClose />
+              </button>
+            </div>
+            <p className={css.text}>Choose a value:</p>
+            <p>Amount of water:</p>
+            <div className={css.amountbox}>
+              <button type="button" onClick={incrementAmount}>
+                +
+              </button>
+
+              <div> {amount}ml</div>
+              <button type="button" onClick={decrementAmount}>
+                -
+>>>>>>> Stashed changes
               </button>
             </div>
 
@@ -123,7 +184,11 @@ export default function TodayListModal({ closeModal }) {
               onChange={handleChangeAmount}
             />
             <div className={css.flexbox}>
+<<<<<<< Updated upstream
               <p className={css.result}>{amount || 0}ml</p>
+=======
+              <p>{amount || 0}ml</p>
+>>>>>>> Stashed changes
               <button className={css.saveButton} type="submit">
                 Save
               </button>{" "}
