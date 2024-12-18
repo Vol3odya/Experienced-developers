@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProfile } from "../../redux/auth/operations";
+import { updateUser } from "../../redux/user/operations";
 import {selectUser} from "../../redux/auth/selectors"
 import styles from "./SettingModal.module.css";
 
@@ -99,7 +99,7 @@ console.log("UserData из Redux:", userData); // Проверка
       return;
     }
 
-    dispatch(updateProfile(formDataToSend))
+    dispatch(updateUser(formDataToSend))
       .unwrap()
       .then(() => {
         alert("Profile updated successfully!");
