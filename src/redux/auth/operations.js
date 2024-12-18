@@ -64,16 +64,6 @@ export const refreshUser = createAsyncThunk(
     },
   }
 );
-export const updateProfile = createAsyncThunk(
-  "auth/updateProfile",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.patch("/profile/update", formData);
-      console.log("Server Response:", data);
 
-      return data.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data.message || "Update failed");
-    }
-  }
-);
+
+

@@ -4,8 +4,8 @@ import {
   logout,
   refreshUser,
   signup,
-  updateProfile,
 } from "./operations";
+
 
 const initialState = {
   user: {
@@ -19,7 +19,7 @@ const initialState = {
   isLoggedIn: false,
   isLoading: false,
   isRefresh: false,
-  isError: false,
+  isError: null,
 };
 
 const authSlice = createSlice({
@@ -29,13 +29,15 @@ const authSlice = createSlice({
     builder
       .addCase(signup.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        // state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isLoading = false;
+        state.isError = null;
       })
 
       .addCase(signin.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
       })
       .addCase(logout.fulfilled, () => {
@@ -45,24 +47,16 @@ const authSlice = createSlice({
         state.isRefresh = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.token = action.payload.accessToken;
+        // state.user = action.payload;
         state.isRefresh = false;
         state.isLoggedIn = true;
       })
-      .addCase(refreshUser.rejected, () => {})
-      .addCase(updateProfile.pending, (state) => {
-        state.isLoading = true;
-        state.isError = false;
-      })
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        state.user = { ...state.user, ...action.payload }; // Обновляем данные пользователя
-        state.isLoading = false;
-      })
-      .addCase(updateProfile.rejected, (state, action) => {
-        state.isLoading = false;
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefresh = false;
         state.isError = action.payload;
       })
-      .addMatcher(isAnyOf(/*register.pending,*/ signin.pending), (state) => {
+      .addMatcher(isAnyOf(signup.pending, signin.pending), (state) => {
         state.isLoading = true;
       })
       .addMatcher(
@@ -75,4 +69,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export const  authReducer = authSlice.reducer;
