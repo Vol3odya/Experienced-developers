@@ -1,0 +1,425 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: auto;
+}
+
+.modal-content {
+  position: absolute;
+  left: 50%;
+  top: 40px;
+  transform: translate(-50%);
+  color: rgb(47, 47, 47);
+  background-color: white;
+  width: 280px;
+  padding: 32px 12px;
+  border-radius: 10px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  color: var(--Primery-Color-Black, #2f2f2f);
+  font-family: Roboto, sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button svg {
+  width: 24px;
+  height: 24px;
+  stroke: #407bff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.save-button {
+  padding: 10px 20px;
+  background-color: #407bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.save-button:hover {
+  background-color: #305fcb;
+}
+
+.photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.photo-label {
+  color: var(--Primery-Color-Black, #2f2f2f);
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.photo-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.photo-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: lightgray;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.photo-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.photo-upload svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--Primery-Color-Blue, #407bff);
+}
+
+.upload-text {
+  color: var(--Primery-Color-Blue, #407bff);
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  cursor: pointer;
+}
+
+.hidden-input {
+  display: none;
+}
+.photo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Блок gender-section */
+.gender-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.gender-label {
+  color: var(--Primery-Color-Black, #2f2f2f);
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 111.111% */
+}
+
+.gender-option label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  color: var(--Primery-Color-Black, #2f2f2f);
+}
+
+.gender-options {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.gender-option svg {
+  width: 14px;
+  height: 14px;
+}
+.hidden-radio {
+  display: none;
+}
+
+/* Контейнер секции */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Группа для каждого инпута и лейбла */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Лейбл (Your name и E-mail) */
+.input-label {
+  color: var(--Primery-Color-Black, #2f2f2f);
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 111.111% */
+}
+
+/* Поле ввода */
+.input-field {
+  width: 100%;
+  padding: 12px 10px;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  color: var(--Primery-Color-Blue, #407bff);
+  border-radius: 6px;
+  border: 1px solid #d7e3ff;
+  outline: none;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+/* Стиль для фокуса */
+.input-field:focus {
+  border-color: #407bff;
+  box-shadow: 0 0 5px rgba(64, 123, 255, 0.3);
+}
+
+.password-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-label {
+  color: var(--Primery-Color-Black, #2f2f2f);
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.password-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.password-input-label {
+  color: var(--Primery-Color-Black, #2f2f2f);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.password-section {
+  margin-top: 24px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 12px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--Secondary-color-5, #d7e3ff);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--Secondary-color-4, #407bff);
+  line-height: 20px;
+  outline: none;
+  background-color: #fff;
+}
+
+.password-input::placeholder {
+  color: var(--Secondary-color-4, #9ebbff);
+}
+
+.password-input:focus {
+  border-color: #407bff;
+  box-shadow: 0 0 5px rgba(64, 123, 255, 0.3);
+}
+
+.visibility-button {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.visibility-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.visibility-button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.save-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 30px;
+  gap: 10px;
+  border-radius: 10px;
+
+  background: var(--Primery-Color-Blue, #407bff);
+  box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
+  color: var(--Primery-Color-White, #fff);
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  box-sizing: border-box;
+  width: 100%;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.save-button:hover {
+  background: #305fcb;
+  box-shadow: 0px 4px 10px 0px rgba(64, 123, 255, 0.5);
+}
+
+.save-button:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+.save-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/*----------------------TABLET------------------------*/
+
+/* Планшет (768px и больше) */
+@media (min-width: 768px) {
+  .modal-content {
+    width: 704px;
+    padding: 32px 24px;
+  }
+
+  .input-section {
+    width: 372px;
+  }
+  .password-section {
+    width: 372px;
+  }
+  .save-button {
+    display: flex;
+
+    width: 160px;
+
+    padding: 10px 30px;
+    font-size: 18px;
+    margin-right: 0;
+    margin-left: auto;
+  }
+}
+
+/*---------------------DESKTOP---------------------*/
+
+/* Десктоп (1440px и больше) */
+@media (min-width: 1440px) {
+  .modal-content {
+    width: 1008px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .right-column {
+    flex: 1;
+  }
+  .gender-section {
+    margin-bottom: 54px;
+    width: 392px;
+  }
+}
