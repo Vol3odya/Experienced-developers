@@ -164,18 +164,6 @@
     color: #2f2f2f;
 }
 
-.text-value {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 1.11;
-}
-
-
-
-
-
-
-
 .saveButton {
   border-radius: 10px;
   padding: 8px 30px;
@@ -194,7 +182,6 @@
   margin-right: auto;
   display: block;
 }
-
   
 
 

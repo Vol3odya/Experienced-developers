@@ -8,6 +8,7 @@ import { HiMinus } from "react-icons/hi2";
 import { HiPlus } from "react-icons/hi";
 
 export default function TodayListModal({ closeModal }) {
+
   const [amount, setAmount] = useState(50);
   const [time, setTime] = useState("");
 
@@ -161,3 +162,4 @@ export default function TodayListModal({ closeModal }) {
     </div>
   );
 }
+
