@@ -1,10 +1,17 @@
-// import css from "../TodayListModal/TodayListModal.module.css";
-import { Form, Formik } from "formik";
+import css from "../TodayListModal/TodayListModal.module.css";
+import { IoMdClose } from "react-icons/io";
+import { addWater } from "../../redux/water/operations.js";
+import { Field, Form, Formik } from "formik";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { HiMinus } from "react-icons/hi2";
+import { HiPlus } from "react-icons/hi";
 
-export default function AddWaterModal() {
-  const [amount, setAmount] = useState(0);
+export default function TodayListModal({ closeModal }) {
+  const [amount, setAmount] = useState(50);
   const [time, setTime] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const now = new Date();
@@ -15,7 +22,7 @@ export default function AddWaterModal() {
   }, []);
 
   const decrementAmount = () => {
-    setAmount((prev) => Math.max(prev - 50, 0));
+    setAmount((prev) => Math.max(prev - 50, 50));
   };
 
   const incrementAmount = () => {
@@ -34,6 +41,7 @@ export default function AddWaterModal() {
     timeFormat.test(time);
   }
 
+  
   function handleChangeAmount(e) {
     const value = e.target.value;
     const amountFormat = /^[0-9]*$/;
@@ -41,47 +49,115 @@ export default function AddWaterModal() {
       !amountFormat.test(value) || value === "" ? "" : Number(value);
     setAmount(inputValue);
   }
-  const handleSubmit = (value, actions) => {
-    console.log(value);
-    actions.resetForm();
-    // буде запит на додавання води post
+
+  const handleBlur = () => {
+    const roundedAmount = Math.round(amount / 50) * 50;
+    const clampedAmount = Math.min(roundedAmount, 5000);
+    setAmount(clampedAmount);
+  };
+
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, "0");
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const year = String(now.getFullYear());
+
+  const forDate = `${day}.${month}.${year}`;
+
+  const handleSubmit = () => {
+    const newNote = {
+      time: time,
+      amount: amount,
+      date: forDate,
+    };
+    dispatch(addWater(newNote));
+    console.log(newNote);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeModal]);
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      closeModal();
+    }
   };
 
   return (
-    <Formik initialValues={{ amount: 0, time }} onSubmit={handleSubmit}>
-      <Form>
-        <div>
-          <p>Amount of water:</p>
-        </div>
+    <div className={css.backdrop} onClick={handleBackdropClick}>
+      <Formik initialValues={{ amount: 50, time }} onSubmit={handleSubmit}>
+        <Form>
+          <div className={css.container}>
+            <div className={css.iconclose}>
+              <h2 className={css.title}>App water</h2>
+              <button
+                type="button"
+                className={css.closeIcon}
+                onClick={closeModal}
+              >
+                <IoMdClose size={24} />
+              </button>
+            </div>
+            <p className={css.text}>Choose a value:</p>
+            <p className={css.texttwo}>Amount of water:</p>
+            <div className={css.amountbox}>
+              <button
+                type="button"
+                className={css.minusIcon}
+                onClick={decrementAmount}
+              >
+                <HiMinus size={24} />
+              </button>
+              
+              <div className={css.result}> {amount}ml</div>
+              
+              <button
+                type="button"
+                className={css.plusIcon}
+                onClick={incrementAmount}
+              >
+                <HiPlus size={13.5} />
+              </button>
+            </div>
 
-        <button type="button" onClick={incrementAmount}>
-          +
-        </button>
-        <div> {amount}ml</div>
-        <button type="button" onClick={decrementAmount}>
-          -
-        </button>
-        <div> Recording time:</div>
-        <input
-          id="time"
-          name="time"
-          value={time}
-          onChange={handleTimeChange}
-          placeholder="hh:mm"
-        />
-        <div>Enter the value of the water used:</div>
-        <input
-          type="number"
-          name="amount"
-          max={5000}
-          value={amount}
-          onChange={handleChangeAmount}
-        />
-        <div>
-          <p>{amount}ml</p>
-          <button type="submit">Save</button>{" "}
-        </div>
-      </Form>
-    </Formik>
+            <label className={css.recording}> Recording time:</label>
+            <Field
+              className={css.input}
+              id="time"
+              name="time"
+              value={time}
+              onChange={handleTimeChange}
+              placeholder="hh:mm"
+            />
+            <label className={css.enter}>
+              Enter the value of the water used:
+            </label>
+            <Field
+              className={css.input}
+              type="number"
+              name="amount"
+              max={5000}
+              value={amount}
+              onChange={handleChangeAmount}
+              onBlur={handleBlur}
+            />
+            <div className={css.flexbox}>
+              <p className={css.result}>{amount || 0}ml</p>
+              <button className={css.saveButton} type="submit">
+                Save
+              </button>{" "}
+            </div>
+          </div>
+        </Form>
+      </Formik>
+    </div>
   );
 }
