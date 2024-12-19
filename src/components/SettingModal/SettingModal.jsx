@@ -1,30 +1,37 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { updateUser, updateUserAvatar } from "../../redux/user/operations";
+import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose }) => {
-  // Получаем userData из Redux
-  const userData = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
-  // Иницилизация formData после получения userData
+  const userData = useSelector(selectUser);
+
+  console.log("UserData из Redux:", userData); // Проверка
+
   const [formData, setFormData] = useState({
     photo: "",
-    gender: "",
+    gender: "Man",
     name: "",
     email: "",
-    oldPassword: "",
+    outdatePassword: "",
     newPassword: "",
     repeatPassword: "",
   });
 
   useEffect(() => {
-    if (userData) {
+
+    if (userData && Object.keys(userData).length > 0) {
+
       setFormData({
-        photo: userData.photo || "",
-        gender: userData.gender || "",
-        name: userData.name || "",
-        email: userData.email || "",
-        oldPassword: "",
+        photo: userData.avatarUrl, // || "",
+        gender: userData.gender || "male", // Значение по умолчанию
+        name: userData.name, // || "",
+        email: userData.email, // || "",
+        outdatePassword: "",
         newPassword: "",
         repeatPassword: "",
       });
@@ -34,12 +41,11 @@ const SettingModal = ({ onClose }) => {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
-        onClose(); // Закрывает модалку
+        onClose();
       }
     };
     window.addEventListener("keydown", handleEscape);
 
-    // Очистка обработчика при размонтировании компонента
     return () => {
       window.removeEventListener("keydown", handleEscape);
     };
@@ -53,50 +59,68 @@ const SettingModal = ({ onClose }) => {
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setFormData({ ...formData, photo: reader.result });
-      reader.readAsDataURL(file);
+      const previewURL = URL.createObjectURL(file);
+      setFormData((prev) => ({ ...prev, photo: previewURL, photoFile: file }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(
-        "https://tracker-of-water-xk7t.onrender.com/update-user",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+    if (!formData.name || !formData.email) {
+      alert("Name and email are required!");
+      return;
+    }
 
-      if (!response.ok) {
-        throw new Error("Помилка оновлення даних");
+    if (
+      formData.newPassword &&
+      formData.newPassword !== formData.repeatPassword
+    ) {
+      alert("New passwords do not match!");
+      return;
+    }
+
+    if (formData.newPassword && formData.newPassword.length < 6) {
+      alert("New password must be at least 6 characters long!");
+      return;
+    }
+
+    try {
+      if (formData.photoFile) {
+        const avatarData = new FormData();
+        avatarData.append("photo", formData.photoFile);
+        await dispatch(updateUserAvatar(avatarData)).unwrap();
       }
 
-      alert("Дані успішно оновлено!");
+      const updatedData = console.log("Отправляемые данные:", {
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender,
+        ...(formData.outdatePassword && {
+          outdatePassword: formData.outdatePassword,
+          newPassword: formData.newPassword,
+        }),
+      });
+
+      await dispatch(updateUser(updatedData)).unwrap();
+      alert("Profile updated successfully!");
+      onClose();
     } catch (error) {
-      console.error(error.message);
-      alert("Помилка: " + error.message);
+      console.error("Error updating profile:", error);
+      alert("Error updating profile: " + error.message);
     }
   };
 
   const handleGenderChange = (e) => {
-    const { value } = e.target;
-    setFormData({ ...formData, gender: value });
+    setFormData((prev) => ({ ...prev, gender: e.target.value }));
   };
 
   const [passwordVisibility, setPasswordVisibility] = useState({
-    oldPassword: false,
+    outdatePassword: false,
     newPassword: false,
     repeatPassword: false,
   });
 
-  // Обработчик видимости пароля
   const togglePasswordVisibility = (field) => {
     setPasswordVisibility((prev) => ({
       ...prev,
@@ -258,18 +282,21 @@ const SettingModal = ({ onClose }) => {
                     <div className={styles["gender-option"]}>
                       <input
                         type="radio"
-                        id="woman"
+                        id="female"
                         name="gender"
-                        value="Woman"
-                        checked={formData.gender === "Woman"}
+                        value="female" // Храним как "female"
+                        checked={formData.gender === "female"}
                         onChange={handleGenderChange}
                         className={styles["hidden-radio"]}
                       />
-                      <label htmlFor="woman" className={styles["gender-label"]}>
+                      <label
+                        htmlFor="female"
+                        className={styles["gender-label"]}
+                      >
                         <svg width="32" height="32">
                           <use
                             xlinkHref={
-                              formData.gender === "Woman"
+                              formData.gender === "female"
                                 ? "#icon-touch1"
                                 : "#icon-touch"
                             }
@@ -283,18 +310,18 @@ const SettingModal = ({ onClose }) => {
                     <div className={styles["gender-option"]}>
                       <input
                         type="radio"
-                        id="man"
+                        id="male"
                         name="gender"
-                        value="Man"
-                        checked={formData.gender === "Man"}
+                        value="male" // Храним как "male"
+                        checked={formData.gender === "male"}
                         onChange={handleGenderChange}
                         className={styles["hidden-radio"]}
                       />
-                      <label htmlFor="man" className={styles["gender-label"]}>
+                      <label htmlFor="male" className={styles["gender-label"]}>
                         <svg width="32" height="32">
                           <use
                             xlinkHref={
-                              formData.gender === "Man"
+                              formData.gender === "male"
                                 ? "#icon-touch1"
                                 : "#icon-touch"
                             }
@@ -349,14 +376,14 @@ const SettingModal = ({ onClose }) => {
                 <div className={styles["password-section"]}>
                   <label className={styles["section-label"]}>Password</label>
 
-                  {["oldPassword", "newPassword", "repeatPassword"].map(
+                  {["outdatePassword", "newPassword", "repeatPassword"].map(
                     (field) => (
                       <div className={styles["password-group"]} key={field}>
                         <label
                           htmlFor={field}
                           className={styles["password-input-label"]}
                         >
-                          {field === "oldPassword"
+                          {field === "outdatePassword"
                             ? "Outdated password:"
                             : field === "newPassword"
                             ? "New Password:"

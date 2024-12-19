@@ -207,6 +207,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-top: 24px;
 }
 
 /* Группа для каждого инпута и лейбла */
@@ -282,6 +283,10 @@
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.password-section {
+  margin-top: 24px;
 }
 
 .password-input {
@@ -405,16 +410,13 @@
 
   .form-layout {
     display: flex;
-
+    justify-content: space-between;
     align-items: flex-start;
     gap: 24px;
   }
-  .left-column,
+
   .right-column {
     flex: 1;
-  }
-  .right-column {
-    margin-top: 24px;
   }
   .gender-section {
     margin-bottom: 54px;

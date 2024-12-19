@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+  import { createSlice } from '@reduxjs/toolkit';
 import { getWaterFromToday } from './operations.js';
 
 const initialState = {
@@ -25,8 +25,6 @@ const slice = createSlice({
       .addCase(getWaterFromToday.fulfilled, (state, action) => {
         state.items = action.payload;
         state.loading = false;
-        state.amount = action.payload.numberOfValue;
-        state.percentFromNorm = action.payload.curDaylyNorm;
       })
       .addCase(getWaterFromToday.rejected, (state) => {
         state.error = true;

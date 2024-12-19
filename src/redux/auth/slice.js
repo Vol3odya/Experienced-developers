@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { signin, logout, refreshUser, signup } from './operations.js';
+import { signin, logout, refreshUser, signup } from './operations';
 
 const initialState = {
   user: {
@@ -22,14 +22,14 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signup.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = action.payload;
         state.isLoggedIn = true;
+        state.isLoading = false;
+        state.isError = null;
       })
 
       .addCase(signin.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload;
         state.isLoggedIn = true;
       })
       .addCase(logout.fulfilled, () => {
@@ -39,9 +39,13 @@ const authSlice = createSlice({
         state.isRefresh = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.token = action.payload;
         state.isRefresh = false;
         state.isLoggedIn = true;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefresh = false;
+        state.isError = action.payload;
       })
       .addMatcher(isAnyOf(signup.pending, signin.pending), (state) => {
         state.isLoading = true;
@@ -56,4 +60,4 @@ const authSlice = createSlice({
   },
 });
 
-export const  authReducer = authSlice.reducer;
+export const authReducer = authSlice.reducer;
