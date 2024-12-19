@@ -17,6 +17,7 @@ export const signup = createAsyncThunk(
       const { data } = await axios.post('auth/signup', credentials);
       return {
         ...data.data.data,
+        accessToken: data.data.accessToken,
         photo: data.data.photo,
       };
     } catch (error) {
@@ -66,7 +67,10 @@ export const refreshUser = createAsyncThunk(
     setAuthHeader(reduxState.auth.token);
     try {
       const { data } = await axios.get('auth/refreshSession');
-      return data.data.accessToken;
+      return {
+        ...data.data,
+        accessToken: data.data.accessToken,
+      };
     } catch (error) {
       return thunkApi.rejectWithValue(error.messege);
     }
