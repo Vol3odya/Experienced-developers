@@ -51,7 +51,6 @@ export const signin = createAsyncThunk(
 export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
     const response = await axios.post('/auth/logout');
-    console.log(response.status);
 
     if (response.status === 204) {
       clearAuthHeader();
@@ -61,20 +60,17 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   }
 });
 
-export const refreshUser = createAsyncThunk(
-  'auth/refresh',
-  async (_, thunkApi) => {
+export const refreshUser = createAsyncThunk('signin/refresh', async (_, thunkApi) => {
     const reduxState = thunkApi.getState();
     setAuthHeader(reduxState.auth.token);
     try {
-      const { data } = await axios.get('auth/refresh');
-      console.log(data);
+      const { data } = await axios.post('auth/refresh');
       return {
         ...data.data,
         accessToken: data.data.accessToken,
       };
     } catch (error) {
-      return thunkApi.rejectWithValue(error.messege);
+      return thunkApi.rejectWithValue(error.message);
     }
   },
   {
