@@ -1,4 +1,6 @@
 .container {
+  margin-top: 24px;
+
   display: inline-flex;
   padding: 8px 20px;
   flex-direction: column;
@@ -43,16 +45,33 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 125% */
-  
 }
 
 .edit:hover {
-  color: #FF9D43;
+  color: #ff9d43;
+}
+
+.image {
+  margin: 8px 0px;
 }
 
 @media (min-width: 768px) {
+  .wrapper {
+    position: relative;
+  }
+  .container {
+    margin-top: 40px;
+  }
+
   .liters {
     font-size: 24px;
     line-height: 24px;
+  }
+
+  .wrapper {
+  }
+
+  .image {
+    margin: -76px auto 8px auto;
   }
 }

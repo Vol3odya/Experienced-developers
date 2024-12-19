@@ -1,7 +1,3 @@
-.image {
-  margin: 20px 0px;
-}
-
 .header {
   color: var(--Primery-Color-Blue, #407bff);
   text-align: center;
@@ -17,6 +13,7 @@
 
 .button {
   margin-top: 16px;
+  margin-bottom: 40px;
 
   display: inline-flex;
   padding: 6px 76px;
@@ -41,4 +38,17 @@
 
 .btnIcon {
   margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .shkala {
+    flex-grow: 1;
+  }
+  .button {
+    flex-grow: 1;
+  }
 }
