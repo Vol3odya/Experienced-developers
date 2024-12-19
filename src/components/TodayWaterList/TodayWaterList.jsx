@@ -1,17 +1,13 @@
-<<<<<<< Updated upstream
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 import { useState } from "react";
 import TodayListModal from "../TodayListModal/TodayListModal";
 import css from "../TodayListModal/TodayListModal.module.css";
-=======
+
 // import { useEffect } from "react";
 // import { useDispatch } from "react-redux";
 // import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
-import { useState } from "react";
-import TodayListModal from "../TodayListModal/TodayListModal";
->>>>>>> Stashed changes
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();

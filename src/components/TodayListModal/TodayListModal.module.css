@@ -87,7 +87,6 @@
 }
 
 .saveButton {
-<<<<<<< Updated upstream
   border-radius: 10px;
   padding: 8px 30px;
   width: 256px;
@@ -104,15 +103,6 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
-=======
-  border: none;
-  display: block;
-  margin: 0 auto;
-  background-color: #407bff;
-  padding: 8px 30px;
-  width: 100%;
-  cursor: pointer;
->>>>>>> Stashed changes
 }
 
 .input {
@@ -124,7 +114,6 @@
   border-radius: 10px;
 }
 
-<<<<<<< Updated upstream
 .plusIcon {
   color: #407bff;
   width: 44px;
@@ -161,8 +150,6 @@
   color: #407bff;
 }
 
-=======
->>>>>>> Stashed changes
 @media (min-width: 768px) {
   .flexbox {
     display: flex;
