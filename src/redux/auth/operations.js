@@ -15,8 +15,9 @@ export const signup = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const { data } = await axios.post('auth/signup', credentials);
+      setAuthHeader(data.data.accessToken);
       return {
-        ...data.data.data,
+        ...data.data,
         accessToken: data.data.accessToken,
         photo: data.data.photo,
       };
@@ -66,7 +67,8 @@ export const refreshUser = createAsyncThunk(
     const reduxState = thunkApi.getState();
     setAuthHeader(reduxState.auth.token);
     try {
-      const { data } = await axios.get('auth/refreshSession');
+      const { data } = await axios.get('auth/refresh');
+      console.log(data);
       return {
         ...data.data,
         accessToken: data.data.accessToken,

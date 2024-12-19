@@ -24,7 +24,7 @@ export default function App() {
   const isRefreshing = useSelector(selectIsRefresh);
 
   useEffect(() => {
-    dispatch(refreshUser);
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return isRefreshing ? (
