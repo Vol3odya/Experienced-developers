@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import { updateUser, updateUserAvatar } from "../../redux/user/operations";
 import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
@@ -16,7 +17,7 @@ const SettingModal = ({ onClose }) => {
     gender: "Man",
     name: "",
     email: "",
-    oldPassword: "",
+    outdatePassword: "",
     newPassword: "",
     repeatPassword: "",
   });
@@ -28,7 +29,7 @@ const SettingModal = ({ onClose }) => {
         gender: userData.gender || "male", // Значение по умолчанию
         name: userData.name, // || "",
         email: userData.email, // || "",
-        oldPassword: "",
+        outdatePassword: "",
         newPassword: "",
         repeatPassword: "",
       });
@@ -89,15 +90,15 @@ const SettingModal = ({ onClose }) => {
         await dispatch(updateUserAvatar(avatarData)).unwrap();
       }
 
-      const updatedData = {
+      const updatedData = console.log("Отправляемые данные:", {
         name: formData.name,
         email: formData.email,
         gender: formData.gender,
-        ...(formData.oldPassword && {
-          oldPassword: formData.oldPassword,
+        ...(formData.outdatePassword && {
+          outdatePassword: formData.outdatePassword,
           newPassword: formData.newPassword,
         }),
-      };
+      });
 
       await dispatch(updateUser(updatedData)).unwrap();
       alert("Profile updated successfully!");
@@ -113,7 +114,7 @@ const SettingModal = ({ onClose }) => {
   };
 
   const [passwordVisibility, setPasswordVisibility] = useState({
-    oldPassword: false,
+    outdatePassword: false,
     newPassword: false,
     repeatPassword: false,
   });
@@ -373,14 +374,14 @@ const SettingModal = ({ onClose }) => {
                 <div className={styles["password-section"]}>
                   <label className={styles["section-label"]}>Password</label>
 
-                  {["oldPassword", "newPassword", "repeatPassword"].map(
+                  {["outdatePassword", "newPassword", "repeatPassword"].map(
                     (field) => (
                       <div className={styles["password-group"]} key={field}>
                         <label
                           htmlFor={field}
                           className={styles["password-input-label"]}
                         >
-                          {field === "oldPassword"
+                          {field === "outdatePassword"
                             ? "Outdated password:"
                             : field === "newPassword"
                             ? "New Password:"
