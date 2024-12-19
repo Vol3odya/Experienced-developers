@@ -3,7 +3,6 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import css from "./App.module.css";
 
 import SharedLayout from "../SharedLayout/SharedLayout";
@@ -18,9 +17,6 @@ const WelcomePage = lazy(() => import("../../pages/WelcomePage/WelcomePage"));
 const SigninPage = lazy(() => import("../../pages/SigninPage/SigninPage"));
 const SignupPage = lazy(() => import("../../pages/SignupPage/SignupPage"));
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
-
-
-
 
 export default function App() {
   const [count, setCount] = useState(0);
