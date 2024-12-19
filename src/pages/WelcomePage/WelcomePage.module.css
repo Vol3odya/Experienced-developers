@@ -24,3 +24,44 @@
     background-size: cover;
   }
 }
+
+@media (min-width: 768px) {
+  .background {
+    background-image: url(../../images/WelcomePage/tablet/background-main-page.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 50px;
+    background-attachment: fixed;
+  }
+
+  .wrap {
+    justify-content: flex-start;
+  }
+}
+@media (min-width: 768px) and (min-resolution: 192dpi),
+  (min-width: 768px) and (min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url(../../images/WelcomePage/tablet/background-main-page@2x.png);
+    background-size: contain;
+    background-size: cover;
+  }
+}
+
+@media (min-width: 1440px) {
+  .background {
+    background-image: url(../../images/WelcomePage/desktop/background-element-main-page.png),
+      url(../../images/WelcomePage/desktop/background-main-page.png);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 90.8vh;
+  }
+}
+@media (min-width: 1440px) and (min-resolution: 192dpi),
+  (min-width: 1440px) and (min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url(../../images/WelcomePage/desktop/background-element-main-page@2x.png),
+      url(../../images/WelcomePage/desktop/background-main-page@2x.png);
+  }
+}
