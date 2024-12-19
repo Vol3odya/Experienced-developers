@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getMonthWater } from "./operations.js";
-
+import { getMonthWater } from './operations.js';
 
 const initialState = {
   items: [
@@ -26,16 +25,12 @@ const slice = createSlice({
       })
       .addCase(getMonthWater.fulfilled, (state, action) => {
         state.items = action.payload;
-        state.date = action.payload.items.date;
-        state.daylyNorma = action.payload.items.daylyNorma;
-        state.servings = action.payload.items.servings;
-        state.percentFromDailyNorma = action.payload.items.percentFromDailyNorma;
+        state.error = null;
         state.loading = false;
       })
       .addCase(getMonthWater.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
-      
       });
   },
 });

@@ -23,14 +23,18 @@ const authSlice = createSlice({
     builder
       .addCase(signup.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.avatarUrl = action.payload.photo;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
         state.isLoading = false;
         state.isError = null;
       })
 
       .addCase(signin.fulfilled, (state, action) => {
+        state.isRefresh = true;
         state.token = action.payload;
         state.isLoggedIn = true;
+        state.isLoading = false;
       })
       .addCase(logout.fulfilled, () => {
         return initialState;
@@ -39,7 +43,8 @@ const authSlice = createSlice({
         state.isRefresh = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.token = action.payload;
+        state.user = action.payload;
+        state.token = action.payload.token;
         state.isRefresh = false;
         state.isLoggedIn = true;
       })
