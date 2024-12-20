@@ -151,7 +151,7 @@ export default function TodayListModal({ closeModal }) {
               onBlur={handleBlur}
             />
             <div className={css.flexbox}>
-              <p className={css.result}>{amount || 0}ml</p>
+              <p className={css.result}>{amount || 50}ml</p>
               <button className={css.saveButton} type="submit">
                 Save
               </button>{" "}
