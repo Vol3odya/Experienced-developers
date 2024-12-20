@@ -8,7 +8,6 @@ import { HiMinus } from "react-icons/hi2";
 import { HiPlus } from "react-icons/hi";
 
 export default function TodayListModal({ closeModal }) {
-
   const [amount, setAmount] = useState(50);
   const [time, setTime] = useState("");
 
@@ -42,7 +41,6 @@ export default function TodayListModal({ closeModal }) {
     timeFormat.test(time);
   }
 
-  
   function handleChangeAmount(e) {
     const value = e.target.value;
     const amountFormat = /^[0-9]*$/;
@@ -57,22 +55,30 @@ export default function TodayListModal({ closeModal }) {
     setAmount(clampedAmount);
   };
 
-  const now = new Date();
-  const day = String(now.getDate()).padStart(2, "0");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const year = String(now.getFullYear());
-
-  const forDate = `${day}.${month}.${year}`;
-
-  const handleSubmit = () => {
-    const newNote = {
-      time: time,
-      amount: amount,
-      date: forDate,
-    };
-    dispatch(addWater(newNote));
-    console.log(newNote);
+  const generateTimeOptions = () => {
+    const options = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 5) {
+        const hourFormatted = hour < 10 ? `0${hour}` : hour;
+        const minuteFormatted = minute < 10 ? `0${minute}` : minute;
+        options.push(`${hourFormatted}:${minuteFormatted}`);
+      }
+    }
+    return options;
   };
+
+  useEffect(() => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const roundedMinute = Math.floor(currentMinute / 5) * 5; // округлюємо до найближчих 5 хвилин
+    const timeString = `${currentHour < 10 ? `0${currentHour}` : currentHour}:${
+      roundedMinute < 10 ? `0${roundedMinute}` : roundedMinute
+    }`;
+    setTime(timeString);
+  }, []);
+
+  const timeOptions = generateTimeOptions();
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -90,6 +96,10 @@ export default function TodayListModal({ closeModal }) {
     if (event.target === event.currentTarget) {
       closeModal();
     }
+  };
+
+  const handleSubmit = () => {
+    dispatch(addWater({ waterVolume: amount, date: time })); // Відправка запиту на бекенд
   };
 
   return (
@@ -117,9 +127,9 @@ export default function TodayListModal({ closeModal }) {
               >
                 <HiMinus size={24} />
               </button>
-              
+
               <div className={css.result}> {amount}ml</div>
-              
+
               <button
                 type="button"
                 className={css.plusIcon}
@@ -130,14 +140,20 @@ export default function TodayListModal({ closeModal }) {
             </div>
 
             <label className={css.recording}> Recording time:</label>
-            <Field
+            <select
               className={css.input}
               id="time"
               name="time"
               value={time}
-              onChange={handleTimeChange}
               placeholder="hh:mm"
-            />
+              onChange={handleTimeChange}
+            >
+              {timeOptions.map((timeOption) => (
+                <option key={timeOption} value={timeOption}>
+                  {timeOption}
+                </option>
+              ))}
+            </select>
             <label className={css.enter}>
               Enter the value of the water used:
             </label>
@@ -151,10 +167,10 @@ export default function TodayListModal({ closeModal }) {
               onBlur={handleBlur}
             />
             <div className={css.flexbox}>
-              <p className={css.result}>{amount || 50}ml</p>
+              <p className={css.resulttwo}>{amount || 0}ml</p>
               <button className={css.saveButton} type="submit">
                 Save
-              </button>{" "}
+              </button>
             </div>
           </div>
         </Form>
@@ -162,4 +178,3 @@ export default function TodayListModal({ closeModal }) {
     </div>
   );
 }
-

@@ -67,7 +67,6 @@ export const refreshUser = createAsyncThunk(
     setAuthHeader(reduxState.auth.token);
   try {
       const { data } = await axios.get('users/current');
-      console.log("22222", data.data);
       return {
         user: { ...data.data },
         accessToken: data.data.accessToken,
