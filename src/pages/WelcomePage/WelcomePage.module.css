@@ -47,7 +47,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   .background {
     background-image: url(../../images/WelcomePage/desktop/background-element-main-page.png),
       url(../../images/WelcomePage/desktop/background-main-page.png);
@@ -64,4 +64,4 @@
     background-image: url(../../images/WelcomePage/desktop/background-element-main-page@2x.png),
       url(../../images/WelcomePage/desktop/background-main-page@2x.png);
   }
-}
+} */

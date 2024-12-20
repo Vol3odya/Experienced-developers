@@ -10,7 +10,7 @@ export default function WaterConsumptionTracker() {
   };
 
   return (
-    <div className={(css.component, css.background)}>
+    <div className={css.background}>
       <h1 className={css.title}>Water consumption tracker</h1>
       <h3 className={css.subtitle}>Record daily water intake and track</h3>
       <p className={css.text}>Tracker Benefits</p>
