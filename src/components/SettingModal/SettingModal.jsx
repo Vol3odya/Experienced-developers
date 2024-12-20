@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import { updateUser, updateUserAvatar } from "../../redux/user/operations";
 import { selectUser } from "../../redux/user/selectors";
@@ -65,8 +66,8 @@ const SettingModal = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email) {
-      alert("Name and email are required!");
+    if (formData.newPassword && !formData.outdatePassword) {
+      toast.error("Please enter your current password to set a new password!");
       return;
     }
 
@@ -74,12 +75,12 @@ const SettingModal = ({ onClose }) => {
       formData.newPassword &&
       formData.newPassword !== formData.repeatPassword
     ) {
-      alert("New passwords do not match!");
+      toast.error("New passwords do not match!");
       return;
     }
 
     if (formData.newPassword && formData.newPassword.length < 6) {
-      alert("New password must be at least 6 characters long!");
+      toast.error("New password must be at least 6 characters long!");
       return;
     }
 
@@ -91,8 +92,8 @@ const SettingModal = ({ onClose }) => {
       }
 
       const updatedData = console.log("Отправляемые данные:", {
-        name: formData.name,
-        email: formData.email,
+        ...(formData.name && { name: formData.name }),
+        ...(formData.email && { email: formData.email }),
         gender: formData.gender,
         ...(formData.outdatePassword && {
           outdatePassword: formData.outdatePassword,
@@ -101,11 +102,11 @@ const SettingModal = ({ onClose }) => {
       });
 
       await dispatch(updateUser(updatedData)).unwrap();
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
       onClose();
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Error updating profile: " + error.message);
+      toast.error("Error updating profile: " + error.message);
     }
   };
 
