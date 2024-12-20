@@ -60,7 +60,9 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   }
 });
 
-export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkApi) => {
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkApi) => {
     const reduxState = thunkApi.getState();
     setAuthHeader(reduxState.auth.token);
   try {
