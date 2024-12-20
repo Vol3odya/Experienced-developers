@@ -2,6 +2,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, Bounce } from "react-toastify";
 
 import css from "./App.module.css";
 
@@ -30,6 +31,8 @@ export default function App() {
   return isRefreshing ? (
     <Loader />
   ) : (
+      <>
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick={false} rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" transition={Bounce} />
     <SharedLayout>
       <Suspense fallback={null}>
         <div className={css.container}>
@@ -62,6 +65,7 @@ export default function App() {
           </Routes>
         </div>
       </Suspense>
-    </SharedLayout>
+        </SharedLayout>
+        </>
   );
 }
