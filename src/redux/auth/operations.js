@@ -41,7 +41,7 @@ export const signin = createAsyncThunk(
       // console.log(data);
 
       setAuthHeader(data.data.accessToken);
-      return data.data.accessToken;
+      return data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -60,7 +60,9 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   }
 });
 
-export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkApi) => {
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkApi) => {
     const reduxState = thunkApi.getState();
     setAuthHeader(reduxState.auth.token);
     try {
