@@ -1,13 +1,13 @@
-import { useDispatch } from 'react-redux';
+
 import { useEffect, useState } from "react";
-import { logout } from "../../redux/auth/operations";
+
 
 
 
 import css from "./UserLogoutModal.module.css";
 
-export default function UserLogoutModal({ closeModal, delOrLogout }) {
-  const dispatch = useDispatch();
+export default function UserLogoutModal({ closeModal, onClick, delOrLogout }) {
+
   let logo = "";
   let par = "";
   let butt = "";
@@ -54,7 +54,7 @@ export default function UserLogoutModal({ closeModal, delOrLogout }) {
         <p className={css.text}>{par}</p>
         <div className={css.grid}>
           <button className={css.button} onClick={closeModal} type='button'>Cancel</button>
-          <button className={css.buttonRed} onClick={() => dispatch(logout())} type='button'>{ butt }</button>
+          <button className={css.buttonRed} onClick={onClick} type='button'>{ butt }</button>
         </div>
       </div>
     </div>

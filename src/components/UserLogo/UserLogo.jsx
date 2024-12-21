@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import SettingModal from "../SettingModal/SettingModal";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
+import { logout } from "../../redux/auth/operations";
+import { useDispatch } from 'react-redux';
 import css from "./UserLogo.module.css";
 
 export default function UserLogo() {
@@ -78,6 +80,11 @@ export default function UserLogo() {
     setIsLogoutOpen(false);
   }
 
+  const dispatch = useDispatch();
+    
+  const loggout = () => {
+    dispatch(logout());
+  }
 
 
 
@@ -93,7 +100,7 @@ export default function UserLogo() {
       </button>
       {isOpen && <UserLogoModal closeModal={handleCloseModal} settingOpen={ settingOpen } logoutOpen={ logoutOpen } className={css.modal} />}
       {isSettingOpen && <SettingModal onClose={settingClose} />}
-      {isLogoutOpen && <UserLogoutModal closeModal={logoutClose} delOrLogout = {false}/>}
+      {isLogoutOpen && <UserLogoutModal closeModal={logoutClose} onClick={ loggout } delOrLogout = {false}/>}
     </div>
   )
 }
