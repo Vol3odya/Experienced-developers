@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 import { useState } from "react";
-import { logout } from "../../redux/auth/operations";
+// import { logout } from "../../redux/auth/operations";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal.jsx";
 import TodayListModal from "../TodayListModal/TodayListModal";
 import css from "../TodayListModal/TodayListModal.module.css";
@@ -18,7 +18,7 @@ export default function TodayWaterList() {
   // const handleDelete = dispatch(delete)
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isEditeOpen, setEditeOpen] = useState(false);
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -26,22 +26,23 @@ export default function TodayWaterList() {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
-  const logoutClose = () => {
-    setIsLogoutOpen(false);
+
+  const editClose = () => {
+    setEditeOpen(false);
   };
-  const loggout = () => {
-    dispatch(logout());
+  const editOpen = () => {
+    setEditeOpen(true);
   };
+
   return (
     <div className={css.wraper}>
       <h2>Today</h2>
 
-      <button type="button">Delete</button>
-      <UserLogoutModal
-        closeModal={logoutClose}
-        onClick={loggout}
-        delOrLogout={true}
-      />
+      <button type="button" onClick={editOpen}>
+        Delete
+      </button>
+      {isEditeOpen && <UserLogoutModal closeModal={editClose} />}
+
       <button onClick={handleOpenModal}>Add water</button>
       {isOpen && <TodayListModal closeModal={handleCloseModal} />}
     </div>
