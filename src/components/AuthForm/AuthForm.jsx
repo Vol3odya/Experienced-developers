@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { signup, signin } from "../../redux/auth/operations";
 import { selectIsLoading, selectIsEror } from "../../redux/auth/selectors";
+import sprite from '../../images/svg/symbol-defs.svg'
 import s from "./AuthForm.module.css";
 
 const AuthForm = ({ mode }) => {
@@ -56,8 +57,8 @@ const AuthForm = ({ mode }) => {
         {({ isSubmitting }) => (
           <Form className={s.form}>
             <div className={s.item}>
-              <label htmlFor="email">Enter your email</label>
-              <Field name="email" type="email" placeholder="E-mail" />
+              <label htmlFor="email" className={s.label}>Enter your email</label>
+              <Field name="email" type="email" placeholder="E-mail"className={s.input} />
               <ErrorMessage
                 name="email"
                 component="span"
@@ -66,7 +67,7 @@ const AuthForm = ({ mode }) => {
             </div>
 
             <div className={s.item}>
-              <label htmlFor="password">Enter your password</label>
+              <label htmlFor="password" className={s.label}>Enter your password </label>
               <div className={s.passwordWrapper}>
                 <Field
                   type={showPassword ? "text" : "password"}
@@ -76,12 +77,12 @@ const AuthForm = ({ mode }) => {
                   autoComplete="current-password"
                 />
                 <svg
-                  className={s.icon}
+                  className={s.iconN}
                   onClick={togglePasswordVisibility}
                   aria-hidden="true"
                 >
                   <use
-                    xlinkHref={`../../images/svg/symbol-defs.svg#${
+                    xlinkHref={`${sprite}#${
                       showPassword ? "icon-eye-open" : "icon-eye-closed"
                     }`}
                   />
@@ -94,10 +95,11 @@ const AuthForm = ({ mode }) => {
                 className={s.attention}
               />
             </div>
+            
 
             {mode === "signup" && (
               <div className={s.item}>
-                <label htmlFor="repeatPassword">Repeat password</label>
+                <label htmlFor="repeatPassword" className={s.label}>Repeat password</label>
                 <div className={s.passwordWrapper}>
                   <Field
                     type={showPassword ? "text" : "password"}
@@ -106,17 +108,17 @@ const AuthForm = ({ mode }) => {
                     className={s.input}
                     autoComplete="new-password"
                   />
-                  <svg
-                    className={s.icon}
-                    onClick={togglePasswordVisibility}
-                    aria-hidden="true"
-                  >
-                    <use
-                      xlinkHref={`../../images/svg/symbol-defs.svg#${
-                        showPassword ? "icon-eye-open" : "icon-eye-closed"
-                      }`}
-                    />
-                  </svg>
+                   <svg
+                  className={s.iconN}
+                  onClick={togglePasswordVisibility}
+                  aria-hidden="true"
+                >
+                  <use
+                    xlinkHref={`${sprite}#${
+                      showPassword ? "icon-eye-open" : "icon-eye-closed"
+                    }`}
+                  />
+                </svg>
                 </div>
 
                 <ErrorMessage
@@ -124,6 +126,7 @@ const AuthForm = ({ mode }) => {
                   component="span"
                   className={s.attention}
                 />
+                
               </div>
             )}
 
