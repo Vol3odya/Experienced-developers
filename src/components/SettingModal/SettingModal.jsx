@@ -2,20 +2,21 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { updateUser, updateUserAvatar } from "../../redux/user/operations";
+import {
+  updateUser,
+  updateUserAvatar,
+  fetchUser,
+} from "../../redux/user/operations";
 import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
 
 const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
-
   const userData = useSelector(selectUser);
-
-  console.log("UserData из Redux:", userData); // Проверка
 
   const [formData, setFormData] = useState({
     photo: "",
-    gender: "Man",
+    gender: "female",
     name: "",
     email: "",
     outdatePassword: "",
@@ -23,20 +24,40 @@ const SettingModal = ({ onClose }) => {
     repeatPassword: "",
   });
 
+  const [isLoading, setIsLoading] = useState(true); // Добавляем состояние загрузки
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        if (!userData || Object.keys(userData).length === 0) {
+          await dispatch(fetchUser()).unwrap(); // Загружаем данные
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false); // Завершаем загрузку
+      }
+    };
+
+    loadData();
+  }, [dispatch, userData]);
+
   useEffect(() => {
 
     if (userData && Object.keys(userData).length > 0) {
 
-      setFormData({
-        photo: userData.avatarUrl, // || "",
-        gender: userData.gender || "male", // Значение по умолчанию
-        name: userData.name, // || "",
-        email: userData.email, // || "",
-        outdatePassword: "",
-        newPassword: "",
-        repeatPassword: "",
-      });
+      setFormData((prev) => ({
+        ...prev,
+        photo: userData.photo || prev.photo, // Обновляем с учетом корректного поля
+        gender: userData.gender || prev.gender,
+        name: userData.name || prev.name,
+        email: userData.email || prev.email,
+      }));
     }
+  }, [userData]);
+
+  useEffect(() => {
+    console.log("Fetched user data from Redux:", userData);
   }, [userData]);
 
   useEffect(() => {
@@ -54,7 +75,7 @@ const SettingModal = ({ onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value || "" }));
   };
 
   const handlePhotoUpload = (e) => {
@@ -67,6 +88,10 @@ const SettingModal = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isLoading) {
+      return <div className={styles.loader}>Loading...</div>; // Показываем loader пока данные загружаются
+    }
 
     if (formData.newPassword && !formData.outdatePassword) {
       toast.error("Please enter your current password to set a new password!");
@@ -90,21 +115,29 @@ const SettingModal = ({ onClose }) => {
       if (formData.photoFile) {
         const avatarData = new FormData();
         avatarData.append("photo", formData.photoFile);
-        await dispatch(updateUserAvatar(avatarData)).unwrap();
+        const avatarResponse = await dispatch(
+          updateUserAvatar(avatarData)
+        ).unwrap();
+        if (avatarResponse) {
+          setFormData((prev) => ({ ...prev, photo: avatarResponse }));
+        }
       }
 
-      const updatedData = console.log("Отправляемые данные:", {
-        ...(formData.name && { name: formData.name }),
-        ...(formData.email && { email: formData.email }),
-        gender: formData.gender,
-        ...(formData.outdatePassword && {
+      const updatedData = Object.fromEntries(
+        Object.entries({
+          name: formData.name,
+          email: formData.email,
+          gender: formData.gender,
           outdatePassword: formData.outdatePassword,
-          newPassword: formData.newPassword,
-        }),
-      });
+          password: formData.newPassword, // Приводим к ожидаемому сервером имени
+        }).filter(([, value]) => value !== "")
+      );
+
+      console.log("Отправляемые данные:", updatedData);
 
       await dispatch(updateUser(updatedData)).unwrap();
       toast.success("Profile updated successfully!");
+      await new Promise((resolve) => setTimeout(resolve, 100));
       onClose();
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -113,7 +146,8 @@ const SettingModal = ({ onClose }) => {
   };
 
   const handleGenderChange = (e) => {
-    setFormData((prev) => ({ ...prev, gender: e.target.value }));
+    const selectedGender = e.target.value; // Получаем выбранное значение
+    setFormData((prev) => ({ ...prev, gender: selectedGender })); // Обновляем локальное состояние
   };
 
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -248,7 +282,7 @@ const SettingModal = ({ onClose }) => {
               <div
                 className={styles["photo-preview"]}
                 style={{
-                  backgroundImage: `url(${formData.photo || ""})`,
+                  backgroundImage: `url(${formData.photo}?t=${Date.now()})`,
                 }}
               ></div>
 
