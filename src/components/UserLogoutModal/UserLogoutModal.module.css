@@ -87,3 +87,45 @@
     height: 36px;
     background: #d7e3ff;
 }
+
+@media only screen and (min-width: 768px) {
+
+    .modal {
+        width: 592px;
+        height: 208px;
+    }
+
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .buttonRed {
+        margin-top: 24px;
+        margin-right: 0;
+        padding: 10px 30px;
+        width: 160px;
+        height: 44px;
+    }
+
+    .button {
+        margin-top: 24px;
+        margin-left: auto;
+        padding: 10px 30px;
+        width: 160px;
+        height: 44px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+
+    .buttonRed {
+        margin-right: auto;
+    }
+
+    .button {
+        margin-left: 0;
+    }
+
+}

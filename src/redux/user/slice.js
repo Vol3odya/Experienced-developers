@@ -4,9 +4,15 @@ import { fetchUser, updateUser, updateUserAvatar } from './operations.js';
 
 
 const handleFulfilled = (state, action) => {
-  (state.isLoading = false),
-    (state.error = null),
-    (state.user = action.payload);
+  if (action.type === "user/updateUserAvatar/fulfilled") {
+    state.user.avatarUrl = action.payload; // Обновляем только аватар
+  } else if (action.payload.user) {
+    state.user = { ...state.user, ...action.payload.user }; // Обновляем, если данные лежат в user
+  } else {
+    state.user = { ...state.user, ...action.payload }; // Если данные приходят напрямую
+  }
+  state.isLoading = false;
+  state.error = null;
 };
 
 const handlePending = (state) => {

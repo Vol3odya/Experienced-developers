@@ -9,8 +9,10 @@ import css from "./App.module.css";
 import SharedLayout from "../SharedLayout/SharedLayout";
 import Loader from "../Loader/Loader";
 
+
 import { selectIsRefresh } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
+import { fetchUser } from "../../redux/user/operations";
 import RestrictedRoute from "./RestrictedRoute";
 import PrivateRoute from "./PrivateRoute";
 
@@ -26,6 +28,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(refreshUser());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return isRefreshing ? (
