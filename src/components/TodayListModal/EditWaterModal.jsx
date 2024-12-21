@@ -1,6 +1,7 @@
 import css from "../TodayListModal/EditWaterModal.module.css";
 import { IoMdClose } from "react-icons/io";
-import { addWater } from "../../redux/water/operations.js";
+import { updateWater } from "../../redux/water/operations.js";
+// import getWaterFromToday from "../../redux/todayWaterList/operations.js";
 import { Field, Form, Formik } from "formik";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -8,9 +9,11 @@ import { HiMinus } from "react-icons/hi2";
 import { HiPlus } from "react-icons/hi";
 import cup from "../../images/svg/cup.svg";
 
-export default function EditWaterModal({ closeModal }) {
+export default function EditWaterModal({ closeModal, id }) {
   const [amount, setAmount] = useState(50);
   const [time, setTime] = useState("");
+  const [isTimeCorrect, setIsTimeCorrect] = useState(true);
+  const [isAmountCorrect, setIsAmountCorrect] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -39,7 +42,9 @@ export default function EditWaterModal({ closeModal }) {
     if (timeFormat.test(value)) {
       setTime(value);
     }
-    timeFormat.test(time);
+    if (timeFormat.test(time)) {
+      setIsTimeCorrect(true);
+    }
   }
 
   function handleChangeAmount(e) {
@@ -99,9 +104,40 @@ export default function EditWaterModal({ closeModal }) {
   };
 
   const handleSubmit = () => {
-    dispatch(addWater({ waterVolume: amount, date: time })); // Відправка запиту на бекенд
-  };
+    if (!isAmountCorrect || !isTimeCorrect) {
+      if (amount === 0) {
+        setIsAmountCorrect(false);
+      }
 
+      return;
+    }
+    if (amount === 0) {
+      setIsAmountCorrect(false);
+
+      return;
+    }
+
+    const now = new Date();
+    const forDate = now.toISOString().split("T")[0];
+
+    const newNote = {
+      id,
+      time: time,
+      waterVolume: amount,
+      date: forDate,
+    };
+    // dispatch(updateWater(newNote));
+    // console.log(newNote);
+
+    dispatch(updateWater(newNote))
+      .unwrap()
+      .then(() => {
+        closeModal(); // Закриваємо модальне вікно після успішного оновлення
+      })
+      .catch((error) => {
+        console.error("Error updating water:", error);
+      });
+  };
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <Formik initialValues={{ amount: 50, time }} onSubmit={handleSubmit}>
@@ -173,7 +209,7 @@ export default function EditWaterModal({ closeModal }) {
               onBlur={handleBlur}
             />
             <div className={css.flexbox}>
-              <p className={css.result}>{amount || 0}ml</p>
+              <p className={css.resulttwo}>{amount || 0}ml</p>
               <button className={css.saveButton} type="submit">
                 Save
               </button>{" "}
