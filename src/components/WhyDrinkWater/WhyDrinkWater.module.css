@@ -17,7 +17,6 @@
 }
 
 .list {
-  /* list-style-type: none; */
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -56,12 +55,6 @@
 }
 
 /*TODO =====================MEDIA===================== */
-
-@media (max-width: 767px) {
-  .bottleIcon {
-    display: none;
-  }
-}
 
 @media (min-width: 768px) {
   .background {

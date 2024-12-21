@@ -111,8 +111,13 @@
 
   .trackerList {
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    gap: 16px;
     align-items: center;
+  }
+
+  .trackerItem {
+    width: 224px;
   }
 
   .icon {

@@ -2,7 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  overflow: hidden;
 }
 
 /*TODO =====================MEDIA===================== */
@@ -12,9 +11,10 @@
     background-image: url(../../images/WelcomePage/mobile/background-main-page.png);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: bottom;
     min-height: 100vh;
+    width: 100%;
     padding-bottom: 40px;
-    background-attachment: fixed;
   }
 }
 @media (min-width: 320px) and (min-resolution: 192dpi),
@@ -29,6 +29,7 @@
   .background {
     background-image: url(../../images/WelcomePage/tablet/background-main-page.png);
     background-repeat: no-repeat;
+    background-position: bottom center;
     background-size: cover;
     padding-bottom: 50px;
     background-attachment: fixed;
@@ -42,8 +43,6 @@
   (min-width: 768px) and (min-device-pixel-ratio: 2) {
   .background {
     background-image: url(../../images/WelcomePage/tablet/background-main-page@2x.png);
-    background-size: contain;
-    background-size: cover;
   }
 }
 
@@ -51,11 +50,11 @@
   .background {
     background-image: url(../../images/WelcomePage/desktop/background-element-main-page.png),
       url(../../images/WelcomePage/desktop/background-main-page.png);
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    min-height: 100vh;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, bottom center;
+    background-size: contain, contain;
+    padding-top: 70px;
+    padding-bottom: 0;
   }
 
   .wrap {
@@ -63,7 +62,7 @@
     align-items: center;
     justify-content: center;
     gap: 80px;
-    padding-top: 80px;
+    /* margin-top: 80px; */
   }
 }
 @media (min-width: 1440px) and (min-resolution: 192dpi),
