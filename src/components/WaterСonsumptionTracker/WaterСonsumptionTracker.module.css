@@ -74,7 +74,6 @@
   background-color: #407bff;
   color: #fff;
   cursor: pointer;
-
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   transition: box-shadow 300ms ease;
 }
@@ -129,21 +128,21 @@
   }
 }
 
-/* @media (min-width: 1440px) {
+@media (min-width: 1440px) {
   .background {
-    padding-left: 216px;
-    padding-right: 81px;
-  }
-
-  .header {
-    padding-top: 80px;
+    min-width: 439px;
+    padding: 0;
+    margin: 0;
   }
 
   .trackerList {
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    padding-bottom: 24px;
+    width: 248px;
   }
-} */
+
+  .button {
+    width: 384px;
+  }
+}

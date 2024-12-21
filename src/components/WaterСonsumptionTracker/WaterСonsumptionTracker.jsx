@@ -1,5 +1,5 @@
 import css from "./WaterСonsumptionTracker.module.css";
-import sprite from "../../images/WelcomePage/sprite.svg";
+import sprite from "../";
 import { useNavigate } from "react-router-dom";
 
 export default function WaterConsumptionTracker() {
@@ -17,19 +17,19 @@ export default function WaterConsumptionTracker() {
       <ul className={css.trackerList}>
         <li className={css.trackerItem}>
           <svg className={css.icon} aria-hidden="true">
-            <use href={`${sprite}#icon-calendar`}></use>
+            <use xlinkHref={`${sprite}#icon-calendar`}></use>
           </svg>
           Habit drive
         </li>
         <li className={css.trackerItem}>
           <svg className={css.icon} aria-hidden="true">
-            <use href={`${sprite}#icon-presentation`}></use>
+            <use xlinkHref={`${sprite}#icon-presentation`}></use>
           </svg>
           View statistics
         </li>
         <li className={css.trackerItem}>
           <svg className={css.icon} aria-hidden="true">
-            <use href={`${sprite}#icon-wrench`}></use>
+            <use xlinkHref={`${sprite}#icon-wrench`}></use>
           </svg>
           Personal rate setting
         </li>

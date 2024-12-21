@@ -47,7 +47,7 @@
   }
 }
 
-/* @media (min-width: 1440px) {
+@media (min-width: 1440px) {
   .background {
     background-image: url(../../images/WelcomePage/desktop/background-element-main-page.png),
       url(../../images/WelcomePage/desktop/background-main-page.png);
@@ -55,7 +55,15 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    min-height: 90.8vh;
+    min-height: 100vh;
+  }
+
+  .wrap {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    padding-top: 80px;
   }
 }
 @media (min-width: 1440px) and (min-resolution: 192dpi),
@@ -64,4 +72,4 @@
     background-image: url(../../images/WelcomePage/desktop/background-element-main-page@2x.png),
       url(../../images/WelcomePage/desktop/background-main-page@2x.png);
   }
-} */
+}
