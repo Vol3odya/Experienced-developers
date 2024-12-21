@@ -13,7 +13,7 @@ const initialState = {
   isLoggedIn: false,
   isLoading: false,
   isRefresh: false,
-  isError: false,
+  isError: null,
 };
 
 const authSlice = createSlice({
@@ -23,14 +23,22 @@ const authSlice = createSlice({
     builder
       .addCase(signup.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.avatarUrl = action.payload.photo;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
+        state.isLoading = false;
+        state.isError = null;
       })
 
       .addCase(signin.fulfilled, (state, action) => {
+        state.token = action.payload.accessToken;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.isRefresh = false;
         state.isLoggedIn = true;
+        state.isLoading = false;
+      })
+      .addCase(signin.pending, (state) => {
+        state.isRefresh = true;
       })
       .addCase(logout.fulfilled, () => {
         return initialState;
@@ -39,12 +47,16 @@ const authSlice = createSlice({
         state.isRefresh = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isRefresh = false;
         state.isLoggedIn = true;
+        state.isError = null;
       })
-      .addCase(refreshUser.rejected, () => {})
-      .addMatcher(isAnyOf(/*register.pending,*/ signin.pending), (state) => {
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefresh = false;
+        state.isError = action.payload;
+      })
+      .addMatcher(isAnyOf(signup.pending, signin.pending), (state) => {
         state.isLoading = true;
       })
       .addMatcher(
@@ -57,4 +69,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export const authReducer = authSlice.reducer;

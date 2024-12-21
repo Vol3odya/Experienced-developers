@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, Bounce } from "react-toastify";
 
 import css from "./App.module.css";
 
@@ -9,6 +10,7 @@ import Loader from "../Loader/Loader";
 
 import { selectIsRefresh } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
+import { fetchUser } from "../../redux/user/operations";
 import RestrictedRoute from "./RestrictedRoute";
 import PrivateRoute from "./PrivateRoute";
 
@@ -23,12 +25,15 @@ export default function App() {
   const isRefreshing = useSelector(selectIsRefresh);
 
   useEffect(() => {
-    dispatch(refreshUser);
+    dispatch(refreshUser());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return isRefreshing ? (
     <Loader />
   ) : (
+      <>
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick={false} rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" transition={Bounce} />
     <SharedLayout>
       <Suspense fallback={null}>
         <div className={css.container}>
@@ -37,13 +42,20 @@ export default function App() {
             <Route
               path="/signup"
               element={
-                <RestrictedRoute component={SignupPage} redirectTo="/home" />
+                <RestrictedRoute
+                  component={SignupPage}
+                  redirectTo="/home"
+                />
               }
             />
             <Route
               path="/signin"
               element={
-                <RestrictedRoute component={SigninPage} redirectTo="/home" />
+                <RestrictedRoute
+                  component={SigninPage}
+                  redirectTo="/home"
+                />
+
               }
             />
             <Route
@@ -55,6 +67,7 @@ export default function App() {
           </Routes>
         </div>
       </Suspense>
-    </SharedLayout>
+        </SharedLayout>
+        </>
   );
 }
