@@ -13,6 +13,7 @@ const initialState = {
   error: null,
 };
 
+
 const slice = createSlice({
   name: 'todayWaterList',
   initialState,
