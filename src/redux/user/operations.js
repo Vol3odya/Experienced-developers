@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "http://localhost:3000/"; //'https://tracker-of-water-xk7t.onrender.com/';
-
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async (_, thunkAPI) => {
