@@ -3,17 +3,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 360px;
+  width: 280px;
+ 
 }
-.title{
-    color:  #2f2f2f;
-    text-align: left;
-    font-family: "Roboto-Medium", sans-serif;
-    font-size: 26px;
-    line-height: 32px;
-    font-weight: 500;
-    width: 100%;
-    margin-bottom: 16px;
+
+.title {
+  color:  #2f2f2f;
+  text-align: left;
+  font-family: "Roboto-Medium", sans-serif;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 500;
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .form {
@@ -29,51 +31,37 @@
   align-items: flex-start; 
   gap: 8px; 
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+}
+.label{
+  color:  #2f2f2f;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  
 }
 
-.submitbutton {
-  width: 100%;
-  padding: 8px 30px;
-  background-color: #407bff;
-  border-radius: 10px;
+input {
+  
+  border-radius: 6px;
+  border-style: solid;
+  border-color:  #d7e3ff;
+  border-width: 1px;
+  padding: 12px 10px 12px 10px;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  color: var(--primery-color-white, #ffffff);
-  text-align: center;
-  font-family: "Roboto-Medium", sans-serif;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
-  width: 220px;
-}
-
-.attention{
-    color: red;
-    font-size: 10px;
+  width: 280px;
 }
 
 .passwordWrapper {
   position: relative;
 }
-
-input {
-  padding-right: 40px;
-}
-/* .icon {
-  width: 20px;
-  height: 20px;
-  fill: #407bff;
-  background-color: #fff;
-  cursor: pointer;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-} */
-
-.icon {
+ .iconN {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -82,5 +70,28 @@ input {
   height: 24px;
   cursor: pointer;
   stroke: #407bff;
-  fill: #407bff;
+  fill: white;
+  
+}
+
+.submitbutton {
+  width: 280px;
+  padding: 8px 30px;
+  background-color: #407bff;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  font-family: "Roboto-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  
+}
+
+.attention{
+  color: red;
+  font-size: 10px;
 }
