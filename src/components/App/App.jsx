@@ -1,4 +1,3 @@
-
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +7,6 @@ import css from "./App.module.css";
 
 import SharedLayout from "../SharedLayout/SharedLayout";
 import Loader from "../Loader/Loader";
-
 
 import { selectIsRefresh } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
@@ -57,6 +55,7 @@ export default function App() {
                   component={SigninPage}
                   redirectTo="/home"
                 />
+
               }
             />
             <Route

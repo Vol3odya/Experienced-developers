@@ -90,7 +90,7 @@ export default function MonthStatsTable() {
         })}
       </div>
 
-      {selectedDay && (
+      {/* {selectedDay && (
         <div className={styles.generalStats}>
           <h3>Day {selectedDay} Stats</h3>
           <p>{`Water intake: ${
@@ -98,6 +98,13 @@ export default function MonthStatsTable() {
           } ml`}</p>
           <button onClick={() => setSelectedDay(null)}>Close</button>
         </div>
+      )} */}
+            {selectedDay && (
+        <DaysGeneralStats
+          dayStats={selectedDay.stats}
+          selectedDate={selectedDay.date}
+          onClose={handleCloseStats}
+        />
       )}
     </div>
   );
