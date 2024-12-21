@@ -53,3 +53,34 @@
     color: red;
     font-size: 10px;
 }
+
+.passwordWrapper {
+  position: relative;
+}
+
+input {
+  padding-right: 40px;
+}
+/* .icon {
+  width: 20px;
+  height: 20px;
+  fill: #407bff;
+  background-color: #fff;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+} */
+
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  stroke: #407bff;
+  fill: #407bff;
+}
