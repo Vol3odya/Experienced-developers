@@ -14,6 +14,8 @@
 .button {
   margin-top: 16px;
   margin-bottom: 40px;
+  width: 280px;
+  height: 36px;
 
   display: inline-flex;
   padding: 6px 76px;
@@ -44,11 +46,56 @@
   .wrapper {
     display: flex;
     flex-direction: row;
+    width: 704px;
+    height: 90px;
   }
   .shkala {
     flex-grow: 1;
   }
   .button {
     flex-grow: 1;
+    max-width: 336px;
+    height: 44px;
+    padding: 10px 104px;
   }
 }
+
+@media (min-width: 768px) {
+
+  .shkala {
+    flex-grow: 1;
+  }
+
+  .button {
+    flex-grow: 1;
+    padding: 10px 30px;
+    max-width: 178px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 133%;
+    text-align: center;
+  }
+}
+
+
+.wrapperwrapper{}
+
+.wrappercontaine{
+  border-radius: 10px;
+  width: 256px;
+  height: 8px;
+  background: #d7e3ff;
+  /*transform: rotate(-90deg);*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.barCompleted{
+  border-radius: 10px;
+  height: 8px;
+  /*width: 82%;*/
+  background: #9ebbff;
+  /*transform: rotate(-90deg);*/
+}
+
+.wrapperlabel{}
