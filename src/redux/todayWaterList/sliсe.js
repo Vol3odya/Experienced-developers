@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+  import { createSlice } from '@reduxjs/toolkit';
 import { getWaterFromToday } from './operations.js';
 
 const initialState = {
@@ -13,6 +13,7 @@ const initialState = {
   error: null,
 };
 
+
 const slice = createSlice({
   name: 'todayWaterList',
   initialState,
@@ -20,19 +21,19 @@ const slice = createSlice({
     builder
       .addCase(getWaterFromToday.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(getWaterFromToday.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.date = action.payload.date;
         state.loading = false;
-        state.amount = action.payload.numberOfValue;
-        state.percentFromNorm = action.payload.curDaylyNorm;
+        state.error = null;
       })
-      .addCase(getWaterFromToday.rejected, (state) => {
-        state.error = true;
+      .addCase(getWaterFromToday.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
       });
   },
 });
 
-export default slice.reducer;
+export const todayReducer = slice.reducer;

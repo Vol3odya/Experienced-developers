@@ -1,7 +1,7 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "https://tracker-of-water-xk7t.onrender.com/";
+axios.defaults.baseURL = 'https://tracker-of-water-xk7t.onrender.com/';
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -11,50 +11,68 @@ const clearAuthHeader = () => {
 };
 
 export const signup = createAsyncThunk(
-  "auth/signup",
+  'auth/signup',
   async (credentials, thunkApi) => {
     try {
-      const { data } = await axios.post("auth/signup", credentials);
+      const { data } = await axios.post('auth/signup', credentials);
       setAuthHeader(data.data.accessToken);
-      return data.data;
+      return {
+        ...data.data,
+        accessToken: data.data.accessToken,
+        photo: data.data.photo,
+      };
     } catch (error) {
-      return thunkApi.rejectWithValue(error.messege);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
 export const signin = createAsyncThunk(
-  "auth/signin",
+  'auth/signin',
   async (credentials, thunkApi) => {
     try {
-      const { data } = await axios.post("auth/signin", credentials);
+      const { data } = await axios.post(
+        'auth/signin',
+        credentials
+        // {
+        // withCredentials: true,
+        // }
+      );
+      // console.log(data);
+
       setAuthHeader(data.data.accessToken);
       return data.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(error.messege);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async (_, thunkApi) => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
-    await axios.post("/auth/logout");
-    clearAuthHeader();
+    const response = await axios.post('/auth/logout');
+
+    if (response.status === 204) {
+      clearAuthHeader();
+    }
   } catch (error) {
     return thunkApi.rejectWithValue(error.messege);
   }
 });
 
 export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+  'auth/refresh',
   async (_, thunkApi) => {
     const reduxState = thunkApi.getState();
     setAuthHeader(reduxState.auth.token);
-    try {
-      const { data } = await axios.get("auth/current");
-      return data.data;
+  try {
+      const { data } = await axios.get('users/current');
+      return {
+        user: { ...data.data },
+        accessToken: data.data.accessToken,
+      };
     } catch (error) {
-      return thunkApi.rejectWithValue(error.messege);
+      return thunkApi.rejectWithValue(error.message);
     }
   },
   {
@@ -62,18 +80,5 @@ export const refreshUser = createAsyncThunk(
       const reduxState = thunkApi.getState();
       return reduxState.auth.token !== null;
     },
-  }
-);
-export const updateProfile = createAsyncThunk(
-  "auth/updateProfile",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.patch("/profile/update", formData);
-      console.log("Server Response:", data);
-
-      return data.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data.message || "Update failed");
-    }
   }
 );

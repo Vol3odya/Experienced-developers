@@ -43,7 +43,9 @@ const SettingModal = ({ onClose }) => {
   }, [dispatch, userData]);
 
   useEffect(() => {
+
     if (userData && Object.keys(userData).length > 0) {
+
       setFormData((prev) => ({
         ...prev,
         photo: userData.photo || prev.photo, // Обновляем с учетом корректного поля
