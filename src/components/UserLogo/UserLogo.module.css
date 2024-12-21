@@ -22,13 +22,13 @@
     line-height: 125%;
     text-align: right;
     color: #2F2F2F;
-    width: 60px;
+    /*width: 60px;*/
 }
 
 .userphoto{
     width: 28px;
     height: 28px;
-    border-radius: 50%;
+    border-radius: 100%;
     margin-right: 4px;
 }
 
@@ -43,4 +43,14 @@
 
 .svg:hover{
     fill: #FF9D43;
+}
+
+
+@media only screen and (min-width: 768px) {
+
+    .username {
+        font-size: 18px;
+        line-height: 133%;
+    }
+
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import SettingModal from "../SettingModal/SettingModal"
+
 
 
 
@@ -11,7 +11,7 @@ import css from "./UserLogoModal.module.css";
 export default function UserLogoModal({ closeModal }) {
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         closeModal();
@@ -30,6 +30,8 @@ export default function UserLogoModal({ closeModal }) {
     }
   };
 
+  //document.addEventListener("click", handleBackdropClick);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -42,6 +44,22 @@ export default function UserLogoModal({ closeModal }) {
   };
   const handleCloseModal = () => {
     setIsOpen(false);
+  };*/
+
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      closeModal();
+    }
+  };
+
+   const handleOpenModal = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+    
   };
 
 
@@ -80,7 +98,7 @@ export default function UserLogoModal({ closeModal }) {
         </svg>
         <p className={css.text}>Log out</p>
       </button>
-      {isOpen && <SettingModal onClose={handleCloseModal} userData={user} />}
+      {/*isOpen && <SettingModal onClose={handleCloseModal} userData={user} />*/}
       {isClose && <UserLogoutModal closeModal={handleCloseModalLogout} delOrLogout = {false}/>}
     </div>
   )
