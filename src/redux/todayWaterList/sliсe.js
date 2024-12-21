@@ -13,6 +13,7 @@ const initialState = {
   error: null,
 };
 
+
 const slice = createSlice({
   name: 'todayWaterList',
   initialState,
@@ -20,14 +21,16 @@ const slice = createSlice({
     builder
       .addCase(getWaterFromToday.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(getWaterFromToday.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.date = action.payload.date;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getWaterFromToday.rejected, (state) => {
-        state.error = true;
+      .addCase(getWaterFromToday.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
       });
   },
