@@ -6,6 +6,7 @@ import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
 import { logout } from "../../redux/auth/operations";
 import { useDispatch } from 'react-redux';
 import css from "./UserLogo.module.css";
+import {csscss} from "../UserLogoModal/UserLogoModal"
 
 export default function UserLogo() {
   const photo = "https://cdn-icons-png.flaticon.com/512/2922/2922506.png";
@@ -17,7 +18,7 @@ export default function UserLogo() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isOpen && !event.target.closest("._modal_9ttlj_1")) {
+      if (isOpen && !event.target.closest(`.${csscss}`)) {
         setIsOpen(false);
       }
     };

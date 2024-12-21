@@ -46,3 +46,5 @@ export default function UserLogoModal({ closeModal, settingOpen, logoutOpen }) {
   )
 }
 
+export const csscss = css.modal;
+

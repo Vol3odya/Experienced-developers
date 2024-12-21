@@ -1,18 +1,20 @@
-.modal {
-    /*position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid black;
-    padding: 20px;*/
-}
+/*.modal {
+    border-radius: 10px;
+    padding: 16px;
+    width: 118px;
+    height: 88px;
+    box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.2);
+    background: #fff;
+    margin-right: 0px;
+    margin-top: 2px;
+}*/
 
 .button{
     display: flex;
     flex-wrap: wrap;
     margin-right: 0;
     height: 28px;
+    min-width: 118px;
     margin-top: 10px;
     margin-bottom: auto;
     /*padding-top: auto;
