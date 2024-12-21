@@ -98,8 +98,17 @@ export default function TodayListModal({ closeModal }) {
     }
   };
 
+  const now = new Date();
+  const forDate = now.toISOString().split("T")[0];
+
   const handleSubmit = () => {
-    dispatch(addWater({ waterVolume: amount, date: time })); // Відправка запиту на бекенд
+    const newNote = {
+      time: time,
+      waterVolume: amount,
+      date: forDate,
+    };
+    dispatch(addWater(newNote));
+    console.log(newNote);
   };
 
   return (

@@ -27,7 +27,7 @@
 .iconclose {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 24px;
 }
 
@@ -140,6 +140,7 @@
   margin-top: 12px;
   margin-bottom: 24px;
   margin-right: 150px;
+  background-color: #fff;
 }
 
 .input:focus {
@@ -169,23 +170,29 @@
   color: #2f2f2f;
 }
 
+.resulttwo {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 133%;
+  text-align: center;
+  color: #407bff;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 16px;
+}
+
 .saveButton {
   border-radius: 10px;
   padding: 8px 30px;
   width: 256px;
   height: 36px;
-  box-shadow: 0 4px 8px 0 rgba(42, 54, 82, 0.34);
-  background-color: #407bff;
-  border: 0px solid transparent;
-  color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: #407bff;
   font-weight: 500;
   font-size: 16px;
-  line-height: 1.25;
+  line-height: 125%;
   text-align: center;
-  margin-top: 16px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+  color: #fff;
 }
 
 .water {
@@ -210,21 +217,63 @@
 }
 
 @media (min-width: 768px) {
+  .container {
+    padding: 32px 24px;
+    width: 704px;
+  }
+  .input {
+    width: 656px;
+    margin-top: none;
+    margin-bottom: 24px;
+  }
+
+  .enter {
+    margin-bottom: 16px;
+  }
   .flexbox {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 24px;
+    /* gap: 24px; */
   }
-  .saveButton {
+
+  .resulttwo {
+    margin-left: auto;
+    margin-right: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  /* .saveButton {
     width: 160px;
     padding: 8px 30px;
     position: relative;
     left: 245px;
+  } */
+
+  .saveButton {
+    padding: 10px 30px;
+    width: 160px;
+    height: 44px;
+    font-size: 18px;
+    line-height: 133%;
   }
 }
 
 @media screen and (min-width: 768px) {
+  .container {
+    width: 704px;
+  }
+
+  .input {
+    width: 544px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    width: 592px;
+  }
+
   .input {
     width: 100%;
   }
