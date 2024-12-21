@@ -18,7 +18,9 @@ export default function UserLogo() {
   console.log(user);
 
   let nikname = "No name";
-  const photo = "https://cdn-icons-png.flaticon.com/512/2922/2922506.png";
+  //const photo = "https://cdn-icons-png.flaticon.com/512/2922/2922506.png";
+  let photo = "";
+  let noPhoto = "";
   if (user.name){
     nikname = user.name;
   }
@@ -26,7 +28,12 @@ export default function UserLogo() {
     photo = user.photo;
   }
   
-  
+  const userPhoto = (user) => {
+    if (user.name) {
+      return user.name[0];
+    }
+    return user.email[0];
+   };
   
   
   
@@ -110,7 +117,7 @@ export default function UserLogo() {
     <div>
       <button type="button" onClick={handleOpenModal} className={css.button}>
         <p className={css.username}>{nikname}</p>
-        {photo ? <img src={photo} alt="User Photo" className={css.userphoto} />:<p className={css.userphoto}>V</p>}
+        {photo ? <img src={photo} alt="User Photo" className={css.userphoto} />:<p className={css.user}>{userPhoto(user)}</p>}
         <svg className={css.svg} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
           <path  /*fill-rule="evenodd"*/ d="M8.354 10.853a.5.5 0 0 1-.707 0l-5-5a.5.5 0 0 1 .707-.706L8 9.793l4.647-4.646a.5.5 0 1 1 .707.706l-5 5Z"  clipPath="evenodd" />
         </svg>
