@@ -10,8 +10,10 @@ export default function HomePage() {
     <div className={css.container}>
       <DailyNorma />
       <WaterRatioPanel />
-      <TodayWaterList />
-      <MonthStatsTable />
+      <div className={css.calendar}>
+        <TodayWaterList />
+        <MonthStatsTable />
+      </div>
     </div>
   );
 }
