@@ -4,7 +4,8 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { signup, signin } from "../../redux/auth/operations";
 import { selectIsLoading, selectIsEror } from "../../redux/auth/selectors";
-import sprite from '../../images/svg/symbol-defs.svg'
+import sprite from "../../images/svg/symbol-defs.svg";
+import classNames from "classnames";
 import s from "./AuthForm.module.css";
 
 const AuthForm = ({ mode }) => {
@@ -33,7 +34,6 @@ const AuthForm = ({ mode }) => {
     };
     if (mode === "signup") {
       dispatch(signup(credentials));
-      console.log(credentials);
     } else {
       dispatch(signin(credentials));
     }
@@ -41,6 +41,16 @@ const AuthForm = ({ mode }) => {
   };
 
   const formTitle = mode === "signup" ? "Sign Up" : "Sign In";
+
+  const getInputClassName = (errors, touched, fieldName) => {
+    if (errors[fieldName] && touched[fieldName]) {
+      return classNames(s.input, s.error);
+    } else if (touched[fieldName]) {
+      return classNames(s.input, s.focused);
+    } else {
+      return s.input;
+    }
+  };
 
   return (
     <div className={s.wrapper}>
@@ -54,11 +64,18 @@ const AuthForm = ({ mode }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, errors, touched }) => (
           <Form className={s.form}>
             <div className={s.item}>
-              <label htmlFor="email" className={s.label}>Enter your email</label>
-              <Field name="email" type="email" placeholder="E-mail"className={s.input} />
+              <label htmlFor="email" className={s.label}>
+                Enter your email
+              </label>
+              <Field
+                name="email"
+                type="email"
+                placeholder="E-mail"
+                className={getInputClassName(errors, touched, "email")}
+              />
               <ErrorMessage
                 name="email"
                 component="span"
@@ -67,13 +84,15 @@ const AuthForm = ({ mode }) => {
             </div>
 
             <div className={s.item}>
-              <label htmlFor="password" className={s.label}>Enter your password </label>
+              <label htmlFor="password" className={s.label}>
+                Enter your password
+              </label>
               <div className={s.passwordWrapper}>
                 <Field
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  name="password"
-                  className={s.input}
+                  className={getInputClassName(errors, touched, "password")}
                   autoComplete="current-password"
                 />
                 <svg
@@ -82,51 +101,46 @@ const AuthForm = ({ mode }) => {
                   aria-hidden="true"
                 >
                   <use
-                    xlinkHref={`${sprite}#${
-                      showPassword ? "icon-eye-open" : "icon-eye-closed"
-                    }`}
+                    xlinkHref={`${sprite}#${showPassword ? "icon-eye-open" : "icon-eye-closed"}
+                      `}
                   />
                 </svg>
               </div>
-
               <ErrorMessage
                 name="password"
-                component="span"  
+                component="span"
                 className={s.attention}
               />
             </div>
-            
 
             {mode === "signup" && (
               <div className={s.item}>
-                <label htmlFor="repeatPassword" className={s.label}>Repeat password</label>
+                <label htmlFor="repeatPassword" className={s.label}>
+                  Repeat password
+                </label>
                 <div className={s.passwordWrapper}>
                   <Field
+                    name="repeatPassword"
                     type={showPassword ? "text" : "password"}
                     placeholder="Repeat password"
-                    name="repeatPassword"
-                    className={s.input}
+                    className={getInputClassName(errors, touched, "repeatPassword")}
                     autoComplete="new-password"
                   />
-                   <svg
-                  className={s.iconN}
-                  onClick={togglePasswordVisibility}
-                  aria-hidden="true"
-                >
-                  <use
-                    xlinkHref={`${sprite}#${
-                      showPassword ? "icon-eye-open" : "icon-eye-closed"
-                    }`}
-                  />
-                </svg>
+                  <svg
+                    className={s.iconN}
+                    onClick={togglePasswordVisibility}
+                    aria-hidden="true"
+                  >
+                    <use
+                      xlinkHref={`${sprite}#${showPassword ? "icon-eye-open" : "icon-eye-closed"}`}
+                    />
+                  </svg>
                 </div>
-
                 <ErrorMessage
                   name="repeatPassword"
                   component="span"
                   className={s.attention}
                 />
-                
               </div>
             )}
 
@@ -145,9 +159,9 @@ const AuthForm = ({ mode }) => {
             {error && <div className="notification">{error}</div>}
 
             {mode === "signup" ? (
-              <a href="/signin">Sign in</a>
+              <a href="/signin"className={s.href}>Sign in</a>
             ) : (
-              <a href="/signup">Sign up</a>
+              <a href="/signup"className={s.href}>Sign up</a>
             )}
           </Form>
         )}

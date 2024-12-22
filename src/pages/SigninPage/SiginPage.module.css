@@ -1,0 +1,43 @@
+.container {
+  
+  padding: 28px 20px;
+  margin: 0 auto;
+  width: 320px;
+  height: 624px;
+    background-image: url(../../images/UserAuth/mibile-bg.png),
+      url(../../images/UserAuth/mobile-bg2.png);
+    background-repeat: no-repeat;
+    background-position: center bottom, center bottom;
+    background-size: contain;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    padding: 40px 32px; 
+    width: 768px;
+    height: 616px;
+    background-image: url(../../images/UserAuth/Bottle-for-Signin.png);
+    background-repeat: no-repeat;
+    background-position: center bottom, center bottom;
+    background-size: contain;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .container {
+    display: flex;
+    height: 740px;
+    background-image: url(../../images/UserAuth/desc-BottleforSignin.png),
+    url(../../images/UserAuth/desc-BackgroundelementMainPage.png);
+    background-repeat: no-repeat;
+    background-position: left bottom, left bottom;
+    background-size: contain;
+    padding: 123px 198px;
+    width: 1440px;
+    justify-content: end;
+  }
+  
+}
+
+
+
