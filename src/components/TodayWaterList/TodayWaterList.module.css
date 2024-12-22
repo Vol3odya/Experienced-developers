@@ -75,6 +75,8 @@
   display: flex;
   flex-direction: row;
   gap: 18px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .iconEdit {
