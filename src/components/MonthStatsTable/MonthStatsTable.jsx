@@ -3,7 +3,7 @@ import styles from "./MonthStatsTable.module.css";
 
 export default function MonthStatsTable() {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDay, setSelectedDay] = useState(null);
+  //const [selectedDay, setSelectedDay] = useState(null);
   const [daysStats, setDaysStats] = useState([]);
 
   useEffect(() => {
@@ -57,37 +57,55 @@ export default function MonthStatsTable() {
 
   return (
     <div className={styles.calendarContainer}>
-      <div className={styles.paginator}>
-        <button onClick={handlePrevMonth}>&lt;</button>
-        <span>
-          {currentDate.toLocaleString("default", { month: "long" })}{" "}
-          {currentDate.getFullYear()}
-        </span>
-        {new Date().getMonth() !== currentDate.getMonth() ? (
-          <button onClick={handleNextMonth}>&gt;</button>
-        ) : (
-          <div className={styles.hiddenButton}></div>
-        )}
+      <div className={styles.monthContainer}>
+        <span className={styles.month}>Month</span>
+        <div className={styles.paginator}>
+          <button onClick={handlePrevMonth} className={styles.arrowButton}>
+            &lt;
+          </button>
+          <span className={styles.currentMonth}>
+            {currentDate.toLocaleString("en", { month: "long" })},{" "}
+            {currentDate.getFullYear()}
+          </span>
+          <button
+            onClick={handleNextMonth}
+            className={styles.arrowButton}
+            disabled={
+              currentDate.getFullYear() === new Date().getFullYear() &&
+              currentDate.getMonth() === new Date().getMonth()
+            }
+          >
+            &gt;
+          </button>
+        </div>
       </div>
 
-      <div className={styles.daysList}>
-        {days.map((day) => {
-          const dayStats = daysStats?.[day - 1] || null;
-          const isPlanMet = dayStats && dayStats.percentage >= 100;
+      <div className={styles.calendar}>
+        {Array.from({ length: Math.ceil(days.length / 10) }, (_, rowIndex) => (
+          <div key={rowIndex} className={styles.row}>
+            {days.slice(rowIndex * 10, rowIndex * 10 + 10).map((day) => {
+              const dayStats = daysStats?.[day - 1] || {};
+              const isComplete = dayStats.percentage === 100;
 
-          return (
-            <div
-              key={day}
-              className={`${styles.day} ${!isPlanMet ? styles.incomplete : ""}`}
-              onClick={() => setSelectedDay(day)}
-            >
-              <div className={styles.dayNumber}>{day}</div>
-              {dayStats && (
-                <div className={styles.percentage}>{dayStats.percentage}%</div>
-              )}
-            </div>
-          );
-        })}
+              return (
+                <div key={day} className={styles.dayWrapper}>
+                  {/* Кружок с числом */}
+                  <div
+                    className={`${styles.dayCircle} ${
+                      !isComplete ? styles.incomplete : ""
+                    }`}
+                  >
+                    <span className={styles.dayNumber}>{day}</span>
+                  </div>
+                  {/* Процент снизу */}
+                  <div className={styles.percentage}>
+                    {dayStats.percentage || "0"}%
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
 
       {/* {selectedDay && (
@@ -99,13 +117,13 @@ export default function MonthStatsTable() {
           <button onClick={() => setSelectedDay(null)}>Close</button>
         </div>
       )} */}
-            {selectedDay && (
+      {/*selectedDay && (
         <DaysGeneralStats
           dayStats={selectedDay.stats}
           selectedDate={selectedDay.date}
           onClose={handleCloseStats}
         />
-      )}
+      )*/}
     </div>
   );
 }
