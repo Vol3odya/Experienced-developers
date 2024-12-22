@@ -11,6 +11,8 @@ import { selectWaterShots } from "../../redux/water/selectors.js";
 import cup from "../../images/svg/cup.svg";
 import outline from "../../images/svg/outline.svg";
 import del from "../../images/svg/del.svg";
+import { HiOutlinePlusSmall } from "react-icons/hi2";
+
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();
@@ -51,31 +53,33 @@ export default function TodayWaterList() {
 
   return (
     <div className={css.section}>
-      <h2>Today</h2>
-      <div className={css.listWrapper}></div>
+      <h2 className={css.header}>Today</h2>
+      {/* <div className={css.listWrapper}></div> */}
       <ul className={css.list}>
         {water.map(({ id, waterVolume, date }) => (
           <li key={id} className={css.item}>
             <div className={css.listli}>
-              <img src={cup} size={22.69} alt="cup image" />
-              <div className={css.colorMl}> {waterVolume}ml</div>
-              <span className={css.waterTime}>
-                {new Date(date).toLocaleTimeString("uk-UA", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
-              <div>
-                <button type="button" onClick={handleOpenModalEdit}>
-                  <img
+             <div className={css.itemInfo}>
+                <img src={cup} size={22.69} alt="cup image" />
+                <div className={css.colorMl}> {waterVolume}ml</div>
+                <span className={css.waterTime}>
+                  {new Date(date).toLocaleTimeString("uk-UA", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+             </div>
+              <div className={css.itemIcons}>
+                <button type="button" className={css.iconButton} onClick={handleOpenModalEdit}>
+                  <img className={css.iconEdit}
                     src={outline}
                     width="16"
                     height="16"
                     alt="outline image"
                   />
                 </button>
-                <button type="button" onClick={editOpen}>
-                  <img src={del} width="16" height="16" alt="delete image" />
+                <button type="button" className={css.iconButton}onClick={editOpen}>
+                  <img className={css.icon} src={del} width="16" height="16" alt="delete image" />
                 </button>
               </div>
             </div>
@@ -88,7 +92,7 @@ export default function TodayWaterList() {
       </button> */}
       {isEditeOpen && <UserLogoutModal closeModal={editClose} />}
 
-      <button onClick={handleOpenModal}>Add water</button>
+      <button className={css.btnAddWater} onClick={handleOpenModal}><HiOutlinePlusSmall size="16" />Add water</button>
       {isOpen && <TodayListModal closeModal={handleCloseModal} />}
     </div>
   );
