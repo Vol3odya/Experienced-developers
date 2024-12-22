@@ -3,14 +3,19 @@ import css from "./WaterRatioPanel.module.css";
 
 export default function WaterRatioPanel() {
 
+  const statys = 100;
+  //console.log(css.status);
+  //css.style.status.width = `${statys}px`;
   return (
     <div>
-      <h2 className={css.header}>Today</h2>
       <div className={css.wrapper}>
         <div className={css.ritio}>
           <h2 className={css.header}>Today</h2>
-          <div className={css.ritiocon}>
-            <div className={css.status}>
+          <div className={css.labelstatus} style={{ marginLeft: `calc(((${statys}/100) * (100% - 24px)) + 10.5px)` }}>
+            <p className={css.texttwo}>{statys}%</p>
+          </div> 
+          <div className={css.ritiocon} >
+            <div className={css.status} style={{width:`${statys}%`}}>
               <div className={css.but}>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="7" cy="7" r="6.5" fill="white" stroke="#407BFF" />
@@ -22,11 +27,8 @@ export default function WaterRatioPanel() {
             <div className={css.labeltwo}>
               <p className={css.text}>0%</p>
             </div>
-            <div className={css.labelstatus}>
-              <p>50%</p>
-            </div>
             <div className={css.labeltry}>
-              <p className={css.text}>100%</p>
+              <p className={css.texttry}>100%</p>
             </div>
           </div>
         </div>

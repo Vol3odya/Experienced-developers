@@ -8,7 +8,7 @@
   line-height: 24px; /* 133.333% */
 
   text-align: start;
-  padding-bottom: 8px;
+  padding-bottom: 20px;
 }
 
 .button {
@@ -79,9 +79,8 @@
 
 
 .ritio{
-  margin-top: 11px;
   width: 280px;
-  height: 82px;
+  /*height: 82px;*/
 }
 
 .ritiocon{
@@ -95,7 +94,7 @@
 
 .status{
   border-radius: 10px;
-  width: 100px;
+  width: 0px;
   height: 8px;
   background: #9ebbff;
   position: relative;
@@ -143,9 +142,73 @@
   line-height: 133%;
   text-align: center;
   color: #407bff;
+  width: 22px;
+  height: 16px;
   position: absolute;
   top: 16px;
-  left: 10px;
+  left: 0px;
 }
 
-.labelstatus{}
+.texttwo {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: #407bff;
+  width: 50px;
+  height: 20px;
+  position: absolute;
+  bottom: 10px;
+  left: -25px;
+}
+
+.texttry {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  text-align: center;
+  color: #407bff;
+  width: 30px;
+  height: 16px;
+  position: absolute;
+  top: 16px;
+  right: 0px;
+}
+
+.labelstatus{
+  position: relative;
+  border: 1px solid #d7e3ff;
+  width: 0px;
+  height: 8px;
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+
+  .ritio {
+    width: 356px;
+    /*height: 82px;*/
+  }
+
+  .ritiocon {
+    width: 325px;
+  }
+
+  .label {
+    width: 347px;
+  }
+
+}
+
+@media only screen and (min-width: 1440px) {
+
+  .buttonRed {
+    margin-right: auto;
+  }
+
+  .button {
+    margin-left: 0;
+  }
+
+}
