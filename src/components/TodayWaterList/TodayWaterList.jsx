@@ -5,7 +5,7 @@ import { useState } from "react";
 // import { logout } from "../../redux/auth/operations";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal.jsx";
 import TodayListModal from "../TodayListModal/TodayListModal";
-import css from "../TodayListModal/TodayListModal.module.css";
+import css from "./TodayWaterList.module.css";
 // import EditWaterModal from "../TodayListModal/EditWaterModal.jsx";
 
 export default function TodayWaterList() {

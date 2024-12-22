@@ -31,6 +31,10 @@
     width: 768px;
   }
 
+    .body {
+      display:block;
+    }
+
   .calendar {
     padding: 32px 24px;
     width: 704px;

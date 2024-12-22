@@ -43,7 +43,7 @@
 }
 
 @media (min-width: 768px) {
-  .wrapper {
+  .wrapperwrapper {
     display: flex;
     flex-direction: row;
     width: 704px;
@@ -78,9 +78,9 @@
 }
 
 
-.wrapperwrapper{}
+.wrapper{}
 
-.wrappercontaine{
+.container{
   border-radius: 10px;
   width: 256px;
   height: 8px;
@@ -98,4 +98,4 @@
   /*transform: rotate(-90deg);*/
 }
 
-.wrapperlabel{}
+.label{}
