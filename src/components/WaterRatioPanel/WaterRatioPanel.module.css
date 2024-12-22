@@ -78,24 +78,74 @@
 }
 
 
-.wrapper{}
+.ritio{
+  margin-top: 11px;
+  width: 280px;
+  height: 82px;
+}
 
-.container{
+.ritiocon{
   border-radius: 10px;
   width: 256px;
   height: 8px;
   background: #d7e3ff;
-  /*transform: rotate(-90deg);*/
   margin-left: auto;
   margin-right: auto;
 }
 
-.barCompleted{
+.status{
   border-radius: 10px;
+  width: 100px;
   height: 8px;
-  /*width: 82%;*/
   background: #9ebbff;
-  /*transform: rotate(-90deg);*/
+  position: relative;
 }
 
-.label{}
+.but{
+  position: absolute;
+  border-radius: 100%;
+  fill: #fff;
+  stroke-width: 1px;
+  stroke: #407bff;
+  margin-left: calc(100% - 7px);
+  top: -7px;
+}
+
+.label{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 280px;
+  height: 32px;
+  margin-top: 7px;
+}
+
+.labeltwo{
+  border: 1px solid #d7e3ff;
+  width: 0px;
+  height: 8px;
+  margin-left: 12px;
+}
+
+.labeltry{
+  border: 1px solid #d7e3ff;
+  width: 0px;
+  height: 8px;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.text{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  text-align: center;
+  color: #407bff;
+  position: absolute;
+  top: 16px;
+  left: 10px;
+}
+
+.labelstatus{}

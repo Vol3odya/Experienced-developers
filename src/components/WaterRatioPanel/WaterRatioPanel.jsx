@@ -7,13 +7,29 @@ export default function WaterRatioPanel() {
     <div>
       <h2 className={css.header}>Today</h2>
       <div className={css.wrapper}>
-        <ProgressBar
-          completed={80}
-          className={css.wrapper}
-          barContainerClassName={css.container}
-          completedClassName={css.barCompleted}
-          labelClassName={css.label}
-        />
+        <div className={css.ritio}>
+          <h2 className={css.header}>Today</h2>
+          <div className={css.ritiocon}>
+            <div className={css.status}>
+              <div className={css.but}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="7" cy="7" r="6.5" fill="white" stroke="#407BFF" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div className={css.label}>
+            <div className={css.labeltwo}>
+              <p className={css.text}>0%</p>
+            </div>
+            <div className={css.labelstatus}>
+              <p>50%</p>
+            </div>
+            <div className={css.labeltry}>
+              <p className={css.text}>100%</p>
+            </div>
+          </div>
+        </div>
         <button className={css.button}>
           <svg
             className={css.btnIcon}
