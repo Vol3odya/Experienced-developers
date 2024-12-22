@@ -82,7 +82,7 @@ export default function TodayWaterList() {
           </li>
         ))}
       </ul>
-      {isModalOpen && <EditWaterModal closeModal={handleCloseModalEdit} />}
+      {isModalOpen && <EditWaterModal closeModal={handleCloseModalEdit} _id={id} />}
       {/* <button type="button" onClick={editOpen}>
         Delete
       </button> */}

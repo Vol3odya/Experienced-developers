@@ -31,7 +31,7 @@ const WaterSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             const index = state.waterShots.findIndex(
-                (water) => water.id === action.payload.id
+                (water) => water._id === action.payload._id
               );
               //якщо index - false
               if (index !== -1) {
