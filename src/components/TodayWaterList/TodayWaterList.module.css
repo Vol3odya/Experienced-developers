@@ -21,3 +21,29 @@
   font-size: 24px;
   line-height: 1.11;
 }
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--secondary-color---5);
+}
+
+.list {
+  height: 172px;
+  overflow-y: hidden;
+  padding-right: 10px;
+  margin-bottom: 12px;
+  overflow-y: scroll;
+  &:not:last-child {
+    border-bottom: 1px solid #d7e3ff;
+  }
+}
+
+.listli {
+  display: flex;
+}
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+}
