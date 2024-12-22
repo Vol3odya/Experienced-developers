@@ -12,13 +12,14 @@ import cup from "../../images/svg/cup.svg";
 import outline from "../../images/svg/outline.svg";
 import del from "../../images/svg/del.svg";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
+import { deleteWater } from "../../redux/water/operations.js"
 
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();
 
   const water = useSelector(selectWaterShots);
-  console.log(water);
+  console.log("jknikniui", water);
 
   useEffect(() => {
     dispatch(getWaterFromToday());
@@ -27,14 +28,14 @@ export default function TodayWaterList() {
   // const handleDelete = dispatch(delete)
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isEditeOpen, setEditeOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditeOpen, setEditeOpen] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(0);
 
-  const handleOpenModalEdit = () => {
-    setIsModalOpen(true);
+  const handleOpenModalEdit = (event) => {
+    setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
   };
   const handleCloseModalEdit = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(0);
   };
 
   const handleOpenModal = () => {
@@ -45,20 +46,32 @@ export default function TodayWaterList() {
   };
 
   const editClose = () => {
-    setEditeOpen(false);
+    setEditeOpen(0);
   };
-  const editOpen = () => {
-    setEditeOpen(true);
+  const editOpen = (event) => {
+    setEditeOpen(event.target.parentNode.parentNode.parentNode.id);
   };
+
+  const delet = () => {
+    dispatch(deleteWater({ _id: isEditeOpen }));
+    setEditeOpen(0);
+  }
+
+
+
+
+
+
+
 
   return (
     <div className={css.section}>
       <h2 className={css.header}>Today</h2>
       {/* <div className={css.listWrapper}></div> */}
       <ul className={css.list}>
-        {water.map(({ id, waterVolume, date }) => (
-          <li key={id} className={css.item}>
-            <div className={css.listli}>
+        {water.map(({ _id, waterVolume, date }) => (
+          <li key={_id} className={css.item}>
+            <div id={_id} className={css.listli}>
              <div className={css.itemInfo}>
                 <img src={cup} size={22.69} alt="cup image" />
                 <div className={css.colorMl}> {waterVolume}ml</div>
@@ -78,7 +91,7 @@ export default function TodayWaterList() {
                     alt="outline image"
                   />
                 </button>
-                <button type="button" className={css.iconButton}onClick={editOpen}>
+                <button type="button" className={css.iconButton} onClick={editOpen}>
                   <img className={css.icon} src={del} width="16" height="16" alt="delete image" />
                 </button>
               </div>
@@ -86,11 +99,11 @@ export default function TodayWaterList() {
           </li>
         ))}
       </ul>
-      {isModalOpen && <EditWaterModal closeModal={handleCloseModalEdit} _id={id} />}
+      {isModalOpen ? <EditWaterModal closeModal={handleCloseModalEdit} _id={isModalOpen} />: false}
       {/* <button type="button" onClick={editOpen}>
         Delete
       </button> */}
-      {isEditeOpen && <UserLogoutModal closeModal={editClose} />}
+      {isEditeOpen ? <UserLogoutModal closeModal={editClose} onClick={delet} />: false}
 
       <button className={css.btnAddWater} onClick={handleOpenModal}><HiOutlinePlusSmall size="16" />Add water</button>
       {isOpen && <TodayListModal closeModal={handleCloseModal} />}
