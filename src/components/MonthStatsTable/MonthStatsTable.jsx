@@ -1,27 +1,44 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectWaterShots } from "../../redux/water/selectors";
+import { getMonthWater } from "../../redux/monthWaterList/operations";
 import styles from "./MonthStatsTable.module.css";
 
+const DEFAULT_DAILY_NORMA = 2000; // Дефолтная норма воды
+
 export default function MonthStatsTable() {
+  const dispatch = useDispatch();
   const [currentDate, setCurrentDate] = useState(new Date());
-  //const [selectedDay, setSelectedDay] = useState(null);
-  const [daysStats, setDaysStats] = useState([]);
+
+  // Получаем данные из Redux store
+  const waterShots = useSelector(selectWaterShots);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/days-stats");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setDaysStats(data);
-      } catch (error) {
-        console.error("Error fetching days stats:", error);
-      }
-    };
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Месяц в API начинается с 1
+    dispatch(getMonthWater({ year, month }));
+  }, [currentDate, dispatch]);
 
-    fetchData();
-  }, []);
+  // Суммируем воду по дням и вычисляем проценты
+  const daysStats = waterShots.reduce((acc, shot) => {
+    const shotDate = new Date(shot.date);
+    const isSameMonth =
+      shotDate.getFullYear() === currentDate.getFullYear() &&
+      shotDate.getMonth() === currentDate.getMonth();
+
+    if (isSameMonth) {
+      const day = shotDate.getDate();
+      if (!acc[day]) {
+        acc[day] = {
+          waterVolume: 0,
+          dailyNorma: shot.dailyNorma || DEFAULT_DAILY_NORMA,
+        };
+      }
+      acc[day].waterVolume += shot.waterVolume; // Суммируем воду за день
+    }
+
+    return acc;
+  }, {});
 
   const getDaysInMonth = () => {
     const year = currentDate.getFullYear();
@@ -84,8 +101,15 @@ export default function MonthStatsTable() {
         {Array.from({ length: Math.ceil(days.length / 10) }, (_, rowIndex) => (
           <div key={rowIndex} className={styles.row}>
             {days.slice(rowIndex * 10, rowIndex * 10 + 10).map((day) => {
-              const dayStats = daysStats?.[day - 1] || {};
-              const isComplete = dayStats.percentage === 100;
+              const dayStats = daysStats[day] || {
+                waterVolume: 0,
+                dailyNorma: DEFAULT_DAILY_NORMA,
+              };
+              const percentage = Math.min(
+                (dayStats.waterVolume / dayStats.dailyNorma) * 100,
+                100
+              );
+              const isComplete = percentage === 100;
 
               return (
                 <div key={day} className={styles.dayWrapper}>
@@ -98,32 +122,15 @@ export default function MonthStatsTable() {
                     <span className={styles.dayNumber}>{day}</span>
                   </div>
                   {/* Процент снизу */}
-                  <div className={styles.percentage}>
-                    {dayStats.percentage || "0"}%
-                  </div>
+                  <div className={styles.percentage}>{`${Math.round(
+                    percentage
+                  )}%`}</div>
                 </div>
               );
             })}
           </div>
         ))}
       </div>
-
-      {/* {selectedDay && (
-        <div className={styles.generalStats}>
-          <h3>Day {selectedDay} Stats</h3>
-          <p>{`Water intake: ${
-            daysStats[selectedDay - 1]?.intake || "No data"
-          } ml`}</p>
-          <button onClick={() => setSelectedDay(null)}>Close</button>
-        </div>
-      )} */}
-      {/*selectedDay && (
-        <DaysGeneralStats
-          dayStats={selectedDay.stats}
-          selectedDate={selectedDay.date}
-          onClose={handleCloseStats}
-        />
-      )*/}
     </div>
   );
 }
