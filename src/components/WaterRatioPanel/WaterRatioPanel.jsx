@@ -7,7 +7,6 @@ export default function WaterRatioPanel() {
   //console.log(css.status);
   //css.style.status.width = `${statys}px`;
   return (
-    <div>
       <div className={css.wrapper}>
         <div className={css.ritio}>
           <h2 className={css.header}>Today</h2>
@@ -54,6 +53,5 @@ export default function WaterRatioPanel() {
           </div>
         </button>
       </div>
-    </div>
   );
 }

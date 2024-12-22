@@ -57,9 +57,11 @@
   .body {
     display: flex;
     flex-wrap: wrap;
+    gap: 32px;
   }
 
   .calendar {
     width: 592px;
   }
+  
 }

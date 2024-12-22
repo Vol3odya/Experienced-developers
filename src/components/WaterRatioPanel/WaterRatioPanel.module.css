@@ -59,7 +59,6 @@
     min-width: 336px;
     height: 44px;
     margin-top: 42px;
-
   }
 
   .flex {
@@ -84,13 +83,19 @@
 
   .wrapper {
     width: 592px;
+    padding: 0;
+    margin-left: 0;
   }
   
   .button {
-    /*padding: 10px 30px;*/
+    padding: 0;
     max-width: 178px;
-    margin-top: 42px;
+    width: 178px !important;
+    margin-top: 32px;
+    margin-left: 0;
   }
+
+
 
 }
 
@@ -221,12 +226,23 @@
 
 @media only screen and (min-width: 1440px) {
 
-  .buttonRed {
-    margin-right: auto;
+  .ritio {
+    width: 391px;
+    margin-bottom: 0;
+    /*height: 82px;*/
   }
 
-  .button {
-    margin-left: 0;
+  .ritiocon {
+    width: 360px;
   }
 
+  .label {
+    width: 391px;
+    margin-right: 23px;
+  }
+
+  .labelstatus{
+    margin-bottom: 0;
+  }
+  
 }
