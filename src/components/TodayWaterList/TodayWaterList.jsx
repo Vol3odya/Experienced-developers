@@ -28,14 +28,14 @@ export default function TodayWaterList() {
   // const handleDelete = dispatch(delete)
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isEditeOpen, setEditeOpen] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(0);
+  const [isEditeOpen, setEditeOpen] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState("");
 
   const handleOpenModalEdit = (event) => {
     setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
   };
   const handleCloseModalEdit = () => {
-    setIsModalOpen(0);
+    setIsModalOpen("");
   };
 
   const handleOpenModal = () => {
@@ -46,7 +46,7 @@ export default function TodayWaterList() {
   };
 
   const editClose = () => {
-    setEditeOpen(0);
+    setEditeOpen("");
   };
   const editOpen = (event) => {
     setEditeOpen(event.target.parentNode.parentNode.parentNode.id);
@@ -54,7 +54,7 @@ export default function TodayWaterList() {
 
   const delet = () => {
     dispatch(deleteWater({ _id: isEditeOpen }));
-    setEditeOpen(0);
+    setEditeOpen("");
   }
 
 
@@ -99,11 +99,11 @@ export default function TodayWaterList() {
           </li>
         ))}
       </ul>
-      {isModalOpen ? <EditWaterModal closeModal={handleCloseModalEdit} _id={isModalOpen} />: false}
+      {isModalOpen && <EditWaterModal closeModal={handleCloseModalEdit} _id={isModalOpen} />}
       {/* <button type="button" onClick={editOpen}>
         Delete
       </button> */}
-      {isEditeOpen ? <UserLogoutModal closeModal={editClose} onClick={delet} />: false}
+      {isEditeOpen && <UserLogoutModal closeModal={editClose} onClick={delet}/>}
 
       <button className={css.btnAddWater} onClick={handleOpenModal}><HiOutlinePlusSmall size="16" />Add water</button>
       {isOpen && <TodayListModal closeModal={handleCloseModal} />}
