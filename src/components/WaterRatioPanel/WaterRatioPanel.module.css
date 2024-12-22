@@ -85,12 +85,14 @@
     width: 592px;
     padding: 0;
     margin-left: 0;
+    margin-top: auto;
+    margin-bottom: 0;
   }
   
   .button {
     padding: 0;
     max-width: 178px;
-    width: 178px !important;
+    min-width: 178px;
     margin-top: 32px;
     margin-left: 0;
   }

@@ -63,5 +63,10 @@
   .calendar {
     width: 592px;
   }
+
+  .ratio{
+    margin-top: auto;
+    margin-bottom: 0;
+  }
   
 }
