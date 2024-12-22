@@ -4,6 +4,7 @@ import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 import { useState } from "react";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal.jsx";
 import TodayListModal from "../TodayListModal/TodayListModal";
+
 import css from "../TodayWaterList/TodayWaterList.module.css";
 import EditWaterModal from "../TodayListModal/EditWaterModal.jsx";
 import { selectWaterShots } from "../../redux/water/selectors.js";

@@ -44,6 +44,7 @@ export default function UserLogo() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
+      console.log(event.target.className);
       if (isOpen && !event.target.closest(`.${csscss}`)) {
         setIsOpen(false);
       }

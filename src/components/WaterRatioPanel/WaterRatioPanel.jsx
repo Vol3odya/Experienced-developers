@@ -2,16 +2,17 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import css from "./WaterRatioPanel.module.css";
 
 export default function WaterRatioPanel() {
+
   return (
     <div>
       <h2 className={css.header}>Today</h2>
       <div className={css.wrapper}>
         <ProgressBar
           completed={80}
-          className={css.wrapperwrapper}
-          barContainerClassName={css.wrappercontaine}
+          className={css.wrapper}
+          barContainerClassName={css.container}
           completedClassName={css.barCompleted}
-          labelClassName={css.wrapperlabel}
+          labelClassName={css.label}
         />
         <button className={css.button}>
           <svg

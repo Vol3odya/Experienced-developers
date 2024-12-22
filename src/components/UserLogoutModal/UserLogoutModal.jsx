@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import css from "./UserLogoutModal.module.css";
 
-export default function UserLogoutModal({ closeModal, onClick, delOrLogout }) {
+export default function UserLogoutModal({ closeModal, onClick, delOrLogout=true }) {
 
   let logo = "";
   let par = "";

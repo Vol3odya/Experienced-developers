@@ -3,7 +3,7 @@
   display: inline-flex;
   padding: 24px 8px;
   flex-direction: column;
-  align-items: flex-start;
+  /*align-items: flex-start;*/
   /* gap: 12px; */
 
   @media (min-width: 768px) {
