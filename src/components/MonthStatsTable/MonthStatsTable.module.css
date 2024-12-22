@@ -94,9 +94,12 @@
   height: 32px;
   border-radius: 50%;
   padding: 7px 6px;
-  border: 20px solid var(--Secondary-color-5, #ff9d43);
   background: var(--Primery-Color-White, #fff);
   box-sizing: border-box;
+}
+
+.complete {
+  border: none;
 }
 
 .incomplete {
