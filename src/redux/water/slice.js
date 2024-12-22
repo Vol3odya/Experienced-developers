@@ -42,7 +42,7 @@ const WaterSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             const index = state.waterShots.findIndex(
-                (water) => water.id === action.payload.id
+                (water) => water.userId === action.payload.userId
               );
               //якщо index - false
               if (index !== -1) {
