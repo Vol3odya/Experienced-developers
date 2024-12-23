@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectWaterShots } from "../../redux/water/selectors";
+
 import { getMonthWater } from "../../redux/monthWaterList/operations";
 import styles from "./MonthStatsTable.module.css";
 
@@ -11,7 +11,7 @@ export default function MonthStatsTable() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   // Получаем данные из Redux store
-  const waterShots = useSelector(selectWaterShots);
+  const monthData = useSelector((state) => state.month.items.data || []);
 
   useEffect(() => {
     const year = currentDate.getFullYear();
@@ -20,23 +20,12 @@ export default function MonthStatsTable() {
   }, [currentDate, dispatch]);
 
   // Суммируем воду по дням и вычисляем проценты
-  const daysStats = waterShots.reduce((acc, shot) => {
-    const shotDate = new Date(shot.date);
-    const isSameMonth =
-      shotDate.getFullYear() === currentDate.getFullYear() &&
-      shotDate.getMonth() === currentDate.getMonth();
-
-    if (isSameMonth) {
-      const day = shotDate.getDate();
-      if (!acc[day]) {
-        acc[day] = {
-          waterVolume: 0,
-          dailyNorma: shot.dailyNorma || DEFAULT_DAILY_NORMA,
-        };
-      }
-      acc[day].waterVolume += shot.waterVolume; // Суммируем воду за день
-    }
-
+  const daysStats = monthData.reduce((acc, day) => {
+    const dayNumber = new Date(day.date).getDate();
+    acc[dayNumber] = {
+      waterVolume: parseFloat(day.waterVolume) || 0,
+      dailyNorma: parseFloat(day.waterRate) || DEFAULT_DAILY_NORMA,
+    };
     return acc;
   }, {});
 
@@ -105,10 +94,15 @@ export default function MonthStatsTable() {
                 waterVolume: 0,
                 dailyNorma: DEFAULT_DAILY_NORMA,
               };
-              const percentage = Math.min(
-                (dayStats.waterVolume / dayStats.dailyNorma) * 100,
-                100
-              );
+              const percentage = dayStats
+                ? Math.min(
+                    Math.round(
+                      (dayStats.waterVolume / dayStats.dailyNorma) * 100
+                    ),
+                    100
+                  )
+                : 0;
+
               const isComplete = percentage === 100;
 
               return (
