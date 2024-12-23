@@ -29,7 +29,7 @@ export default function App() {
         await dispatch(refreshUser()).unwrap();
         await dispatch(fetchUser()).unwrap();
       } catch (error) {
-        console.error("Failed to refresh user or fetch user data:", error);
+        //console.error("Failed to refresh user or fetch user data:", error);
       
       }
     };
