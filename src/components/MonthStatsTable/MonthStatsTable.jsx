@@ -19,7 +19,16 @@ export default function MonthStatsTable() {
   useEffect(() => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Месяц в API начинается с 1
-    dispatch(getMonthWater({ year, month }));
+    const refresh = async () => {
+      try {
+        await dispatch(getMonthWater({ year, month })).unwrap();
+      } catch (error) {
+        //console.error("Failed to refresh user or fetch user data:", error);
+      
+      }
+      refresh();
+    };
+    
   }, [currentDate, dispatch]);
 
   // Суммируем воду по дням и вычисляем проценты

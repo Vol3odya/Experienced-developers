@@ -36,9 +36,20 @@ export default function TodayWaterList() {
   const [isEditeOpen, setEditeOpen] = useState("");
   const [isModalOpen, setIsModalOpen] = useState("");
 
- useEffect(() => {
-    dispatch(getWaterFromToday());
-  }, [dispatch, isOpen, isEditeOpen, isModalOpen]);
+
+  useEffect(() => {
+    const refresh = async () => {
+      try {
+        await dispatch(getWaterFromToday()).unwrap();
+      } catch (error) {
+        //console.error("Failed to refresh user or fetch user data:", error);
+      
+      }
+      refresh();
+    };
+    
+  }, [ dispatch, isOpen, isEditeOpen, isModalOpen]);
+
 
   const handleOpenModalEdit = (event) => {
     setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
