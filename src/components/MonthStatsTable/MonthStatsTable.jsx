@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectWaterShots } from "../../redux/water/selectors";
+
 import { getMonthWater } from "../../redux/monthWaterList/operations";
 import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats";//імпорт модального вікна з інформацією за день
 import styles from "./MonthStatsTable.module.css";
@@ -14,7 +14,7 @@ export default function MonthStatsTable() {
   const [selectedDate, setSelectedDate] = useState(null)//HPO
 
   // Получаем данные из Redux store
-  const waterShots = useSelector(selectWaterShots);
+  const monthData = useSelector((state) => state.month.items.data || []);
 
   useEffect(() => {
     const year = currentDate.getFullYear();
@@ -23,9 +23,14 @@ export default function MonthStatsTable() {
   }, [currentDate, dispatch]);
 
   // Суммируем воду по дням и вычисляем проценты
-
-  // const daysStats = waterShots.reduce((acc, shot) => {
-  //   if(!shot.date) return acc;// пропускаємо об'єкти без дати
+  const daysStats = monthData.reduce((acc, day) => {
+    const dayNumber = new Date(day.date).getDate();
+    acc[dayNumber] = {
+      waterVolume: parseFloat(day.waterVolume) || 0,
+      dailyNorma: parseFloat(day.waterRate) || DEFAULT_DAILY_NORMA,
+    };
+    return acc;
+  }, {});
 
   //   const shotDate = new Date(shot.date);
   //   if (isNaN(shotDate)) return acc; // пропускаємо некоректні дати
@@ -158,10 +163,15 @@ export default function MonthStatsTable() {
                 waterVolume: 0,
                 dailyNorma: DEFAULT_DAILY_NORMA,
               };
-              const percentage = Math.min(
-                (dayStats.waterVolume / dayStats.dailyNorma) * 100,
-                100
-              );
+              const percentage = dayStats
+                ? Math.min(
+                    Math.round(
+                      (dayStats.waterVolume / dayStats.dailyNorma) * 100
+                    ),
+                    100
+                  )
+                : 0;
+
               const isComplete = percentage === 100;
 
               return (
