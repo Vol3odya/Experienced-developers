@@ -27,19 +27,10 @@ export default function WaterRatioPanel() {
     setIsOpen(false);
   };
 
-
-    useEffect(() => {
-    const refresh = async () => {
-      try {
-        await dispatch(getWaterFromToday()).unwrap();
-      } catch (error) {
-        //console.error("Failed to refresh user or fetch user data:", error);
-      
-      }
-      refresh();
-    };
-    
-  }, [ isOpen]);
+  
+  useEffect(() => {
+    dispatch(getWaterFromToday());
+  }, [isOpen]);
 
 
 

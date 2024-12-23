@@ -5,7 +5,7 @@ import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import SettingModal from "../SettingModal/SettingModal";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
 import { logout } from "../../redux/auth/operations";
-import { selectUser } from '../../redux/user/selectors';
+import { selectUser } from '../../redux/auth/selectors';
 import css from "./UserLogo.module.css";
 import {csscss} from "../UserLogoModal/UserLogoModal"
 

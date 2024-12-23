@@ -4,16 +4,19 @@ import bottleImageM from "../../images/svg/bow-m.svg";
 import bottleImageT from "../../images/svg/bow-t.svg";
 import bottleImageD from "../../images/svg/bow-d.svg";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DailyNormaModal from "../DailyNormaModal/DailyNormaModal";
 
 import { useDispatch, useSelector } from "react-redux";
+import {refreshUser} from "../../redux/auth/operations.js"
 import { updateUser } from "../../redux/user/operations.js";
 import { putWaterRate } from "../../redux/waterRate/operations.js";
-import { selectUser } from "../../redux/user/selectors.js";
+import { selectUser } from "../../redux/auth/selectors.js";
 
 export default function DailyNorma() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const dispatch = useDispatch();
 
   // відкриття за такриття модалки
   const handleOpenModal = () => {
@@ -26,7 +29,7 @@ export default function DailyNorma() {
   // оновлення кількості води
   const user = useSelector(selectUser);
   const usersWaterRate = (user.waterRate / 1000).toFixed(1);
-  const dispatch = useDispatch();
+  
   const handleUpdateWaterRate = async (newRate) => {
     // await dispatch(putWaterRate({ dailyNorma: newRate * 1000 }));
     await dispatch(updateUser({ waterRate: newRate * 1000 }));

@@ -24,17 +24,8 @@ export default function App() {
   const isRefreshing = useSelector(selectIsRefresh);
 
   useEffect(() => {
-    const refresh = async () => {
-      try {
-        await dispatch(refreshUser()).unwrap();
-        await dispatch(fetchUser()).unwrap();
-      } catch (error) {
-        //console.error("Failed to refresh user or fetch user data:", error);
-      
-      }
-    };
-  
-    refresh();
+    dispatch(refreshUser());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return isRefreshing ? (
