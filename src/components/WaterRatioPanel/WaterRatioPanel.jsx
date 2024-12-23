@@ -1,20 +1,47 @@
-import ProgressBar from "@ramonak/react-progress-bar";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { selectAmountToday } from "../../redux/todayWaterList/selectors";
+import TodayListModal from "../TodayListModal/TodayListModal";
+import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 import css from "./WaterRatioPanel.module.css";
 
 export default function WaterRatioPanel() {
 
-  const statys = 50;
+  const dispatch = useDispatch();
+
+  const water = useSelector(selectAmountToday);
+  /*const norm = useSelector(selectUser);
+
+  let statys = 0;
+  if (norm) {
+    statys=weter/norm.waterRate
+  }*/
   //console.log(css.status);
   //css.style.status.width = `${statys}px`;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    dispatch(getWaterFromToday());
+  }, [isOpen]);
+
+
+
   return (
       <div className={css.wrapper}>
         <div className={css.ritio}>
           <h2 className={css.header}>Today</h2>
-          <div className={css.labelstatus} style={{ marginLeft: `calc(((${statys}/100) * (100% - 24px)) + 10.5px)` }}>
-            <p className={css.texttwo}>{statys}%</p>
+          <div className={css.labelstatus} style={{ marginLeft: `calc(((${water.waterVolumeInPercent}/100) * (100% - 24px)) + 10.5px)` }}>
+            <p className={css.texttwo}>{water.waterVolumeInPercent}%</p>
           </div> 
           <div className={css.ritiocon} >
-            <div className={css.status} style={{width:`${statys}%`}}>
+            <div className={css.status} style={{width:`${water.waterVolumeInPercent}%`}}>
               <div className={css.but}>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="7" cy="7" r="6.5" fill="white" stroke="#407BFF" />
@@ -31,7 +58,7 @@ export default function WaterRatioPanel() {
             </div>
           </div>
         </div>
-        <button className={css.button}>
+        <button className={css.button} onClick={handleOpenModal}>
           <div className={css.flex}>
             <svg
               className={css.btnIcon}
@@ -51,7 +78,8 @@ export default function WaterRatioPanel() {
             </svg>
             <span className={css.btnSpan}>Add Water</span>
           </div>
-        </button>
+      </button>
+      {isOpen && <TodayListModal closeModal={handleCloseModal} />}
       </div>
   );
 }
