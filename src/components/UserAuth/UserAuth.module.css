@@ -5,6 +5,7 @@
     max-height: 28px;
     margin-top: auto;
     margin-bottom: auto;
+    cursor: pointer;
 }
 
 .user_img {
