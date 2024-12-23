@@ -99,7 +99,7 @@ export default function TodayListModal({ closeModal }) {
   };
 
   const now = new Date();
-  const forDate = now.toISOString().split("T")[0];
+  const forDate = now.toISOString();//.split("T")[0];
 
   const handleSubmit = () => {
     const newNote = {
@@ -109,6 +109,7 @@ export default function TodayListModal({ closeModal }) {
     };
     dispatch(addWater(newNote));
     console.log(newNote);
+    //closeModal();
   };
 
   return (

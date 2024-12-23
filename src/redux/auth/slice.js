@@ -40,8 +40,12 @@ const authSlice = createSlice({
       .addCase(signin.pending, (state) => {
         state.isRefresh = true;
       })
+  
       .addCase(logout.fulfilled, () => {
         return initialState;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isError = action.payload;
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefresh = true;
@@ -51,6 +55,7 @@ const authSlice = createSlice({
         state.isRefresh = false;
         state.isLoggedIn = true;
         state.isError = null;
+        state.isLoading = false;
       })
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefresh = false;
@@ -64,6 +69,7 @@ const authSlice = createSlice({
         (state, action) => {
           state.isLoading = false;
           state.isError = action.payload;
+          state.isRefresh = false;
         }
       );
   },

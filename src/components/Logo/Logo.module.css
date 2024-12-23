@@ -5,6 +5,7 @@
     margin-right: auto;
     max-width: 110px;
     max-height: 48px;
+    cursor: pointer;
 }
 
 .logo:hover {

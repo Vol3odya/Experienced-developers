@@ -1,19 +1,54 @@
 .modal {
-  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box; 
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  /* position: absolute; */
+  box-shadow: 0px 4px 4px 0px rgba(64, 123, 255, 0.3);
+  background: var(--primery-color-white, #ffffff);
+  /* position: fixed; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-  width: 90%;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); */
+  border-radius: 10px;
+  /* width: 90%; */
+  width: 280px;
   max-width: 400px;
   z-index: 1000;
-  padding: 20px;
+  padding: 24px 13px 24px 13px;
+  /* padding: 20px; */
+}
+
+.dayMoth {
+  color: var(--primery-color-blue, #407bff);
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+}
+
+.sectionDate {
+  display: flex;
+  flex-direction: row;
+  gap: 34px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
 }
 
 .content {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .closeButton {
@@ -34,11 +69,40 @@
 }
 
 .section {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px;
   font-size: 16px;
-  color: #555;
+  color: #555; */
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
 }
 
 .section strong {
   color: #333;
 }
+
+.sectionTitle {
+  color: var(--primery-color-black, #2f2f2f);
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+}
+
+.sectionNumber {
+  color: var(--primery-color-blue, #407bff);
+  text-align: left;
+  font-family: "Roboto-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  position: relative;
+  /* width: 44px; */
+}
+

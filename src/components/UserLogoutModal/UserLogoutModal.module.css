@@ -77,6 +77,7 @@
     height: 36px;
     box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
     background: #ef5050;
+    cursor: pointer;
 }
 
 .button{
@@ -86,6 +87,7 @@
     width: 232px;
     height: 36px;
     background: #d7e3ff;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 768px) {

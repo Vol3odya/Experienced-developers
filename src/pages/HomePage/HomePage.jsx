@@ -11,7 +11,7 @@ export default function HomePage() {
       <div className={`${css.container} ${css.body}`}>
         <div>
           <DailyNorma />
-          <WaterRatioPanel />
+          <WaterRatioPanel className={css.ratio} />
         </div>
         <div className={css.calendar}>
           <TodayWaterList />

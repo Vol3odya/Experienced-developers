@@ -9,7 +9,7 @@ import { HiMinus } from "react-icons/hi2";
 import { HiPlus } from "react-icons/hi";
 import cup from "../../images/svg/cup.svg";
 
-export default function EditWaterModal({ closeModal, id }) {
+export default function EditWaterModal({ closeModal, _id }) {
   const [amount, setAmount] = useState(50);
   const [time, setTime] = useState("");
   const [isTimeCorrect, setIsTimeCorrect] = useState(true);
@@ -121,7 +121,7 @@ export default function EditWaterModal({ closeModal, id }) {
     const forDate = now.toISOString().split("T")[0];
 
     const newNote = {
-      id,
+      _id,
       time: time,
       waterVolume: amount,
       date: forDate,

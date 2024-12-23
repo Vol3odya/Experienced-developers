@@ -17,9 +17,10 @@ export const addWater = createAsyncThunk(
 
 export const updateWater = createAsyncThunk(
   "water/updateWater",
-  async ({ waterVolume, date, userId }, thunkAPI) => {
+  async ({ waterVolume, date, _id }, thunkAPI) => {
     try {
-      const response = await axios.patch(`/water/${userId}`, { date, waterVolume });
+      console.log(_id);
+      const response = await axios.patch(`/water/${_id}`, { date, waterVolume });
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -29,10 +30,10 @@ export const updateWater = createAsyncThunk(
 
 export const deleteWater = createAsyncThunk(
   "water/deleteWater",
-  async ({ userId }, thunkAPI) => {
+  async ({ _id }, thunkAPI) => {
     try {
-      await axios.delete(`/water/${userId}`);
-      return userId;
+      await axios.delete(`/water/${_id}`);
+      return _id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
