@@ -78,7 +78,7 @@ export default function TodayWaterList() {
       <h2 className={css.header}>Today</h2>
       {/* <div className={css.listWrapper}></div> */}
       <ul className={css.list}>
-        {waterDay.items ? [...waterDay.items].reverse().map(({ _id, waterVolume, time }) => (
+        {[...waterDay.items].reverse().map(({ _id, waterVolume, time }) => (
           <li key={_id} className={css.item}>
             <div id={_id} className={css.listli}>
              <div className={css.itemInfo}>
@@ -103,7 +103,7 @@ export default function TodayWaterList() {
               </div>
             </div>
           </li>
-        )):<p></p>}
+        ))}
       </ul>
       {isModalOpen && <EditWaterModal closeModal={handleCloseModalEdit} _id={isModalOpen} />}
       {/* <button type="button" onClick={editOpen}>
