@@ -15,6 +15,7 @@ export default function UserLogo() {
   const dispatch = useDispatch();
 
   const user = useSelector(selectUser);
+  console.log(user, "1111111111111111111");
 
   let nikname = "User";
   let photo = "https://cdn-icons-png.flaticon.com/512/2922/2922506.png";

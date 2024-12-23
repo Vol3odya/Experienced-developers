@@ -15,21 +15,30 @@ import { HiOutlinePlusSmall } from "react-icons/hi2";
 import { deleteWater } from "../../redux/water/operations.js"
 
 
+import { selectAmountToday } from "../../redux/todayWaterList/selectors.js";
+
+
+
 export default function TodayWaterList() {
   const dispatch = useDispatch();
 
-  const water = useSelector(selectWaterShots);
-  console.log("jknikniui", water);
+ 
 
-  useEffect(() => {
-    dispatch(getWaterFromToday());
-  }, [dispatch]);
+
+  const waterDay = useSelector(selectAmountToday);
+
+  
+
 
   // const handleDelete = dispatch(delete)
 
   const [isOpen, setIsOpen] = useState(false);
   const [isEditeOpen, setEditeOpen] = useState("");
   const [isModalOpen, setIsModalOpen] = useState("");
+
+ useEffect(() => {
+    dispatch(getWaterFromToday());
+  }, [dispatch, isOpen, isEditeOpen, isModalOpen]);
 
   const handleOpenModalEdit = (event) => {
     setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
@@ -69,17 +78,14 @@ export default function TodayWaterList() {
       <h2 className={css.header}>Today</h2>
       {/* <div className={css.listWrapper}></div> */}
       <ul className={css.list}>
-        {water.map(({ _id, waterVolume, date }) => (
+        {waterDay.map(({ _id, waterVolume, time }) => (
           <li key={_id} className={css.item}>
             <div id={_id} className={css.listli}>
              <div className={css.itemInfo}>
                 <img src={cup} size={22.69} alt="cup image" />
                 <div className={css.colorMl}> {waterVolume}ml</div>
                 <span className={css.waterTime}>
-                  {new Date(date).toLocaleTimeString("uk-UA", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {time}
                 </span>
              </div>
               <div className={css.itemIcons}>
