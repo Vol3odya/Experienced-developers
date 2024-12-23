@@ -25,7 +25,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(refreshUser());
-    //dispatch(fetchUser());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   return isRefreshing ? (
