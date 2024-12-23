@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats"; //імпорт модального вікна з інформацією за день
 import { getMonthWater } from "../../redux/monthWaterList/operations";
 import styles from "./MonthStatsTable.module.css";
 
@@ -9,6 +10,8 @@ const DEFAULT_DAILY_NORMA = 2000; // Дефолтная норма воды
 export default function MonthStatsTable() {
   const dispatch = useDispatch();
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDayStats, setSelectedDayStats] = useState(null); //HPO
+  const [selectedDate, setSelectedDate] = useState(null); //HPO
 
   // Получаем данные из Redux store
   const monthData = useSelector((state) => state.month.items.data || []);
@@ -17,14 +20,15 @@ export default function MonthStatsTable() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Месяц в API начинается с 1
     dispatch(getMonthWater({ year, month }));
-  }, [currentDate, dispatch]);
+  }, [currentDate, dispatch, monthData]);
 
   // Суммируем воду по дням и вычисляем проценты
   const daysStats = monthData.reduce((acc, day) => {
     const dayNumber = new Date(day.date).getDate();
     acc[dayNumber] = {
-      waterVolume: parseFloat(day.waterVolume) || 0,
-      dailyNorma: parseFloat(day.waterRate) || DEFAULT_DAILY_NORMA,
+      waterVolume: parseFloat(day.waterVolume) * 1000 || 0,
+      dailyNorma: parseFloat(day.waterRate) * 1000 || 0,
+      portions: day.portions || 0,
     };
     return acc;
   }, {});
@@ -61,6 +65,20 @@ export default function MonthStatsTable() {
 
   const days = generateDays();
 
+  const openModal = (day) => {
+    // modal is open DaysGeneralStats
+    setSelectedDayStats(daysStats[day]);
+    setSelectedDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+    );
+  };
+
+  const closeModal = () => {
+    // modal is close DaysGeneralStats
+    setSelectedDayStats(null);
+    setSelectedDate(null);
+  };
+
   return (
     <div className={styles.calendarContainer}>
       <div className={styles.monthContainer}>
@@ -94,27 +112,23 @@ export default function MonthStatsTable() {
                 waterVolume: 0,
                 dailyNorma: DEFAULT_DAILY_NORMA,
               };
-              const percentage = dayStats
-                ? Math.min(
-                    Math.round(
-                      (dayStats.waterVolume / dayStats.dailyNorma) * 100
-                    ),
-                    100
-                  )
-                : 0;
-
+              const percentage = Math.min(
+                (dayStats.waterVolume / dayStats.dailyNorma) * 100,
+                100
+              );
               const isComplete = percentage === 100;
 
               return (
                 <div key={day} className={styles.dayWrapper}>
                   {/* Кружок с числом */}
-                  <div
+                  <button
                     className={`${styles.dayCircle} ${
                       !isComplete ? styles.incomplete : ""
                     }`}
+                    onClick={() => openModal(day)}
                   >
                     <span className={styles.dayNumber}>{day}</span>
-                  </div>
+                  </button>
                   {/* Процент снизу */}
                   <div className={styles.percentage}>{`${Math.round(
                     percentage
@@ -125,6 +139,13 @@ export default function MonthStatsTable() {
           </div>
         ))}
       </div>
+      {selectedDayStats && selectedDate && (
+        <DaysGeneralStats
+          dayStats={selectedDayStats}
+          selectedDate={selectedDate}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }
