@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,9 @@ import { signup, signin } from "../../redux/auth/operations";
 import { selectIsLoading, selectIsEror } from "../../redux/auth/selectors";
 import sprite from "../../images/svg/symbol-defs.svg";
 import classNames from "classnames";
+import { toast, ToastContainer } from "react-toastify";
+import Loader from "../Loader/Loader";
+import "react-toastify/dist/ReactToastify.css";
 import s from "./AuthForm.module.css";
 
 const AuthForm = ({ mode }) => {
@@ -14,6 +17,20 @@ const AuthForm = ({ mode }) => {
   const error = useSelector(selectIsEror);
 
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    }
+  }, [error]);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -54,6 +71,7 @@ const AuthForm = ({ mode }) => {
 
   return (
     <div className={s.wrapper}>
+      <ToastContainer />
       <h2 className={s.title}>{formTitle}</h2>
       <Formik
         initialValues={{
@@ -156,12 +174,14 @@ const AuthForm = ({ mode }) => {
                 : "Sign in"}
             </button>
 
-            {error && <div className="notification">{error}</div>}
-
             {mode === "signup" ? (
-              <a href="/signin"className={s.href}>Sign in</a>
+              <a href="/signin" className={s.href}>
+                Sign in
+              </a>
             ) : (
-              <a href="/signup"className={s.href}>Sign up</a>
+              <a href="/signup" className={s.href}>
+                Sign up
+              </a>
             )}
           </Form>
         )}
