@@ -2,16 +2,45 @@ import s from "./DailyNormaModal.module.css";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { IoMdClose } from "react-icons/io";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectIsLoading, selectUser } from "../../redux/user/selectors.js";
+import Loader from "../Loader/Loader.jsx";
 
-export default function DailyNormaModal({ closeModal }) {
+export default function DailyNormaModal({ closeModal, updateWaterRate }) {
+  const isLoading = useSelector(selectIsLoading);
+  const [weight, setWeight] = useState("");
+  const [activity, setActivity] = useState("");
+  const [waterRate, setWaterRate] = useState("");
+
+  //  юзер
+  const user = useSelector(selectUser);
+
   // початкові значення форми
   const initialValues = {
-    sex: "female",
-    weightValue: "0",
-    timeValue: "0",
-    dailyNorma: "2.0",
+    sex: user?.gender || "female",
+    weightValue: weight || "0",
+    timeValue: activity || "0",
+    dailyNorma: waterRate || "2.0",
   };
+
+  const [formValues, setFormValues] = useState(initialValues);
+
+  useEffect(() => {
+    const savedData = JSON.parse(sessionStorage.getItem("dailyNorma"));
+    if (savedData) {
+      setWeight(savedData.weight);
+      setActivity(savedData.activity);
+      setWaterRate(savedData.waterRate);
+
+      setFormValues({
+        sex: user.gender,
+        weightValue: savedData.weight || "0",
+        timeValue: savedData.activity || "0",
+        dailyNorma: savedData.waterRate || "2.0",
+      });
+    }
+  }, [user.gender]); //???
 
   // валідація форми
   const validationSchema = Yup.object({
@@ -39,9 +68,25 @@ export default function DailyNormaModal({ closeModal }) {
     }
   };
 
-  // const handleSubmit = (values) => {
-  //   calculateWaterVolume(values);
-  // };
+  // збереження денної норми
+  const handleSubmit = async (values) => {
+    try {
+      const { dailyNorma, weightValue, timeValue } = values;
+      updateWaterRate(dailyNorma);
+      sessionStorage.setItem(
+        "dailyNorma",
+        JSON.stringify({
+          weight: weightValue,
+          activity: timeValue,
+          waterRate: dailyNorma,
+        })
+      );
+
+      closeModal();
+    } catch (error) {
+      console.error("Failed to update water rate:", error);
+    }
+  };
 
   // закриття модального вікна при натисканні на esc
   useEffect(() => {
@@ -89,9 +134,10 @@ export default function DailyNormaModal({ closeModal }) {
         <h4 className={s.calc}>Calculate your rate:</h4>
 
         <Formik
-          initialValues={initialValues}
+          enableReinitialize
+          initialValues={formValues}
           validationSchema={validationSchema}
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           {({ values, handleChange, setFieldValue }) => {
             const waterVolume = calculateWaterVolume(values);
@@ -189,10 +235,16 @@ export default function DailyNormaModal({ closeModal }) {
                     className={s.input}
                     type="input"
                     name="dailyNorma"
+                    // value={newRate}
+                    step="0.1"
                     onFocus={() => handleFocus("dailyNorma")}
                     onBlur={() => handleBlur("dailyNorma")}
                     onChange={(e) =>
-                      handleFieldChange("dailyNorma", e.target.value)
+                      handleFieldChange(
+                        "dailyNorma",
+                        e.target.value
+                        // setNewRate(e.target.value)
+                      )
                     }
                   />
                   <ErrorMessage
@@ -203,6 +255,7 @@ export default function DailyNormaModal({ closeModal }) {
                 </label>
 
                 <div className={s.btnWrap}>
+                  {isLoading && <Loader />}
                   <button className={s.saveButton} type="submit">
                     {" "}
                     Save{" "}

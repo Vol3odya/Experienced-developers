@@ -7,13 +7,29 @@ import bottleImageD from "../../images/svg/bow-d.svg";
 import { useState } from "react";
 import DailyNormaModal from "../DailyNormaModal/DailyNormaModal";
 
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../redux/user/operations.js";
+import { putWaterRate } from "../../redux/waterRate/operations.js";
+import { selectUser } from "../../redux/user/selectors.js";
+
 export default function DailyNorma() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // відкриття за такриття модалки
   const handleOpenModal = () => {
     setIsOpen(true);
   };
   const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  // оновлення кількості води
+  const user = useSelector(selectUser);
+  const usersWaterRate = (user.waterRate / 1000).toFixed(1);
+  const dispatch = useDispatch();
+  const handleUpdateWaterRate = async (newRate) => {
+    // await dispatch(putWaterRate({ dailyNorma: newRate * 1000 }));
+    await dispatch(updateUser({ waterRate: newRate * 1000 }));
     setIsOpen(false);
   };
 
@@ -22,11 +38,18 @@ export default function DailyNorma() {
       <div className={css.container}>
         <h2 className={css.header}>My daily norma</h2>
         <div className={css.bottomContainer}>
-          <p className={css.liters}>1.5 L</p>
+          <p className={css.liters}>
+            {usersWaterRate ? `${usersWaterRate} L` : "2.0 L"}
+          </p>
           <p onClick={handleOpenModal} className={css.edit}>
             Edit
           </p>
-          {isOpen && <DailyNormaModal closeModal={handleCloseModal} />}
+          {isOpen && (
+            <DailyNormaModal
+              closeModal={handleCloseModal}
+              updateWaterRate={handleUpdateWaterRate}
+            />
+          )}
         </div>
       </div>
       <picture>
