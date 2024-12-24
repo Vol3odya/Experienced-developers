@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats"; //імпорт модального вікна з інформацією за день
 import { getMonthWater } from "../../redux/monthWaterList/operations";
+import { selectItems } from "../../redux/monthWaterList/selectors";
 import styles from "./MonthStatsTable.module.css";
 
 const DEFAULT_DAILY_NORMA = 2000; // Дефолтная норма воды
@@ -14,13 +15,15 @@ export default function MonthStatsTable() {
   const [selectedDate, setSelectedDate] = useState(null); //HPO
 
   // Получаем данные из Redux store
-  const monthData = useSelector((state) => state.month.items.data || []);
+//  const monthData = useSelector((state) => state.month.items.data || []);
+  const monthData = useSelector(selectItems)||[];
+
 
   useEffect(() => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Месяц в API начинается с 1
     dispatch(getMonthWater({ year, month }));
-  }, [currentDate, dispatch, monthData]);
+  }, [/*currentDate,*/ dispatch/*, monthData*/]);
 
   // Суммируем воду по дням и вычисляем проценты
   const daysStats = monthData.reduce((acc, day) => {
@@ -28,7 +31,7 @@ export default function MonthStatsTable() {
     acc[dayNumber] = {
       waterVolume: parseFloat(day.waterVolume) * 1000 || 0,
       dailyNorma: parseFloat(day.waterRate) * 1000 || 0,
-      portions: day.portions || 0,
+      portions: day.count || 0,
     };
     return acc;
   }, {});

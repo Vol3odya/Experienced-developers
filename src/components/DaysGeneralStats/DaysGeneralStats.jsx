@@ -1,19 +1,18 @@
 import css from "./DaysGeneralStats.module.css";
 
-export default function DaysGeneralStats(dayStats, selectedDate, onClose) {
-  if (!dayStats) {
-    return null;
+export default function DaysGeneralStats({dayStats, selectedDate, onClose}) {
+if (!dayStats || !selectedDate) {
+    return null; //захист від відсутніх данних
   }
 
   const formattedDate = `${selectedDate.getDate()}, ${selectedDate.toLocaleString("en-US", 
     { month: "long" }
   )}`;
 
-  const dailyNorm = dayStats.dailyNorm || 0;
-  const intake = dayStats.intake || 0;
-  const percentage = dailyNorm ? Math.round((intake / dailyNorm) * 100) : 0;
+  const dailyNorm = dayStats.dailyNorma || 0;
+  const intake = dayStats.waterVolume || 0;
+  const percentage = dailyNorm ? Math.round((intake / dailyNorm) * 100) : 0; 
   const portions = dayStats.portions || Math.floor(dayStats.waterVolume / 250);
-
 
   return (
     <div className={css.modal}>
