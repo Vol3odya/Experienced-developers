@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import Loader from "../Loader/loader";
 
 import {
   updateUser,
@@ -55,10 +56,6 @@ const SettingModal = ({ onClose }) => {
   }, [userData]);
 
   useEffect(() => {
-    console.log("Fetched user data from Redux:", userData);
-  }, [userData]);
-
-  useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         onClose();
@@ -87,9 +84,7 @@ const SettingModal = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isLoading) {
-      return <div className={styles.loader}>Loading...</div>; // Показываем loader пока данные загружаются
-    }
+    setIsLoading(true);
 
     if (formData.newPassword && !formData.outdatePassword) {
       toast.error("Please enter your current password to set a new password!");
@@ -135,11 +130,13 @@ const SettingModal = ({ onClose }) => {
 
       await dispatch(updateUser(updatedData)).unwrap();
       toast.success("Profile updated successfully!");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+
       onClose();
     } catch (error) {
       console.error("Error updating profile:", error);
       toast.error("Error updating profile: " + error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -280,7 +277,9 @@ const SettingModal = ({ onClose }) => {
               <div
                 className={styles["photo-preview"]}
                 style={{
-                  backgroundImage: `url(${formData.photo}?t=${Date.now()})`,
+                  backgroundImage: formData.photo
+                    ? `url(${formData.photo})`
+                    : "none",
                 }}
               ></div>
 
@@ -459,8 +458,18 @@ const SettingModal = ({ onClose }) => {
 
             {/* Контейнер кнопки */}
             <div className={styles["button-container"]}>
-              <button type="submit" className={styles["save-button"]}>
-                Save
+              <button
+                type="submit"
+                className={styles["save-button"]}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <div className={styles["loader-container"]}>
+                    <Loader />
+                  </div>
+                ) : (
+                  "Save"
+                )}
               </button>
             </div>
           </form>
