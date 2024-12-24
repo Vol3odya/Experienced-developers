@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, Bounce } from "react-toastify";
 
@@ -8,7 +8,7 @@ import css from "./App.module.css";
 import SharedLayout from "../SharedLayout/SharedLayout";
 import Loader from "../Loader/Loader";
 
-import { selectIsRefresh, selectIsLoggedIn } from "../../redux/auth/selectors";
+import { selectIsRefresh, selectIsLoggedIn} from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
 import { fetchUser } from "../../redux/user/operations";
 import RestrictedRoute from "./RestrictedRoute";
@@ -21,23 +21,12 @@ const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 
 export default function App() {
   const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefresh);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const location = useLocation();
 
   useEffect(() => {
     dispatch(refreshUser());
     dispatch(fetchUser());
   }, [dispatch]);
-
-  if (isRefreshing) {
-    return <Loader />;
-  }
-
-  // Якщо користувач залогінений, перенаправляємо на /home
-  if (isLoggedIn && location.pathname === "/welcome") {
-    return <Navigate to="/home" />;
-  }
 
   return (
     <>
@@ -58,7 +47,7 @@ export default function App() {
         <Suspense fallback={null}>
           <div className={css.container}>
             <Routes>
-              <Route
+            <Route
                 path="/"
                 element={<Navigate to={isLoggedIn ? "/home" : "/welcome"} />}
               />
@@ -89,10 +78,6 @@ export default function App() {
                     redirectTo="/signin"
                   />
                 }
-              />
-              <Route
-                path="*"
-                element={<Navigate to={isLoggedIn ? "/home" : "/welcome"} />}
               />
             </Routes>
           </div>
