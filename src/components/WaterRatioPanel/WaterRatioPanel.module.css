@@ -1,0 +1,251 @@
+.header {
+  color: var(--Primery-Color-Blue, #407bff);
+  text-align: center;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+
+  text-align: start;
+  padding-bottom: 20px;
+}
+
+
+
+.button {
+  border-radius: 10px;
+  padding: 6px 76px;
+  width: 280px;
+  height: 36px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: #407bff;
+  margin-top: 16px;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.btnSpan {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: #fff;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+
+}
+
+.btnIcon {
+  /*margin-right: 10px;*/
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    display: flex;
+    /*flex-wrap: wrap;*/
+    flex-direction: row;
+    width: 704px;
+    /*height: 90px;*/
+  }
+
+  .button {
+    padding: 10px 104px;
+    min-width: 336px;
+    height: 44px;
+    margin-top: 42px;
+  }
+
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: auto;
+    padding-right: auto;
+  }
+
+  .btnSpan {
+    font-size: 18px;
+    line-height: 133%;
+    margin-right: auto;
+  }
+
+  .btnIcon {
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 1440px) {
+
+  .wrapper {
+    width: 592px;
+    padding: 0;
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: 0;
+  }
+  
+  .button {
+    padding: 0;
+    max-width: 178px;
+    min-width: 178px;
+    margin-top: 44px;
+    margin-left: 0;
+  }
+
+
+
+}
+
+
+.ritio{
+  width: 280px;
+  /*height: 82px;*/
+}
+
+.ritiocon{
+  border-radius: 10px;
+  width: 256px;
+  height: 8px;
+  background: #d7e3ff;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.status{
+  border-radius: 10px;
+  width: 0px;
+  height: 8px;
+  background: #9ebbff;
+  position: relative;
+}
+
+.but{
+  position: absolute;
+  border-radius: 100%;
+  fill: #fff;
+  stroke-width: 1px;
+  stroke: #407bff;
+  margin-left: calc(100% - 7px);
+  top: -7px;
+}
+
+.label{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 280px;
+  height: 32px;
+  margin-top: 7px;
+}
+
+.labeltwo{
+  border: 1px solid #d7e3ff;
+  width: 0px;
+  height: 8px;
+  margin-left: 12px;
+}
+
+.labeltry{
+  border: 1px solid #d7e3ff;
+  width: 0px;
+  height: 8px;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.text{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  text-align: center;
+  color: #407bff;
+  width: 22px;
+  height: 16px;
+  position: absolute;
+  top: 16px;
+  left: 0px;
+}
+
+.texttwo {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: #407bff;
+  width: 50px;
+  height: 20px;
+  position: absolute;
+  bottom: 10px;
+  left: -25px;
+}
+
+.texttry {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  text-align: center;
+  color: #407bff;
+  width: 30px;
+  height: 16px;
+  position: absolute;
+  top: 16px;
+  right: 0px;
+}
+
+.labelstatus{
+  position: relative;
+  border: 1px solid #d7e3ff;
+  width: 0px;
+  height: 8px;
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+
+  .ritio {
+    width: 356px;
+    margin-right: 12px;
+    /*height: 82px;*/
+  }
+
+  .ritiocon {
+    width: 325px;
+  }
+
+  .label {
+    width: 347px;
+  }
+
+}
+
+@media only screen and (min-width: 1440px) {
+
+  .ritio {
+    width: 391px;
+    margin-bottom: 0;
+    /*height: 82px;*/
+  }
+
+  .ritiocon {
+    width: 360px;
+  }
+
+  .label {
+    width: 391px;
+    margin-right: 23px;
+  }
+
+  .labelstatus{
+    margin-bottom: 10px;
+  }
+  
+}

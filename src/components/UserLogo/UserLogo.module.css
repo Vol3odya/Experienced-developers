@@ -1,0 +1,80 @@
+/*.modal {
+    border-radius: 10px;
+    padding: 16px;
+    width: 118px;
+    height: 88px;
+    box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.2);
+    background: #fff;
+    margin-right: 0px;
+    margin-top: 2px;
+}*/
+
+.button{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0;
+    height: 28px;
+    min-width: 118px;
+    margin-top: 10px;
+    margin-bottom: auto;
+    /*padding-top: auto;
+    padding-bottom: auto;*/
+    color: #FFFFFF;
+    background-color: #FFFFFF;
+    border: none;
+    /*width: 118px;*/
+    cursor: pointer;
+}
+
+.username{
+    margin-right: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    text-align: right;
+    color: #2F2F2F;
+    /*width: 60px;*/
+}
+
+.userphoto{
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    margin-right: 4px;
+}
+
+.user{
+    width: 28px;
+    height: 28px;
+    margin-right: 4px;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 100%;
+    text-align: center;
+    color: #2F2F2F;
+}
+
+.svg{
+    width: 16px;
+    height: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 0;
+    fill: #407BFF;
+}
+
+.svg:hover{
+    fill: #FF9D43;
+}
+
+
+@media only screen and (min-width: 768px) {
+
+    .username {
+        font-size: 18px;
+        line-height: 133%;
+    }
+
+}

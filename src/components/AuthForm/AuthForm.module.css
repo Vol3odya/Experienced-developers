@@ -1,0 +1,132 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+ 
+}
+
+.title {
+  color:  #2f2f2f;
+  text-align: left;
+  font-family: "Roboto-Medium", sans-serif;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 500;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  width: 100%;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; 
+  gap: 8px; 
+  width: 100%;
+  margin-bottom: 16px;
+}
+.label{
+  color:  #2f2f2f;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  
+}
+
+input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 6px;
+  border-style: solid;
+  border-color:  #d7e3ff;
+  border-width: 1px;
+  color:#407bff;
+  padding: 12px 10px 12px 10px;
+  width: 280px;
+ 
+}
+input::placeholder {
+  color:#9ebbff;
+
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+ .iconN {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  stroke: #407bff;
+  fill: white;
+  
+}
+
+.submitbutton {
+  width: 280px;
+  padding: 8px 30px;
+  background-color: #407bff;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  font-family: "Roboto-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  
+}
+
+.attention{
+  color: #ef5050;
+  font-size: 10px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #407bff;
+}
+
+.input.error {
+  border-color: #ef5050; 
+  color: #ef5050; 
+}
+
+.input.error:focus {
+  border-color: #ef5050; 
+}
+
+.href{
+  color:#407bff
+}
+
+.href:hover{
+  color:  #ff9d43;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  -webkit-text-stroke: 1px #000000;
+}

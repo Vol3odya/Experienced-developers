@@ -1,0 +1,36 @@
+.user {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0;
+    max-height: 28px;
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+}
+
+.user_img {
+    max-width: 28px;
+    max-height: 28px;
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.user_img:hover{
+    color: #FF9D43;
+}
+
+.user_text {
+    /*font-family: var(--font-family);*/
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #407BFF;
+    max-height: 20px;
+    padding: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.user_text:hover {
+    color: #FF9D43;
+}

@@ -1,0 +1,242 @@
+/* !------------- GENERAL -------------! */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 280px;
+  /* height: 816px; */
+  border-radius: 10px;
+  padding: 24px 10px;
+
+  background-color: #ffffff;
+  color: #2f2f2f;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+/* ------------- Head & CloseBtn ------------- */
+
+.top {
+  display: flex;
+  flex-direction: row;
+  gap: 52px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.top button {
+  cursor: pointer;
+  background-color: #ffffff;
+  border: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  position: relative;
+}
+
+.top button:focus,
+.top button:active,
+.saveButton:focus,
+.saveButton.active {
+  outline: none; /* Убирает обводку */
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  color: #407bff;
+  position: relative;
+  bottom: 3px;
+  right: 3px;
+}
+
+.head {
+  /* width: 182px; */
+  font-weight: 500;
+  font-size: 26px;
+}
+
+/* ------------- Formulas ------------- */
+
+.formulas {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.formula {
+  color: #407bff;
+  font-size: 18px;
+}
+
+.formulaDescription {
+  border: 1px solid #d7e3ff;
+  color: #8f8f8f;
+  border-radius: 10px;
+  padding: 10px;
+  line-height: 1.33;
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+
+.asterisk {
+  color: #407bff;
+}
+
+/* ------------- Form ------------- */
+
+.calc {
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+/* ------------- Radiobuttons ------------- */
+
+.radio {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.radioBtn {
+  width: 14px;
+  height: 14px;
+  border-color: #407bff;
+  background-color: #ffffff;
+}
+
+.radioBtn:checked {
+  width: 14px;
+  height: 14px;
+}
+
+.radio label {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+/* --- Weight, Time, RequiredAmount --- */
+
+.weight,
+.time {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.input {
+  background-color: #ffffff;
+  color: #407bff;
+  outline: none;
+  padding: 12px 10px;
+  border: 1px solid #d7e3ff;
+  border-radius: 10px;
+}
+
+.requiredAmount {
+  margin-bottom: 24px;
+}
+
+.volume {
+  color: #407bff;
+  font-size: 18px;
+  line-height: 1.33;
+  font-weight: 700;
+}
+
+.dailyNorma {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  margin-bottom: 24px;
+}
+
+.error {
+  color: #ef5050;
+  font-size: 14px;
+  line-height: 1.28;
+}
+
+.saveButton {
+  border: none;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: #407bff;
+  padding: 8px 30px;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: #fff;
+}
+
+/* !------------- TABLET -------------! */
+
+@media screen and (min-width: 768px) {
+  .modal {
+    width: 704px;
+    padding: 32px 24px;
+  }
+
+  .top {
+    gap: 452px;
+  }
+
+  .formulas {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .saveButton {
+    border-radius: 10px;
+    width: 160px;
+    padding: 8px 30px;
+    position: relative;
+    left: 245px;
+  }
+
+  /* .btnWrap {
+    display: flex;
+    justify-content: flex-end;
+  } */
+}
+
+/* !------------- DESKTOP -------------! */
+
+@media screen and (min-width: 1440px) {
+  .modal {
+    width: 592px;
+  }
+
+  .top {
+    gap: 340px;
+  }
+
+  .saveButton {
+    padding: 10px 30px;
+    position: relative;
+    left: 190px;
+  }
+}

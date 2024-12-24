@@ -1,0 +1,133 @@
+.backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal{
+    
+    
+    background-color: #fff;
+    color: #2f2f2f;
+
+
+    border-radius: 10px;
+    padding: 32px 24px;
+    width: 280px;
+    height: 260px;
+}
+
+.top{
+    display: flex;
+    flex-direction: row;
+    /*gap: 52px;*/
+    align-items: center;
+    /*margin-bottom: 24px;
+    margin-right: 24px;
+    margin-left: auto;*/
+}
+
+.head{
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 123%;
+    color: #2f2f2f;
+}
+
+.close{
+    width: 24px;
+    height: 24px;
+    color: #407bff;
+    position: relative;
+    /*bottom: 3px;
+    right: 3px;*/
+    margin-right: 0;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #fff;
+}
+
+.text{
+    margin-top: 24px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 111%;
+    color: #2f2f2f;
+}
+
+.grid{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: auto auto;
+}
+
+.buttonRed{
+    margin-top: -96px;
+    border-radius: 10px;
+    padding: 8px 30px;
+    width: 232px;
+    height: 36px;
+    box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+    background: #ef5050;
+    cursor: pointer;
+}
+
+.button{
+    margin-top: 84px;
+    border-radius: 10px;
+    padding: 8px 30px;
+    width: 232px;
+    height: 36px;
+    background: #d7e3ff;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+
+    .modal {
+        width: 592px;
+        height: 208px;
+    }
+
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .buttonRed {
+        margin-top: 24px;
+        margin-right: 0;
+        padding: 10px 30px;
+        width: 160px;
+        height: 44px;
+    }
+
+    .button {
+        margin-top: 24px;
+        margin-left: auto;
+        padding: 10px 30px;
+        width: 160px;
+        height: 44px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+
+    .buttonRed {
+        margin-right: auto;
+    }
+
+    .button {
+        margin-left: 0;
+    }
+
+}

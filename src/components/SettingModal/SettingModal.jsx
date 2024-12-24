@@ -10,6 +10,7 @@ import {
 } from "../../redux/user/operations";
 import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
+import { refreshUser } from "../../redux/auth/operations";
 
 const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -28,11 +29,12 @@ const SettingModal = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(true); // Добавляем состояние загрузки
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadData = () => {
       try {
         if (!userData || Object.keys(userData).length === 0) {
-          await dispatch(fetchUser()).unwrap(); // Загружаем данные
+          dispatch(fetchUser()).unwrap(); // Загружаем данные
         }
+        dispatch(refreshUser());
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
@@ -108,12 +110,14 @@ const SettingModal = ({ onClose }) => {
       if (formData.photoFile) {
         const avatarData = new FormData();
         avatarData.append("photo", formData.photoFile);
-        const avatarResponse = await dispatch(
+        const avatarResponse = dispatch(
           updateUserAvatar(avatarData)
         ).unwrap();
         if (avatarResponse) {
           setFormData((prev) => ({ ...prev, photo: avatarResponse }));
         }
+        dispatch(refreshUser());
+        dispatch(fetchUser());
       }
 
       const updatedData = Object.fromEntries(
@@ -128,9 +132,11 @@ const SettingModal = ({ onClose }) => {
 
       console.log("Отправляемые данные:", updatedData);
 
-      await dispatch(updateUser(updatedData)).unwrap();
+      dispatch(updateUser(updatedData)).unwrap();
       toast.success("Profile updated successfully!");
-
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      dispatch(refreshUser());
+      dispatch(fetchUser());
       onClose();
     } catch (error) {
       console.error("Error updating profile:", error);

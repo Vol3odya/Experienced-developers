@@ -1,11 +1,5 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import {
-  signin,
-  logout,
-  refreshUser,
-  signup,
-  updateProfile,
-} from "./operations";
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { signin, logout, refreshUser, signup } from './operations';
 
 const initialState = {
   user: {
@@ -19,50 +13,55 @@ const initialState = {
   isLoggedIn: false,
   isLoading: false,
   isRefresh: false,
-  isError: false,
+  isError: null,
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   extraReducers: (builder) => {
     builder
       .addCase(signup.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.avatarUrl = action.payload.photo;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
+        state.isLoading = false;
+        state.isError = null;
       })
 
       .addCase(signin.fulfilled, (state, action) => {
+        state.token = action.payload.accessToken;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.isRefresh = false;
         state.isLoggedIn = true;
+        state.isLoading = false;
       })
+      .addCase(signin.pending, (state) => {
+        state.isRefresh = true;
+      })
+  
       .addCase(logout.fulfilled, () => {
         return initialState;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isError = action.payload;
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefresh = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isRefresh = false;
         state.isLoggedIn = true;
-      })
-      .addCase(refreshUser.rejected, () => {})
-      .addCase(updateProfile.pending, (state) => {
-        state.isLoading = true;
-        state.isError = false;
-      })
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        state.user = { ...state.user, ...action.payload }; // Обновляем данные пользователя
+        state.isError = null;
         state.isLoading = false;
       })
-      .addCase(updateProfile.rejected, (state, action) => {
-        state.isLoading = false;
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefresh = false;
         state.isError = action.payload;
       })
-      .addMatcher(isAnyOf(/*register.pending,*/ signin.pending), (state) => {
+      .addMatcher(isAnyOf(signup.pending, signin.pending), (state) => {
         state.isLoading = true;
       })
       .addMatcher(
@@ -70,6 +69,7 @@ const authSlice = createSlice({
         (state, action) => {
           state.isLoading = false;
           state.isError = action.payload;
+          state.isRefresh = false;
         }
       );
   },
