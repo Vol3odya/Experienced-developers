@@ -43,9 +43,7 @@ const SettingModal = ({ onClose }) => {
   }, [dispatch, userData]);
 
   useEffect(() => {
-
     if (userData && Object.keys(userData).length > 0) {
-
       setFormData((prev) => ({
         ...prev,
         photo: userData.photo || prev.photo, // Обновляем с учетом корректного поля
@@ -54,10 +52,6 @@ const SettingModal = ({ onClose }) => {
         email: userData.email || prev.email,
       }));
     }
-  }, [userData]);
-
-  useEffect(() => {
-    console.log("Fetched user data from Redux:", userData);
   }, [userData]);
 
   useEffect(() => {
@@ -282,7 +276,9 @@ const SettingModal = ({ onClose }) => {
               <div
                 className={styles["photo-preview"]}
                 style={{
-                  backgroundImage: `url(${formData.photo}?t=${Date.now()})`,
+                  backgroundImage: formData.photo
+                    ? `url(${formData.photo})`
+                    : "none",
                 }}
               ></div>
 
