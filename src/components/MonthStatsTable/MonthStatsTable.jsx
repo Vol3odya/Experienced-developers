@@ -5,6 +5,7 @@ import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats"; //імпо�
 import { getMonthWater } from "../../redux/monthWaterList/operations";
 import { selectItems } from "../../redux/monthWaterList/selectors";
 import styles from "./MonthStatsTable.module.css";
+import { csscss } from "../DaysGeneralStats/DaysGeneralStats";
 
 const DEFAULT_DAILY_NORMA = 2000; // Дефолтная норма воды
 
@@ -81,6 +82,30 @@ export default function MonthStatsTable() {
     setSelectedDayStats(null);
     setSelectedDate(null);
   };
+
+
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (selectedDayStats && selectedDate && !event.target.closest(`.${csscss}`)) {
+        closeModal();
+      }
+    };
+
+    if (selectedDayStats && selectedDate) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [selectedDayStats, selectedDate]);
+
+
+
 
   return (
     <div className={styles.calendarContainer}>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import css from "./DaysGeneralStats.module.css";
 
 export default function DaysGeneralStats({dayStats, selectedDate, onClose}) {
@@ -14,12 +15,27 @@ if (!dayStats || !selectedDate) {
   const percentage = dailyNorm ? Math.round((intake / dailyNorm) * 100) : 0; 
   const portions = dayStats.portions || Math.floor(dayStats.waterVolume / 250);
 
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+
+
   return (
     <div className={css.modal}>
       <div className={css.content}>
-        <button className={css.closeButton} onClick={onClose}>
+        {/*<button className={css.closeButton} onClick={onClose}>
           ×
-        </button>
+        </button>*/}
         {/* <h3 className={css.title}>Day Statistics</h3> */}
         <div className={css.sectionDate}>
           <span className={css.dayMoth}>{formattedDate}</span>
@@ -37,3 +53,6 @@ if (!dayStats || !selectedDate) {
     </div>
   );
 }
+
+
+export const csscss = css.modal;
