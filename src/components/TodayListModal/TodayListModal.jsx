@@ -1,4 +1,5 @@
 import css from "../TodayListModal/TodayListModal.module.css";
+import { toast } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 import { addWater } from "../../redux/water/operations.js";
 import { Field, Form, Formik } from "formik";
@@ -99,17 +100,20 @@ export default function TodayListModal({ closeModal }) {
   };
 
   const now = new Date();
-  const forDate = now.toISOString().slice(0, 10)+` ${time}`;//.split("T")[0];
-
+  const forDate = now.toISOString().slice(0, 10) + ` ${time}`; //.split("T")[0];
 
   const handleSubmit = () => {
+    if (amount <= 0) {
+      toast.error("Water amount cannot be below 0");
+      return;
+    }
     const newNote = {
       //time: time,
       waterVolume: amount,
       date: forDate,
     };
     dispatch(addWater(newNote));
-    //console.log(newNote);
+    toast.success("Water was successfully added");
     closeModal();
   };
 
