@@ -122,7 +122,7 @@ export default function EditWaterModal({ closeModal, _id }) {
 
     const newNote = {
       _id,
-      //time: time,
+      time: time,
       waterVolume: amount,
       date: forDate,
     };

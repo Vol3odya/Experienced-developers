@@ -24,7 +24,7 @@ export default function MonthStatsTable() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Месяц в API начинается с 1
     dispatch(getMonthWater({ year, month }));
-  }, [/*currentDate,*/ dispatch/*, monthData*/]);
+  }, [currentDate, dispatch/*, monthData*/]);
 
   // Суммируем воду по дням и вычисляем проценты
   const daysStats = monthData.reduce((acc, day) => {

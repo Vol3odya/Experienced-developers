@@ -33,8 +33,7 @@ export default function TodayWaterList() {
 
  useEffect(() => {
    dispatch(getWaterFromToday());
-   console.log("qwerty");
- }, [dispatch]);
+ }, [dispatch, isOpen, isEditeOpen, isModalOpen]);
   
   
   const waterDay = useSelector(selectAmountToday);
@@ -43,6 +42,7 @@ export default function TodayWaterList() {
     setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
   };
   const handleCloseModalEdit = () => {
+    dispatch(getWaterFromToday());
     setIsModalOpen("");
   };
 
@@ -50,10 +50,12 @@ export default function TodayWaterList() {
     setIsOpen(true);
   };
   const handleCloseModal = () => {
+    dispatch(getWaterFromToday());
     setIsOpen(false);
   };
 
   const editClose = () => {
+    dispatch(getWaterFromToday());
     setEditeOpen("");
   };
   const editOpen = (event) => {
@@ -62,6 +64,7 @@ export default function TodayWaterList() {
 
   const delet = () => {
     dispatch(deleteWater({ _id: isEditeOpen }));
+    dispatch(getWaterFromToday());
     setEditeOpen("");
   }
 
