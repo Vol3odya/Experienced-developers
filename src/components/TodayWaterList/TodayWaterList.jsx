@@ -25,7 +25,7 @@ export default function TodayWaterList() {
  
 
 
-  const waterDay = useSelector(selectAmountToday);
+  
 
   
 
@@ -39,8 +39,11 @@ export default function TodayWaterList() {
   
 
  useEffect(() => {
-    dispatch(getWaterFromToday());
-  }, [ isOpen, isEditeOpen, isModalOpen]);
+   dispatch(getWaterFromToday());
+   console.log("qwerty");
+ }, [isOpen, isEditeOpen, isModalOpen]);
+  
+  const waterDay = useSelector(selectAmountToday);
 
   const handleOpenModalEdit = (event) => {
     setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
@@ -71,7 +74,7 @@ export default function TodayWaterList() {
 
 
 
-
+  //console.log(new Date("2024-12-24 12:00").toISOString());
 
 
 

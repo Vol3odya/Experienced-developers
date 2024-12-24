@@ -26,15 +26,21 @@ export default function DailyNorma() {
     setIsOpen(false);
   };
 
+useEffect(() => {
+      //dispatch(refreshUser());
+  }, [isOpen ]);
+  
   // оновлення кількості води
   const user = useSelector(selectUser);
   const usersWaterRate = (user.waterRate / 1000).toFixed(1);
   
-  const handleUpdateWaterRate = async (newRate) => {
+  const handleUpdateWaterRate = /*async*/ (newRate) => {
     // await dispatch(putWaterRate({ dailyNorma: newRate * 1000 }));
-    await dispatch(updateUser({ waterRate: newRate * 1000 }));
+    /*await*/ dispatch(updateUser({ waterRate: newRate * 1000 }));
+    dispatch(refreshUser());
     setIsOpen(false);
   };
+
 
   return (
     <div className={css.wrapper}>
@@ -42,11 +48,11 @@ export default function DailyNorma() {
         <h2 className={css.header}>My daily norma</h2>
         <div className={css.bottomContainer}>
           <p className={css.liters}>
-            {usersWaterRate ? `${usersWaterRate} L` : "2.0 L"}
+            {usersWaterRate ? `${(user.waterRate / 1000).toFixed(1)} L` : "2.0 L"}
           </p>
-          <p onClick={handleOpenModal} className={css.edit}>
+          <button type='button' onClick={handleOpenModal} className={css.edit}>
             Edit
-          </p>
+          </button>
           {isOpen && (
             <DailyNormaModal
               closeModal={handleCloseModal}

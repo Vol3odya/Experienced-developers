@@ -20,7 +20,6 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(getWaterFromToday.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.items = action.payload.waterVolumeTimeEntries;
         state.waterVolumeInPercent = action.payload.waterVolumeInPercent,
         state.totalWaterVolume=action.payload.totalWaterVolume,

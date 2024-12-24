@@ -180,10 +180,16 @@
   border: none;
   display: block;
   margin: 0 auto;
+  border-radius: 10px;
   background-color: #407bff;
   padding: 8px 30px;
   width: 100%;
   cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: #fff;
 }
 
 /* !------------- TABLET -------------! */

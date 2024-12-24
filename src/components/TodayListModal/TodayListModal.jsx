@@ -99,17 +99,18 @@ export default function TodayListModal({ closeModal }) {
   };
 
   const now = new Date();
-  const forDate = now.toISOString();//.split("T")[0];
+  const forDate = now.toISOString().slice(0, 10)+` ${time}`;//.split("T")[0];
+
 
   const handleSubmit = () => {
     const newNote = {
-      time: time,
+      //time: time,
       waterVolume: amount,
       date: forDate,
     };
     dispatch(addWater(newNote));
-    console.log(newNote);
-    //closeModal();
+    //console.log(newNote);
+    closeModal();
   };
 
   return (
