@@ -137,12 +137,29 @@
   .list {
     height: 172px;
     overflow-y: hidden;
-    padding-right: 24px;
+    padding-right: 10px;
+    margin-bottom: 12px;
     overflow-y: scroll;
     &:not:last-child {
       border-bottom: 1px solid #d7e3ff;
     }
+    &:not(:empty) {
+      overflow-y: scroll;
+    }
   }
+
+  .list::-webkit-scrollbar {
+    width: 4px;
+  }
+  .list::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #9EBBFF;
+  }
+  .list::-webkit-scrollbar-track {
+    background-color: #d7e3ff;
+  }
+
+
   .listli {
     display: flex;
     flex-direction: row;
