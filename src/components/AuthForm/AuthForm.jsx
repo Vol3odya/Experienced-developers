@@ -6,8 +6,8 @@ import { signup, signin } from "../../redux/auth/operations";
 import { selectIsLoading, selectIsEror } from "../../redux/auth/selectors";
 import sprite from "../../images/svg/symbol-defs.svg";
 import classNames from "classnames";
-import { toast, ToastContainer } from "react-toastify";
-import Loader from "../Loader/Loader";
+import { toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import s from "./AuthForm.module.css";
 
@@ -19,15 +19,16 @@ const AuthForm = ({ mode }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    if (error) {
+    if (error && !toast.isActive('authErrorToast')) {
       toast.error(error, {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
+        toastId: 'authErrorToast' 
       });
     }
   }, [error]);
@@ -71,7 +72,6 @@ const AuthForm = ({ mode }) => {
 
   return (
     <div className={s.wrapper}>
-      <ToastContainer />
       <h2 className={s.title}>{formTitle}</h2>
       <Formik
         initialValues={{
