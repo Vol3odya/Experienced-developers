@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {refreshUser} from "../../redux/auth/operations.js"
 import { updateUser } from "../../redux/user/operations.js";
 import { putWaterRate } from "../../redux/waterRate/operations.js";
-import { selectUser } from "../../redux/auth/selectors.js";
+import { selectUser } from "../../redux/user/selectors.js";
+import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 
 export default function DailyNorma() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,18 +27,17 @@ export default function DailyNorma() {
     setIsOpen(false);
   };
 
-useEffect(() => {
+/*useEffect(() => {
       //dispatch(refreshUser());
-  }, [isOpen ]);
+  }, [isOpen ]);*/
   
   // оновлення кількості води
   const user = useSelector(selectUser);
   const usersWaterRate = (user.waterRate / 1000).toFixed(1);
   
-  const handleUpdateWaterRate = /*async*/ (newRate) => {
-    // await dispatch(putWaterRate({ dailyNorma: newRate * 1000 }));
-    /*await*/ dispatch(updateUser({ waterRate: newRate * 1000 }));
-    dispatch(refreshUser());
+  const handleUpdateWaterRate = (newRate) => {
+    dispatch(updateUser({ waterRate: newRate * 1000 }));
+    dispatch(getWaterFromToday());
     setIsOpen(false);
   };
 

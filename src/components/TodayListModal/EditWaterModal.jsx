@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { HiMinus } from "react-icons/hi2";
 import { HiPlus } from "react-icons/hi";
 import cup from "../../images/svg/cup.svg";
+import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 
 export default function EditWaterModal({ closeModal, _id }) {
   const [amount, setAmount] = useState(50);
@@ -137,6 +138,7 @@ export default function EditWaterModal({ closeModal, _id }) {
       .catch((error) => {
         console.error("Error updating water:", error);
       });
+    dispatch(getWaterFromToday());
   };
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>

@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const slice = createSlice({
-  name: 'monthWaterList',
+  name: 'month',
   initialState,
   extraReducers: (builder) => {
     builder
@@ -35,4 +35,4 @@ const slice = createSlice({
   },
 });
 
-export const monthReducer = slice.reducer;
+export default slice.reducer;

@@ -11,7 +11,7 @@ const initialState = {
 
 
 const slice = createSlice({
-  name: 'todayWaterList',
+  name: 'today',
   initialState,
   extraReducers: (builder) => {
     builder
@@ -34,4 +34,4 @@ const slice = createSlice({
   },
 });
 
-export const todayReducer = slice.reducer;
+export default slice.reducer;

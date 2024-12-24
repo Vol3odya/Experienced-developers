@@ -23,17 +23,21 @@ export default function TodayWaterList() {
   const dispatch = useDispatch();
 
 
+
+
   // const handleDelete = dispatch(delete)
 
   const [isOpen, setIsOpen] = useState(false);
   const [isEditeOpen, setEditeOpen] = useState("");
   const [isModalOpen, setIsModalOpen] = useState("");
  // const [waterDay, setWaterDay] = useState(useSelector(selectAmountToday));
+  /*useEffect(() => {
+    dispatch(getWaterFromToday());
+  }, [dispatch, isOpen, isModalOpen, isEditeOpen]);*/
 
-
- useEffect(() => {
+ /*useEffect(() => {
    dispatch(getWaterFromToday());
- }, [dispatch, isOpen, isEditeOpen, isModalOpen]);
+ }, [dispatch, isOpen, isEditeOpen, isModalOpen]);*/
   
   
   const waterDay = useSelector(selectAmountToday);
@@ -42,7 +46,6 @@ export default function TodayWaterList() {
     setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
   };
   const handleCloseModalEdit = () => {
-    dispatch(getWaterFromToday());
     setIsModalOpen("");
   };
 
@@ -50,12 +53,10 @@ export default function TodayWaterList() {
     setIsOpen(true);
   };
   const handleCloseModal = () => {
-    dispatch(getWaterFromToday());
     setIsOpen(false);
   };
 
   const editClose = () => {
-    dispatch(getWaterFromToday());
     setEditeOpen("");
   };
   const editOpen = (event) => {

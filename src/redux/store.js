@@ -10,13 +10,13 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { todayReducer } from './todayWaterList/sliсe.js';
-import { monthReducer } from './monthWaterList/slice.js';
-import { authReducer } from './auth/slice.js';
+import todayReducer from './todayWaterList/sliсe.js';
+import monthReducer from './monthWaterList/slice.js';
+import authReducer from './auth/slice.js';
 
-import { waterRateReducer } from './waterRate/slice.js';
-import { waterReducer } from './water/slice.js';
-import { userReducer } from './user/slice.js';
+import waterRateReducer from './waterRate/slice.js';
+import waterReducer from './water/slice.js';
+import userReducer from './user/slice.js';
 const authPersistConfig = {
   key: 'auth',
   storage,

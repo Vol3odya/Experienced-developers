@@ -11,6 +11,8 @@ const DEFAULT_DAILY_NORMA = 2000; // Дефолтная норма воды
 
 export default function MonthStatsTable() {
   const dispatch = useDispatch();
+  
+  
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDayStats, setSelectedDayStats] = useState(null); //HPO
   const [selectedDate, setSelectedDate] = useState(null); //HPO
@@ -24,7 +26,7 @@ export default function MonthStatsTable() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1; // Месяц в API начинается с 1
     dispatch(getMonthWater({ year, month }));
-  }, [currentDate, dispatch/*, monthData*/]);
+  }, [currentDate, dispatch, monthData]);
 
   // Суммируем воду по дням и вычисляем проценты
   const daysStats = monthData.reduce((acc, day) => {
@@ -103,7 +105,6 @@ export default function MonthStatsTable() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [selectedDayStats, selectedDate]);
-
 
 
 

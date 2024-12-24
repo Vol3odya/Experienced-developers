@@ -35,4 +35,4 @@ const waterRateSlice = createSlice({
   },
 });
 
-export const waterRateReducer = waterRateSlice.reducer;
+export default waterRateSlice.reducer;

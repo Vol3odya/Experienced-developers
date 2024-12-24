@@ -9,8 +9,11 @@ export default function WaterRatioPanel() {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getWaterFromToday());
+  }, [dispatch]);
+
   const water = useSelector(selectAmountToday);
-  console.log(water.waterVolumeInPercent);
   /*const norm = useSelector(selectUser);
 
   let statys = 0;
@@ -29,9 +32,9 @@ export default function WaterRatioPanel() {
   };
 
   
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(getWaterFromToday());
-  }, [isOpen]);
+  }, [isOpen]);*/
 
 
 
