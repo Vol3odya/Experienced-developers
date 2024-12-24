@@ -2,13 +2,9 @@
 import { getWaterFromToday } from './operations.js';
 
 const initialState = {
-  items: [
-    {
-      date: null,
-      amount: null,
-      percentFromNorm: null,
-    },
-  ],
+  items: [],
+  totalWaterVolume: 0,
+  waterVolumeInPercent: 0,
   loading: false,
   error: null,
 };
@@ -24,7 +20,9 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(getWaterFromToday.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.items = action.payload.waterVolumeTimeEntries;
+        state.waterVolumeInPercent = action.payload.waterVolumeInPercent,
+        state.totalWaterVolume=action.payload.totalWaterVolume,
         state.date = action.payload.date;
         state.loading = false;
         state.error = null;

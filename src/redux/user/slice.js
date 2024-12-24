@@ -5,7 +5,7 @@ import { fetchUser, updateUser, updateUserAvatar } from './operations.js';
 
 const handleFulfilled = (state, action) => {
   if (action.type === "user/updateUserAvatar/fulfilled") {
-    state.user.avatarUrl = action.payload; // Обновляем только аватар
+    state.user.photo = action.payload; // Обновляем только аватар
   } else if (action.payload.user) {
     state.user = { ...state.user, ...action.payload.user }; // Обновляем, если данные лежат в user
   } else {

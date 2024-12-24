@@ -27,6 +27,7 @@
 .bottomContainer {
   display: flex;
   gap: 12px;
+  position: relative;
 }
 
 .liters {
@@ -45,6 +46,11 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 125% */
+  width: 40px;
+  height: 20px;
+  background-color: #fff;
+  position: absolute;
+  left: 82px;
 }
 
 .edit:hover {
@@ -75,3 +81,4 @@
     margin: -76px auto 8px auto;
   }
 }
+

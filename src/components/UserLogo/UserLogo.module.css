@@ -23,6 +23,7 @@
     background-color: #FFFFFF;
     border: none;
     /*width: 118px;*/
+    cursor: pointer;
 }
 
 .username{

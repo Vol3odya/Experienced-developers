@@ -20,7 +20,6 @@ const SignupPage = lazy(() => import("../../pages/SignupPage/SignupPage"));
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 
 export default function App() {
-  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefresh);
 
@@ -33,41 +32,55 @@ export default function App() {
     <Loader />
   ) : (
     <>
-    <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick={false} rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" transition={Bounce} />
-    <SharedLayout>
-      <Suspense fallback={null}>
-        <div className={css.container}>
-          <Routes>
-            <Route path="/welcome" element={<WelcomePage />} />
-            <Route
-              path="/signup"
-              element={
-                <RestrictedRoute
-                  component={SignupPage}
-                  redirectTo="/home"
-                />
-              }
-            />
-            <Route
-              path="/signin"
-              element={
-                <RestrictedRoute
-                  component={SigninPage}
-                  redirectTo="/home"
-                />
-
-              }
-            />
-            <Route
-              path="/home"
-              element={
-                <PrivateRoute component={<HomePage />} redirectTo="/signin" />
-              }
-            />
-          </Routes>
-        </div>
-      </Suspense>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
+      <SharedLayout>
+        <Suspense fallback={null}>
+          <div className={css.container}>
+            <Routes>
+              <Route path="/welcome" element={<WelcomePage />} />
+              <Route
+                path="/signup"
+                element={
+                  <RestrictedRoute
+                    component={SignupPage}
+                    redirectTo="/home"
+                  />
+                }
+              />
+              <Route
+                path="/signin"
+                element={
+                  <RestrictedRoute
+                    component={SigninPage}
+                    redirectTo="/home"
+                  />
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute
+                    component={<HomePage />}
+                    redirectTo="/signin"
+                  />
+                }
+              />
+            </Routes>
+          </div>
+        </Suspense>
       </SharedLayout>
-      </>
+    </>
   );
 }

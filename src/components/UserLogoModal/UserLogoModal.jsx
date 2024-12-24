@@ -21,11 +21,6 @@ export default function UserLogoModal({ closeModal, settingOpen, logoutOpen }) {
     logoutOpen();
   };
 
-
-  const user = {
-    name:"Vasya",
-  }
-
   return (
     <div className={css.modal} >
       <button type="button" className={css.button} onClick={handleOpenModalSetting} >
