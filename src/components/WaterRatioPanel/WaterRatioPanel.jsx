@@ -10,6 +10,7 @@ export default function WaterRatioPanel() {
   const dispatch = useDispatch();
 
   const water = useSelector(selectAmountToday);
+  console.log(water.waterVolumeInPercent);
   /*const norm = useSelector(selectUser);
 
   let statys = 0;

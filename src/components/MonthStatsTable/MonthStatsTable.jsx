@@ -18,7 +18,6 @@ export default function MonthStatsTable() {
   // Получаем данные из Redux store
 //  const monthData = useSelector((state) => state.month.items.data || []);
   const monthData = useSelector(selectItems) || [];
-  console.log(monthData);
 
 
   useEffect(() => {
