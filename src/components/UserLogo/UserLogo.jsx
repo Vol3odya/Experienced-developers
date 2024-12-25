@@ -7,6 +7,9 @@ import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
 import { logout } from "../../redux/auth/operations";
 import { selectUser } from '../../redux/auth/selectors';
 import css from "./UserLogo.module.css";
+import { selectIsLoading } from "../../redux/user/selectors";
+import { refreshUser } from "../../redux/auth/operations";
+import { fetchUser} from "../../redux/user/operations";
 import {csscss} from "../UserLogoModal/UserLogoModal"
 
 export default function UserLogo() {
@@ -15,6 +18,11 @@ export default function UserLogo() {
   const dispatch = useDispatch();
 
   const user = useSelector(selectUser);
+  const loading = useSelector(selectIsLoading);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch, loading]);
 
   let nikname = "User";
   let photo = "https://cdn-icons-png.flaticon.com/512/2922/2922506.png";

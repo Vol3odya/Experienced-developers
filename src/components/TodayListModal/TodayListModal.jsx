@@ -114,7 +114,6 @@ export default function TodayListModal({ closeModal }) {
       date: forDate,
     };
     dispatch(addWater(newNote));
-    dispatch(getWaterFromToday());
     toast.success("Water was successfully added");
 
     closeModal();

@@ -3,18 +3,24 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { IoMdClose } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectIsLoading, selectUser } from "../../redux/user/selectors.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoading } from "../../redux/user/selectors.js";
+import {selectUser} from "../../redux/auth/selectors.js"
 import Loader from "../Loader/Loader.jsx";
+import {refreshUser} from "../../redux/auth/operations.js"
 
 export default function DailyNormaModal({ closeModal, updateWaterRate }) {
   const isLoading = useSelector(selectIsLoading);
   const [weight, setWeight] = useState("");
   const [activity, setActivity] = useState("");
   const [waterRate, setWaterRate] = useState("");
-
+  const dispatch = useDispatch();
   //  юзер
   const user = useSelector(selectUser);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch, isLoading ]);
 
   // початкові значення форми
   const initialValues = {

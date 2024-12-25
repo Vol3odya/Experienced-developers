@@ -29,21 +29,16 @@ const SettingModal = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(true); // Добавляем состояние загрузки
 
   useEffect(() => {
-    const loadData = () => {
-      try {
-        if (!userData || Object.keys(userData).length === 0) {
-          dispatch(fetchUser()).unwrap(); // Загружаем данные
-        }
-        dispatch(refreshUser());
-      } catch (error) {
+    setIsLoading(true);
+    dispatch(fetchUser())
+      .unwrap()
+      .then(() => dispatch(refreshUser()))
+      .catch((error) => {
         console.error("Error fetching user data:", error);
-      } finally {
-        setIsLoading(false); // Завершаем загрузку
-      }
-    };
-
-    loadData();
-  }, [dispatch, userData]);
+        toast.error("Failed to fetch user data!");
+      })
+      .finally(() => setIsLoading(false));
+  }, [dispatch]);
 
   useEffect(() => {
     if (userData && Object.keys(userData).length > 0) {
@@ -106,44 +101,59 @@ const SettingModal = ({ onClose }) => {
       return;
     }
 
-    try {
-      if (formData.photoFile) {
-        const avatarData = new FormData();
-        avatarData.append("photo", formData.photoFile);
-        const avatarResponse = dispatch(
-          updateUserAvatar(avatarData)
-        ).unwrap();
-        if (avatarResponse) {
-          setFormData((prev) => ({ ...prev, photo: avatarResponse }));
-        }
+    const promises = [];
+
+    if (formData.photoFile) {
+      const avatarData = new FormData();
+      avatarData.append("photo", formData.photoFile);
+
+      promises.push(
+        dispatch(updateUserAvatar(avatarData))
+          .unwrap()
+          .then((avatarResponse) => {
+            setFormData((prev) => ({ ...prev, photo: avatarResponse }));
+          })
+          .catch((error) => {
+            console.error("Error updating avatar:", error);
+            toast.error("Failed to update avatar!");
+          })
+      );
+    }
+
+    const updatedData = Object.fromEntries(
+      Object.entries({
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender,
+        outdatePassword: formData.outdatePassword,
+        password: formData.newPassword, // Приводим к ожидаемому сервером имени
+      }).filter(([, value]) => value !== "")
+    );
+
+    console.log("Отправляемые данные:", updatedData);
+
+    promises.push(
+      dispatch(updateUser(updatedData))
+        .unwrap()
+        .then(() => {
+          toast.success("Profile updated successfully!");
+        })
+        .catch((error) => {
+          console.error("Error updating profile:", error);
+          toast.error("Failed to update profile!");
+        })
+    );
+
+    // Ждем когда промис завершится
+    Promise.all(promises)
+      .then(() => {
         dispatch(refreshUser());
         dispatch(fetchUser());
-      }
-
-      const updatedData = Object.fromEntries(
-        Object.entries({
-          name: formData.name,
-          email: formData.email,
-          gender: formData.gender,
-          outdatePassword: formData.outdatePassword,
-          password: formData.newPassword, // Приводим к ожидаемому сервером имени
-        }).filter(([, value]) => value !== "")
-      );
-
-      console.log("Отправляемые данные:", updatedData);
-
-      dispatch(updateUser(updatedData)).unwrap();
-      toast.success("Profile updated successfully!");
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      dispatch(refreshUser());
-      dispatch(fetchUser());
-      onClose();
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      toast.error("Error updating profile: " + error.message);
-    } finally {
-      setIsLoading(false);
-    }
+        onClose();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleGenderChange = (e) => {

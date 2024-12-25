@@ -13,11 +13,14 @@ import { updateUser } from "../../redux/user/operations.js";
 import { putWaterRate } from "../../redux/waterRate/operations.js";
 import { selectUser } from "../../redux/user/selectors.js";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
+import { selectIsLoading } from "../../redux/user/selectors";
 
 export default function DailyNorma() {
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
+
+  const loading = useSelector(selectIsLoading);
 
   // відкриття за такриття модалки
   const handleOpenModal = () => {
@@ -27,9 +30,10 @@ export default function DailyNorma() {
     setIsOpen(false);
   };
 
-/*useEffect(() => {
-      //dispatch(refreshUser());
-  }, [isOpen ]);*/
+  useEffect(() => {
+    dispatch(refreshUser());
+    dispatch(getWaterFromToday());
+  }, [dispatch, loading ]);
   
   // оновлення кількості води
   const user = useSelector(selectUser);
@@ -37,7 +41,6 @@ export default function DailyNorma() {
   
   const handleUpdateWaterRate = (newRate) => {
     dispatch(updateUser({ waterRate: newRate * 1000 }));
-    dispatch(getWaterFromToday());
     setIsOpen(false);
   };
 
