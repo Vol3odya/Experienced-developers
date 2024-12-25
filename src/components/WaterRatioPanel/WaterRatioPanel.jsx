@@ -9,9 +9,9 @@ export default function WaterRatioPanel() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getWaterFromToday());
-  }, [dispatch]);
+  /*useEffect(() => {*/
+    //dispatch(getWaterFromToday());
+  /*}, [dispatch]);*/
 
   const water = useSelector(selectAmountToday);
   /*const norm = useSelector(selectUser);
