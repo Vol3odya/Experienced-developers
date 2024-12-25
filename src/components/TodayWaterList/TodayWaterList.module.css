@@ -13,9 +13,8 @@
   font-size: 24px;
   letter-spacing: 0%;
   font-weight: 500;
-  line-height: 30px;;
+  line-height: 30px;
 }
-
 
 .list {
   height: 172px;
@@ -27,11 +26,16 @@
     border-bottom: 1px solid #d7e3ff;
   }
 }
+.listMessage {
+  font-size: 18px;
+  font-weight: 500;
+  color: #407bff;
+}
 
-.item{
+.item {
   margin-bottom: 12px;
-  border-bottom: 1px solid var(--secondary-color---5);
-} 
+  border-bottom: 1px solid #d7e3ff;
+}
 
 .listli {
   display: flex;
@@ -43,13 +47,13 @@
   display: flex;
   flex-direction: row;
   gap: 12px;
-  justify-content : space-between;
+  justify-content: space-between;
   align-items: center;
   width: 166px;
 }
 
 .colorMl {
-  color: var(--Primery-Color-Blue, #407BFF);
+  color: var(--Primery-Color-Blue, #407bff);
   font-family: Roboto, sans-serif;
   font-weight: 400px;
   font-size: 18px;
@@ -67,11 +71,11 @@
   letter-spacing: 0%;
   /* flex: 1; */
   max-width: 60px;
-  height: 24px ;
+  height: 24px;
   flex-shrink: 0;
 }
 
-.itemIcons{
+.itemIcons {
   display: flex;
   flex-direction: row;
   gap: 18px;
@@ -80,32 +84,26 @@
 }
 
 .iconEdit {
-  stroke: #8BAEFF;
+  stroke: #8baeff;
   width: 16px;
   height: 16px;
 }
 
-.iconButton{
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
+.iconButton {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
 }
-
 
 .btnAddWater {
   background-color: transparent;
-  color: #407BFF;
-  font-family: Roboto, sans-serif ;
+  color: #407bff;
+  font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
-    margin-right: auto;
-  
+  margin-right: auto;
 }
-
-
-
-
 
 /*----------------------TABLET------------------------*/
 
@@ -131,7 +129,7 @@
     font-size: 26px;
     letter-spacing: 0%;
     font-weight: 500;
-    line-height: 32px;;
+    line-height: 32px;
   }
 
   .list {
@@ -153,12 +151,11 @@
   }
   .list::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background-color: #9EBBFF;
+    background-color: #9ebbff;
   }
   .list::-webkit-scrollbar-track {
     background-color: #d7e3ff;
   }
-
 
   .listli {
     display: flex;
@@ -169,15 +166,12 @@
   .itemInfo {
     display: flex;
     flex-direction: row;
-    gap: 12px ;
-    justify-content : space-between;
+    gap: 12px;
+    justify-content: space-between;
     align-items: center;
-    width:206px;
+    width: 206px;
   }
-
 }
-
-
 
 /*---------------------DESKTOP---------------------*/
 
@@ -185,7 +179,6 @@
   .modal-content {
     width: 1008px;
   }
-
 
   .section {
     width: 592px;
@@ -197,16 +190,9 @@
     gap: 280px;
   }
 
-
   .itemInfo {
-    justify-content : space-between;
+    justify-content: space-between;
     align-items: center;
-    width:206px;
+    width: 206px;
   }
-  }
-
-
-
-
-
-
+}

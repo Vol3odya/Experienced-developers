@@ -120,7 +120,7 @@ export default function EditWaterModal({ closeModal, _id }) {
     }
 
     const now = new Date();
-    const forDate = now.toISOString().slice(0, 10)+`T${time}:00.000Z`;
+    const forDate = now.toISOString().slice(0, 10) + `T${time}:00.000Z`;
 
     const newNote = {
       _id,
@@ -129,7 +129,7 @@ export default function EditWaterModal({ closeModal, _id }) {
       date: forDate,
     };
     // dispatch(updateWater(newNote));
-    // console.log(newNote);
+    console.log(newNote);
 
     dispatch(updateWater(newNote))
       .unwrap()
@@ -141,6 +141,7 @@ export default function EditWaterModal({ closeModal, _id }) {
       });
     toast.success("Water was successfully corrected");
   };
+
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <Formik initialValues={{ amount: 50, time }} onSubmit={handleSubmit}>
