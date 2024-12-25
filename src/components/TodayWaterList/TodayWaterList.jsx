@@ -12,7 +12,10 @@ import cup from "../../images/svg/cup.svg";
 import outline from "../../images/svg/outline.svg";
 import del from "../../images/svg/del.svg";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import { deleteWater } from "../../redux/water/operations.js"
+import { deleteWater } from "../../redux/water/operations.js";
+import { toast } from "react-toastify";
+import { selectIsLoading } from "../../redux/water/selectors.js";
+import * as userloading from "../../redux/user/selectors";
 
 
 import { selectAmountToday } from "../../redux/todayWaterList/selectors.js";
@@ -23,6 +26,9 @@ export default function TodayWaterList() {
   const dispatch = useDispatch();
 
 
+  const loading = useSelector(selectIsLoading);
+  const loadingtwo = useSelector(userloading.selectIsLoading);
+
 
 
   // const handleDelete = dispatch(delete)
@@ -31,9 +37,9 @@ export default function TodayWaterList() {
   const [isEditeOpen, setEditeOpen] = useState("");
   const [isModalOpen, setIsModalOpen] = useState("");
  // const [waterDay, setWaterDay] = useState(useSelector(selectAmountToday));
-  /*useEffect(() => {
+  useEffect(() => {
     dispatch(getWaterFromToday());
-  }, [dispatch, isOpen, isModalOpen, isEditeOpen]);*/
+  }, [dispatch, loading, loadingtwo]);
 
  /*useEffect(() => {
    dispatch(getWaterFromToday());
@@ -65,7 +71,7 @@ export default function TodayWaterList() {
 
   const delet = () => {
     dispatch(deleteWater({ _id: isEditeOpen }));
-    dispatch(getWaterFromToday());
+    toast.success("Water was successfully deleted");
     setEditeOpen("");
   }
 
