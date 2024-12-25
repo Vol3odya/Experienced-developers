@@ -116,7 +116,7 @@ export default function TodayListModal({ closeModal }) {
     dispatch(addWater(newNote));
     dispatch(getWaterFromToday());
     toast.success("Water was successfully added");
-    
+
     closeModal();
   };
 
@@ -126,7 +126,7 @@ export default function TodayListModal({ closeModal }) {
         <Form>
           <div className={css.container}>
             <div className={css.iconclose}>
-              <h2 className={css.title}>App water</h2>
+              <h2 className={css.title}>Add water</h2>
               <button
                 type="button"
                 className={css.closeIcon}
