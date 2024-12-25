@@ -9,6 +9,7 @@ import { HiMinus } from "react-icons/hi2";
 import { HiPlus } from "react-icons/hi";
 import cup from "../../images/svg/cup.svg";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
+import { toast } from "react-toastify";
 
 export default function EditWaterModal({ closeModal, _id }) {
   const [amount, setAmount] = useState(50);
@@ -138,7 +139,7 @@ export default function EditWaterModal({ closeModal, _id }) {
       .catch((error) => {
         console.error("Error updating water:", error);
       });
-    dispatch(getWaterFromToday());
+    toast.success("Water was successfully corrected");
   };
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
