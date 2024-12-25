@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import Loader from "../Loader/loader";
+import Loader from "../Loader/Loader";
 
 import {
   updateUser,
