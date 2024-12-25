@@ -34,7 +34,6 @@ const SettingModal = ({ onClose }) => {
         if (!userData || Object.keys(userData).length === 0) {
           dispatch(fetchUser()).unwrap(); // Загружаем данные
         }
-        dispatch(refreshUser());
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
@@ -116,7 +115,6 @@ const SettingModal = ({ onClose }) => {
         if (avatarResponse) {
           setFormData((prev) => ({ ...prev, photo: avatarResponse }));
         }
-        dispatch(refreshUser());
         dispatch(fetchUser());
       }
 
@@ -135,7 +133,6 @@ const SettingModal = ({ onClose }) => {
       dispatch(updateUser(updatedData)).unwrap();
       toast.success("Profile updated successfully!");
       await new Promise((resolve) => setTimeout(resolve, 100));
-      dispatch(refreshUser());
       dispatch(fetchUser());
       onClose();
     } catch (error) {

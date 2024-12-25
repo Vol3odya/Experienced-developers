@@ -3,15 +3,17 @@ import { useState, useEffect } from "react";
 import { selectAmountToday } from "../../redux/todayWaterList/selectors";
 import TodayListModal from "../TodayListModal/TodayListModal";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
+import { selectIsLoading } from "../../redux/water/selectors.js";
 import css from "./WaterRatioPanel.module.css";
 
 export default function WaterRatioPanel() {
 
   const dispatch = useDispatch();
+  const loading = useSelector(selectIsLoading);
 
-  /*useEffect(() => {*/
-    //dispatch(getWaterFromToday());
-  /*}, [dispatch]);*/
+  useEffect(() => {
+    dispatch(getWaterFromToday());
+  }, [dispatch]);
 
   const water = useSelector(selectAmountToday);
   /*const norm = useSelector(selectUser);
