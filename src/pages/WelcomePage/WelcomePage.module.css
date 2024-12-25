@@ -1,0 +1,93 @@
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container {
+  /* padding: 8px 20px; */
+  margin: 0 auto;
+  width: 320px;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    /* padding: 16px 32px; */
+    width: 768px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .container {
+    /* padding: 12px 112px; */
+    width: 1440px;
+  }
+}
+
+/*TODO =====================MEDIA===================== */
+
+@media (min-width: 320px) {
+  .background {
+    background-image: url(../../images/WelcomePage/mobile/background-main-page.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    min-height: 100vh;
+    width: 100%;
+    padding-bottom: 40px;
+  }
+}
+@media (min-width: 320px) and (min-resolution: 192dpi),
+  (min-width: 320px) and (min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url(../../images/WelcomePage/mobile/background-main-page@2x.png);
+    background-size: cover;
+  }
+}
+
+@media (min-width: 768px) {
+  .background {
+    background-image: url(../../images/WelcomePage/tablet/background-main-page.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
+    padding-bottom: 50px;
+    background-attachment: fixed;
+  }
+
+  .wrap {
+    justify-content: flex-start;
+  }
+}
+@media (min-width: 768px) and (min-resolution: 192dpi),
+  (min-width: 768px) and (min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url(../../images/WelcomePage/tablet/background-main-page@2x.png);
+  }
+}
+
+@media (min-width: 1440px) {
+  .background {
+    background-image: url(../../images/WelcomePage/desktop/background-element-main-page.png),
+      url(../../images/WelcomePage/desktop/background-main-page.png);
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, bottom center;
+    background-size: contain, contain;
+    padding-top: 70px;
+    padding-bottom: 0;
+  }
+
+  .wrap {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+  }
+}
+@media (min-width: 1440px) and (min-resolution: 192dpi),
+  (min-width: 1440px) and (min-device-pixel-ratio: 2) {
+  .background {
+    background-image: url(../../images/WelcomePage/desktop/background-element-main-page@2x.png),
+      url(../../images/WelcomePage/desktop/background-main-page@2x.png);
+  }
+}

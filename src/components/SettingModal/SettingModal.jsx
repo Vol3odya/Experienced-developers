@@ -101,6 +101,7 @@ const SettingModal = ({ onClose }) => {
       return;
     }
 
+
     const promises = [];
 
     if (formData.photoFile) {

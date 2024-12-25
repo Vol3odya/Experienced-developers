@@ -1,7 +1,7 @@
 export const selectLoading = (state) => state.monthWaterList.loading;
 export const selectError = (state) => state.monthWaterList.error;
 
-export const selectItems = (state) => state.monthWaterList.items;
+export const selectItems = (state) => state.month.items.data;
 
 export const selectDate = (state) => state.monthWaterList.date;
 

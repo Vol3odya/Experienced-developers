@@ -1,0 +1,152 @@
+.background {
+  padding: 0 20px;
+  min-width: 320px;
+  margin-top: 24px;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.14;
+  width: 246px;
+  color: #2f2f2f;
+}
+
+.subtitle {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.25;
+  width: 197px;
+  color: #2f2f2f;
+  margin-top: 16px;
+}
+
+.text {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  width: 132px;
+  color: #2f2f2f;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.trackerList {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.trackerItem {
+  display: flex;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #2f2f2f;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.button {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  text-align: center;
+  color: #fff;
+  width: 280px;
+  padding: 8px 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #407bff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  transition: box-shadow 300ms ease;
+}
+
+.button:hover,
+.button:focus {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+
+.button:active {
+  box-shadow: none;
+}
+
+/*TODO =====================MEDIA===================== */
+
+@media (min-width: 768px) {
+  .background {
+    min-width: 768px;
+    padding: 0 32px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: 1.17;
+    width: 439px;
+  }
+
+  .subtitle {
+    font-size: 26px;
+    line-height: 1.23;
+    width: 404px;
+  }
+
+  .trackerList {
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .trackerItem {
+    width: 224px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .button {
+    width: 336px;
+    padding: 10px 30px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+}
+
+@media (min-width: 1440px) {
+  .background {
+    min-width: 439px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .trackerList {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 248px;
+  }
+
+  .button {
+    width: 384px;
+  }
+}

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-//axios.defaults.baseURL =....
 
 export const getWaterFromToday = createAsyncThunk(
   'today/getWater',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/today');
-      return response.data;
+      const today = new Date().toISOString().split('T')[0];
+      const response = await axios.get(`/water/day/${today}`);
+      return {...response.data.data, date: today};
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

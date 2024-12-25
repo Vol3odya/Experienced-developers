@@ -1,0 +1,36 @@
+.logo {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-right: auto;
+    max-width: 110px;
+    max-height: 48px;
+    cursor: pointer;
+}
+
+.logo:hover {
+    color: #FF9D43;
+}
+
+.logo_img{
+    max-width: 40px;
+    max-height: 48px;
+    margin-right: 4px;
+}
+
+.logo_text{
+    /*font-family: var(--font-family);*/
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #407BFF;
+    max-width: 60px;
+   /* max-height: 28px;*/
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 0;
+}
+
+.logo_text:hover {
+    color: #FF9D43;
+}
