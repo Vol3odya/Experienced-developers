@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import Loader from "../Loader/loader";
+import Loader from "../Loader/Loader";
 
 import {
   updateUser,
@@ -10,6 +10,7 @@ import {
 } from "../../redux/user/operations";
 import { selectUser } from "../../redux/user/selectors";
 import styles from "./SettingModal.module.css";
+import { refreshUser } from "../../redux/auth/operations";
 
 const SettingModal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -28,20 +29,16 @@ const SettingModal = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(true); // Добавляем состояние загрузки
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        if (!userData || Object.keys(userData).length === 0) {
-          await dispatch(fetchUser()).unwrap(); // Загружаем данные
-        }
-      } catch (error) {
+    setIsLoading(true);
+    dispatch(fetchUser())
+      .unwrap()
+      .then(() => dispatch(refreshUser()))
+      .catch((error) => {
         console.error("Error fetching user data:", error);
-      } finally {
-        setIsLoading(false); // Завершаем загрузку
-      }
-    };
-
-    loadData();
-  }, [dispatch, userData]);
+        toast.error("Failed to fetch user data!");
+      })
+      .finally(() => setIsLoading(false));
+  }, [dispatch]);
 
   useEffect(() => {
     if (userData && Object.keys(userData).length > 0) {
@@ -104,40 +101,59 @@ const SettingModal = ({ onClose }) => {
       return;
     }
 
-    try {
-      if (formData.photoFile) {
-        const avatarData = new FormData();
-        avatarData.append("photo", formData.photoFile);
-        const avatarResponse = await dispatch(
-          updateUserAvatar(avatarData)
-        ).unwrap();
-        if (avatarResponse) {
-          setFormData((prev) => ({ ...prev, photo: avatarResponse }));
-        }
-      }
+    const promises = [];
 
-      const updatedData = Object.fromEntries(
-        Object.entries({
-          name: formData.name,
-          email: formData.email,
-          gender: formData.gender,
-          outdatePassword: formData.outdatePassword,
-          password: formData.newPassword, // Приводим к ожидаемому сервером имени
-        }).filter(([, value]) => value !== "")
+    if (formData.photoFile) {
+      const avatarData = new FormData();
+      avatarData.append("photo", formData.photoFile);
+
+      promises.push(
+        dispatch(updateUserAvatar(avatarData))
+          .unwrap()
+          .then((avatarResponse) => {
+            setFormData((prev) => ({ ...prev, photo: avatarResponse }));
+          })
+          .catch((error) => {
+            console.error("Error updating avatar:", error);
+            toast.error("Failed to update avatar!");
+          })
       );
-
-      console.log("Отправляемые данные:", updatedData);
-
-      await dispatch(updateUser(updatedData)).unwrap();
-      toast.success("Profile updated successfully!");
-
-      onClose();
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      toast.error("Error updating profile: " + error.message);
-    } finally {
-      setIsLoading(false);
     }
+
+    const updatedData = Object.fromEntries(
+      Object.entries({
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender,
+        outdatePassword: formData.outdatePassword,
+        password: formData.newPassword, // Приводим к ожидаемому сервером имени
+      }).filter(([, value]) => value !== "")
+    );
+
+    console.log("Отправляемые данные:", updatedData);
+
+    promises.push(
+      dispatch(updateUser(updatedData))
+        .unwrap()
+        .then(() => {
+          toast.success("Profile updated successfully!");
+        })
+        .catch((error) => {
+          console.error("Error updating profile:", error);
+          toast.error("Failed to update profile!");
+        })
+    );
+
+    // Ждем когда промис завершится
+    Promise.all(promises)
+      .then(() => {
+        dispatch(refreshUser());
+        dispatch(fetchUser());
+        onClose();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleGenderChange = (e) => {
