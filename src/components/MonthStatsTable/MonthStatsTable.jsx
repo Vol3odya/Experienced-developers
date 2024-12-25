@@ -2,16 +2,17 @@ import { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectWaterShots } from "../../redux/water/selectors";
 import { getMonthWater } from "../../redux/monthWaterList/operations";
-import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats";//імпорт модального вікна з інформацією за день
+import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats"; //імпорт модального вікна з інформацією за день
 import styles from "./MonthStatsTable.module.css";
 
 const DEFAULT_DAILY_NORMA = 2000; // Дефолтная норма воды
 
-export default function MonthStatsTable() {
+// export default function MonthStatsTable() {
+export default function MonthStatsTable({ waterShots, currentDate }) {
   const dispatch = useDispatch();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDayStats, setSelectedDayStats] = useState(null);//HPO
-  const [selectedDate, setSelectedDate] = useState(null)//HPO
+  const [selectedDayStats, setSelectedDayStats] = useState(null); //HPO
+  const [selectedDate, setSelectedDate] = useState(null); //HPO
 
   // Получаем данные из Redux store
   const waterShots = useSelector(selectWaterShots);
@@ -29,7 +30,7 @@ export default function MonthStatsTable() {
 
   //   const shotDate = new Date(shot.date);
   //   if (isNaN(shotDate)) return acc; // пропускаємо некоректні дати
-    
+
   //   const isSameMonth =
   //     shotDate.getFullYear() === currentDate.getFullYear() &&
   //     shotDate.getMonth() === currentDate.getMonth();
@@ -47,21 +48,41 @@ export default function MonthStatsTable() {
 
   //   return acc;
   // }, {});
-//========================================update start
+  //========================================update start
+  // const daysStats = useMemo(() => {
+  //   return waterShots.reduce((acc, shot) => {
+  //     if (!shot.date) return acc;
+
+  //     const shotDate = new Date(shot.date);
+  //     if (isNaN(shotDate)) return acc;
+
+  //     const isSameMonth =
+  //       shotDate.getFullYear() === currentDate.getFullYear() &&
+  //       shotDate.getMonth() === currentDate.getMonth();
+
+  //     if (isSameMonth) {
+  //       const day = shotDate.getDate();
+  //       if (!acc[day]) {
+  //         acc[day] = {
+  //           waterVolume: 0,
+  //           dailyNorma: shot.dailyNorma || DEFAULT_DAILY_NORMA,
+  //         };
+  //       }
+  //       acc[day].waterVolume += shot.waterVolume || 0;
+  //     }
+
+  //     return acc;
+  //   }, {});
+  // }, [waterShots, currentDate]);
   const daysStats = useMemo(() => {
     return waterShots.reduce((acc, shot) => {
-      if (!shot.date) return acc;
-
-      const shotDate = new Date (shot.date);
-      if (isNaN(shotDate)) return acc;
-
-      const isSameMonth = 
-        shotDate.getFullYear() === currentDate.getFullYear() && 
-        shotDate.getMonth() === currentDate.getMonth();
-
-      if (isSameMonth) {
+      const shotDate = new Date(shot.date);
+      if (
+        shotDate.getFullYear() === currentDate.getFullYear() &&
+        shotDate.getMonth() === currentDate.getMonth()
+      ) {
         const day = shotDate.getDate();
-        if(!acc[day]) {
+        if (!acc[day]) {
           acc[day] = {
             waterVolume: 0,
             dailyNorma: shot.dailyNorma || DEFAULT_DAILY_NORMA,
@@ -69,26 +90,27 @@ export default function MonthStatsTable() {
         }
         acc[day].waterVolume += shot.waterVolume || 0;
       }
-
       return acc;
     }, {});
   }, [waterShots, currentDate]);
+  // =============================
+  // const days = useMemo(() => {
+  //   const daysInMonth = new Date(
+  //     currentDate.getFullYear(),
+  //     currentDate.getMonth() + 1,
+  //     0
+  //   ).getDate();
+  //   return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  // }, [currentDate]);
+  // =========================
 
-  const days = useMemo(() => {
-    const daysInMonth = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() + 1,
-      0
-    ).getDate();
-    return Array.from({length: daysInMonth}, (_, i) => i + 1);
-  }, [currentDate]);
-// ==================================update finish
+  // ==================================update finish
   // const getDaysInMonth = () => {
   //   const year = currentDate.getFullYear();
   //   const month = currentDate.getMonth();
   //   return new Date(year, month + 1, 0).getDate();
   // };       ===========змінено
- 
+
   const handlePrevMonth = () => {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
@@ -115,15 +137,45 @@ export default function MonthStatsTable() {
 
   // const days = generateDays();    ==========змінено
 
-  const openModal = (day) => {// modal is open DaysGeneralStats
-    setSelectedDayStats(daysStats[day]);
-    setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
+  const handleOpenModal = (day, event) => {
+    const rect = event.target.getBoundingClientRect();
+    setModalPosition({
+      top: rect.top + window.scrollY + 30,
+      left: rect.left + window.scrollX + 30,
+    });
+    setSelectedDay({
+      day,
+      stats: daysStats[day] || {
+        waterVolume: 0,
+        dailyNorma: DEFAULT_DAILY_NORMA,
+      },
+    });
   };
 
-  const closeModal = () => { // modal is close DaysGeneralStats
-    setSelectedDayStats(null);
-    setSelectedDate(null);
-  }
+  const handleCloseModal = () => setSelectedDay(null);
+
+  // Генерація днів місяця
+  const daysInMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0
+  ).getDate();
+
+  // <=<=<=<=<=<=<=<=<=<=<=<=<========================
+
+  // const openModal = (day) => {
+  //   // modal is open DaysGeneralStats
+  //   setSelectedDayStats(daysStats[day]);
+  //   setSelectedDate(
+  //     new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+  //   );
+  // };
+
+  // const closeModal = () => {
+  //   // modal is close DaysGeneralStats
+  //   setSelectedDayStats(null);
+  //   setSelectedDate(null);
+  // };
 
   return (
     <div className={styles.calendarContainer}>
@@ -167,12 +219,14 @@ export default function MonthStatsTable() {
               return (
                 <div key={day} className={styles.dayWrapper}>
                   {/* Кружок с числом */}
-                  <button className={`${styles.dayCircle} ${
-                    !isComplete ? styles.incomplete : ""}`}
+                  <button
+                    className={`${styles.dayCircle} ${
+                      !isComplete ? styles.incomplete : ""
+                    }`}
                     onClick={() => openModal(day)}
-                    >
-                      <span className={styles.dayNumber}>{day}</span>
-                    </button>
+                  >
+                    <span className={styles.dayNumber}>{day}</span>
+                  </button>
                   {/* <div
                     className={`${styles.dayCircle} ${
                       !isComplete ? styles.incomplete : ""
@@ -197,11 +251,10 @@ export default function MonthStatsTable() {
         // onClose = {closeModal}
         // />
         <DaysGeneralStats
-  dayStats={selectedDayStats}
-  selectedDate={selectedDate}
-  onClose={closeModal}
-/>
-
+          dayStats={selectedDayStats}
+          selectedDate={selectedDate}
+          onClose={closeModal}
+        />
       )}
     </div>
   );
