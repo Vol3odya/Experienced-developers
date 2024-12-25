@@ -1,7 +1,7 @@
 // import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal.jsx";
 import TodayListModal from "../TodayListModal/TodayListModal";
 import css from "../TodayWaterList/TodayWaterList.module.css";
