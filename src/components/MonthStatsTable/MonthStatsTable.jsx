@@ -21,10 +21,9 @@ export default function MonthStatsTable() {
   // Получаем данные из Redux store
   //  const monthData = useSelector((state) => state.month.items.data || []);
   const monthData = useSelector(selectItems) || [];
-  
+
   const loading = useSelector(selectIsLoading);
   const loadingtwo = useSelector(userloading.selectIsLoading);
-
 
   useEffect(() => {
     const year = currentDate.getFullYear();
@@ -75,27 +74,36 @@ export default function MonthStatsTable() {
 
   const days = generateDays();
 
-  // const openModal = (day) => {
-  //   // modal is open DaysGeneralStats
-  //   setSelectedDayStats(daysStats[day]);
-  //   setSelectedDate(
-  //     new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
-  //   );
-  // };
-
-  // =========================================NEW======================================================================
   const openModal = (day, event) => {
-    const rect = event.target.getBoundingClientRect();
-    const modalPosition = {
-      top: rect.top + window.scrollY,
-      left: rect.left + window.scrollX,
-    };
+    const target = event.currentTarget;
+    const containerRect = document
+      .querySelector(`.${styles.calendarContainer}`)
+      .getBoundingClientRect();
 
-    setSelectedDayStats({ ...daysStats[day], position: modalPosition });
+    const rect = target.getBoundingClientRect();
+
+    const top = rect.top - containerRect.top;
+    const left = rect.left - containerRect.left;
+
+    const openRight = [1, 2, 3, 4, 11, 12, 13, 14, 21, 22, 23, 24, 31].includes(
+      day
+    );
+
+    const horizontalOffset = openRight ? 155 : -120;
+
+    document.documentElement.style.setProperty("--modal-top", `${top}px`);
+    document.documentElement.style.setProperty("--modal-left", `${left}px`);
+    document.documentElement.style.setProperty(
+      "--modal-horizontal-offset",
+      `${horizontalOffset}px`
+    );
+
+    setSelectedDayStats(daysStats[day] || {}); // Если данных нет, передаём пустой объект
     setSelectedDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
     );
   };
+
   // ==================================================================================================================
 
   const closeModal = () => {
@@ -169,11 +177,12 @@ export default function MonthStatsTable() {
                   <button
                     className={`${styles.dayCircle} ${
                       !isComplete ? styles.incomplete : ""
-                    }`}
-                    onClick={(event) => openModal(day, event)} // Передаємо event
+                    } date-button`} // Добавляем класс date-button
+                    onClick={(event) => openModal(day, event)} // Передаем event
                   >
                     <span className={styles.dayNumber}>{day}</span>
                   </button>
+
                   <div className={styles.percentage}>{`${Math.round(
                     percentage
                   )}%`}</div>
@@ -188,6 +197,7 @@ export default function MonthStatsTable() {
         <DaysGeneralStats
           dayStats={selectedDayStats}
           selectedDate={selectedDate}
+          modalClass="modal"
           onClose={closeModal}
         />
       )}
