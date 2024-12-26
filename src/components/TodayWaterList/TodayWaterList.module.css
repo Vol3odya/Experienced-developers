@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 280px;
-  display: inline-flex;
-  padding: 24px 8px;
+
   gap: 12px;
 }
 
@@ -17,7 +16,7 @@
 }
 
 .list {
-  height: 172px;
+  max-height: 172px;
   overflow-y: hidden;
   padding-right: 8px;
   /* margin-bottom: 12px; */
@@ -117,9 +116,8 @@
   .section {
     display: flex;
     flex-direction: column;
-    width: 704px;
+    width: 100%;
     display: inline-flex;
-    padding: 32px 24px;
     gap: 12px;
   }
 

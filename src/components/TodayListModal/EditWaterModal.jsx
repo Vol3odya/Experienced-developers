@@ -11,21 +11,25 @@ import cup from "../../images/svg/cup.svg";
 import { getWaterFromToday } from "../../redux/todayWaterList/operations.js";
 import { toast } from "react-toastify";
 
-export default function EditWaterModal({ closeModal, _id }) {
-  const [amount, setAmount] = useState(50);
+export default function EditWaterModal({
+  closeModal,
+  _id,
+  initialTime,
+  initialAmount,
+}) {
+  const [amount, setAmount] = useState(initialAmount || 50);
   const [time, setTime] = useState("");
-  const [isTimeCorrect, setIsTimeCorrect] = useState(true);
-  const [isAmountCorrect, setIsAmountCorrect] = useState(true);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const now = new Date();
-    const hours = String(now.getHours());
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const currentTime = `${hours}:${minutes}`;
-    setTime(currentTime);
-  }, []);
+    if (initialAmount !== undefined) {
+      setAmount(initialAmount); // Устанавливаем исходное количество воды
+    }
+    if (initialTime) {
+      setTime(initialTime); // Устанавливаем исходное время записи
+    }
+  }, [initialAmount, initialTime]);
 
   const decrementAmount = () => {
     setAmount((prev) => Math.max(prev - 50, 50));
@@ -44,9 +48,6 @@ export default function EditWaterModal({ closeModal, _id }) {
     if (timeFormat.test(value)) {
       setTime(value);
     }
-    if (timeFormat.test(time)) {
-      setIsTimeCorrect(true);
-    }
   }
 
   function handleChangeAmount(e) {
@@ -62,16 +63,6 @@ export default function EditWaterModal({ closeModal, _id }) {
     const clampedAmount = Math.min(roundedAmount, 5000);
     setAmount(clampedAmount);
   };
-  useEffect(() => {
-    const now = new Date();
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    const roundedMinute = Math.floor(currentMinute / 5) * 5; // округлюємо до найближчих 5 хвилин
-    const timeString = `${currentHour < 10 ? `0${currentHour}` : currentHour}:${
-      roundedMinute < 10 ? `0${roundedMinute}` : roundedMinute
-    }`;
-    setTime(timeString);
-  }, []);
 
   const generateTimeOptions = () => {
     const options = [];
@@ -106,35 +97,23 @@ export default function EditWaterModal({ closeModal, _id }) {
   };
 
   const handleSubmit = () => {
-    if (!isAmountCorrect || !isTimeCorrect) {
-      if (amount === 0) {
-        setIsAmountCorrect(false);
-      }
+    if (amount <= 0 || !time) return;
 
-      return;
-    }
-    if (amount === 0) {
-      setIsAmountCorrect(false);
-
-      return;
-    }
-
-    const now = new Date();
-    const forDate = now.toISOString().slice(0, 10) + `T${time}:00.000Z`;
+    const forDate = `${new Date().toISOString().slice(0, 10)}T${time}:00.000Z`;
 
     const newNote = {
       _id,
-      time: time,
+      time,
       waterVolume: amount,
       date: forDate,
     };
-    // dispatch(updateWater(newNote));
+
     console.log(newNote);
 
     dispatch(updateWater(newNote))
       .unwrap()
       .then(() => {
-        closeModal(); // Закриваємо модальне вікно після успішного оновлення
+        closeModal(); // Закрываем модальное окно после успешного обновления
       })
       .catch((error) => {
         console.error("Error updating water:", error);

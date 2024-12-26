@@ -13,24 +13,20 @@ import { toast } from "react-toastify";
 import { selectIsLoading } from "../../redux/water/selectors.js";
 import * as userloading from "../../redux/user/selectors";
 
-
 import { selectAmountToday } from "../../redux/todayWaterList/selectors.js";
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();
 
-
   const loading = useSelector(selectIsLoading);
   const loadingtwo = useSelector(userloading.selectIsLoading);
-
-
 
   // const handleDelete = dispatch(delete)
 
   const [isOpen, setIsOpen] = useState(false);
   const [isEditeOpen, setEditeOpen] = useState("");
   const [isModalOpen, setIsModalOpen] = useState("");
- // const [waterDay, setWaterDay] = useState(useSelector(selectAmountToday));
+  // const [waterDay, setWaterDay] = useState(useSelector(selectAmountToday));
   useEffect(() => {
     dispatch(getWaterFromToday());
   }, [dispatch, loading, loadingtwo]);
@@ -42,7 +38,14 @@ export default function TodayWaterList() {
   const waterDay = useSelector(selectAmountToday);
 
   const handleOpenModalEdit = (event) => {
-    setIsModalOpen(event.target.parentNode.parentNode.parentNode.id);
+    const _id = event.target.parentNode.parentNode.parentNode.id; // Получаем _id записи
+    const waterItem = waterDay.items.find((item) => item._id === _id); // Ищем запись по _id
+    const time = waterItem?.time; // Извлекаем время записи
+    const amount = waterItem?.waterVolume; // Извлекаем количество воды
+
+    if (_id && time && amount !== undefined) {
+      setIsModalOpen({ _id, time, amount }); // Устанавливаем _id, время и количество воды
+    }
   };
 
   // const handleOpenModalEdit = (event) => {
@@ -142,8 +145,17 @@ export default function TodayWaterList() {
             </li>
           ))}
       </ul>
+      <button className={css.btnAddWater} onClick={handleOpenModal}>
+        <HiOutlinePlusSmall size="16" />
+        Add water
+      </button>
       {isModalOpen && (
-        <EditWaterModal closeModal={handleCloseModalEdit} _id={isModalOpen} />
+        <EditWaterModal
+          closeModal={handleCloseModalEdit}
+          _id={isModalOpen._id}
+          initialTime={isModalOpen.time}
+          initialAmount={isModalOpen.amount}
+        />
       )}
       {/* <button type="button" onClick={editOpen}>
         Delete
@@ -152,10 +164,6 @@ export default function TodayWaterList() {
         <UserLogoutModal closeModal={editClose} onClick={delet} />
       )}
 
-      <button className={css.btnAddWater} onClick={handleOpenModal}>
-        <HiOutlinePlusSmall size="16" />
-        Add water
-      </button>
       {isOpen && <TodayListModal closeModal={handleCloseModal} />}
     </div>
   );
