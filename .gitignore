@@ -25,3 +25,5 @@ dist-ssr
 
 # Pull requests list
 pullrequests-list.txt
+# Local Netlify folder
+.netlify
